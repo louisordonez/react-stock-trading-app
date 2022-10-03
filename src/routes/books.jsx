@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { axiosGet, axiosDelete } from '../services/utils/axios';
 
-const Client = () => {
+const Books = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -39,4 +39,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Books;
