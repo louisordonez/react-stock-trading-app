@@ -1,7 +1,15 @@
-import React from 'react';
-import { axiosDelete } from '../services/utils/axios';
+import { useState, useEffect } from 'react';
+import { axiosGet, axiosDelete } from '../services/utils/axios';
 
-const Books = ({ books }) => {
+const Client = () => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    axiosGet().then((items) => {
+      setBooks(items.data);
+    });
+  }, []);
+
   const deleteBook = (id) => {
     axiosDelete(id);
   };
@@ -31,4 +39,4 @@ const Books = ({ books }) => {
   );
 };
 
-export default Books;
+export default Client;
