@@ -7,20 +7,20 @@ export const StockTradingRef = axios.create({
   timeout: axiosTimeOut.timeout,
 });
 
-export const axiosGet = async () => {
-  return StockTradingRef.get('/books', axiosTimeOut)
+export const axiosGet = async (endpoint) => {
+  return StockTradingRef.get(endpoint, axiosTimeOut)
     .then((response) => response)
     .catch((error) => error);
 };
 
-export const axiosPut = async (body) => {
-  return StockTradingRef.put('/books', body, axiosTimeOut)
+export const axiosPut = async (endpoint, body) => {
+  return StockTradingRef.put(endpoint, body, axiosTimeOut)
     .then((response) => response)
     .catch((error) => error);
 };
 
-export const axiosDelete = async (id) => {
-  return StockTradingRef.delete(`/books/${id}`, axiosTimeOut)
+export const axiosDelete = async (endpoint, id) => {
+  return StockTradingRef.delete(`${endpoint}${id}`, axiosTimeOut)
     .then((response) => response)
     .catch((error) => error);
 };

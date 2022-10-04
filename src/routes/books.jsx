@@ -5,13 +5,13 @@ const Books = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axiosGet().then((items) => {
+    axiosGet('/books').then((items) => {
       setBooks(items.data);
     });
   }, []);
 
   const deleteBook = (id) => {
-    axiosDelete(id);
+    axiosDelete('/books', id);
   };
 
   return (
