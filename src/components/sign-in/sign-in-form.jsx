@@ -1,5 +1,5 @@
 import { TextInput, PasswordInput, Paper, Button } from '@mantine/core';
-import { notifyError } from '../../services/utils/toast';
+import { notifyError } from '../../services/utilities/toast';
 
 const SignInForm = () => {
   return (
