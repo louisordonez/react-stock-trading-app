@@ -18,3 +18,21 @@ export const notifySuccess = (text) => {
     }
   );
 };
+
+export const notifyError = (text) => {
+  toast.error(
+    (t) => (
+      <Group position="apart">
+        <Text>{`${text}`}</Text>
+        <CloseButton onClick={() => toast.dismiss(t.id)} />
+      </Group>
+    ),
+    {
+      style: {
+        background: '#333',
+        color: '#fff',
+      },
+      duration: 5000,
+    }
+  );
+};
