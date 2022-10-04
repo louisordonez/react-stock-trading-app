@@ -12,7 +12,7 @@ const SignInForm = () => {
           mt="xl"
           color="violet"
           onClick={() => {
-            notifySuccess(`You may now sign in to your account`);
+            notifySuccess(`You may now sign in to your account!`);
           }}
         >
           Sign in
