@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 import SignInForm from '../components/sign-in/sign-in-form';
-import { notifySuccess, notifyError } from '../components/toast';
+import { notifyError } from '../components/toast';
 import { axiosPost } from '../services/utilities/axios';
+import { setCookie, getCookie } from '../services/utilities/cookie';
 
 const SignIn = () => {
   const theme = useMantineTheme();
@@ -16,7 +17,9 @@ const SignIn = () => {
     axiosPost('/auth/sign_in', signInInfo).then((response) => {
       if (response.status === 200) {
         setIsError(false);
-        notifySuccess(`${response.data.token}`);
+        setCookie('access-token', response.data['access-token'], 7);
+        console.log(`access-token: ${response.data['access-token']}`);
+        console.log(`getCookie: ${getCookie('access-token')}`);
       } else {
         setIsError(true);
         notifyError(`Invalid email or password.`);
