@@ -1,5 +1,5 @@
 import { TextInput, PasswordInput, Paper, Button } from '@mantine/core';
-import { notifySuccess, notifyError } from '../../services/utils/toast';
+import { notifyError } from '../../services/utils/toast';
 
 const SignInForm = () => {
   return (
@@ -12,7 +12,7 @@ const SignInForm = () => {
           mt="xl"
           color="violet"
           onClick={() => {
-            notifySuccess(`You may now sign in to your account!`);
+            notifyError(`Invalid email or password.`);
           }}
         >
           Sign in

@@ -1,4 +1,5 @@
 import { TextInput, PasswordInput, Paper, Button, Group } from '@mantine/core';
+import { notifySuccess, notifyError } from '../../services/utils/toast';
 
 const SignUpForm = () => {
   return (
@@ -13,7 +14,14 @@ const SignUpForm = () => {
           <PasswordInput label="Password" required mt="md" />
           <PasswordInput label="Confirm Password" required mt="md" />
         </Group>
-        <Button fullWidth mt="xl" color="violet">
+        <Button
+          fullWidth
+          mt="xl"
+          color="violet"
+          onClick={() => {
+            notifySuccess(`You may now sign in to your account!`);
+          }}
+        >
           Sign up
         </Button>
       </Paper>
