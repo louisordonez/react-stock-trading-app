@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { axiosGet, axiosDelete } from '../services/utils/axios';
+import { axiosGet, axiosDelete } from '../services/utilities/axios';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
