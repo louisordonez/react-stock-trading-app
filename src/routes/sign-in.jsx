@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 import SignInForm from '../components/sign-in/sign-in-form';
-import { notifySuccess, notifyError } from '../services/utilities/toast';
+import { notifySuccess, notifyError } from '../components/toast';
 import { axiosPost } from '../services/utilities/axios';
 
 const SignIn = () => {
