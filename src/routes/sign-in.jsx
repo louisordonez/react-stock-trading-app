@@ -1,17 +1,7 @@
-import {
-  AppShell,
-  useMantineTheme,
-  TextInput,
-  PasswordInput,
-  Anchor,
-  Paper,
-  Title,
-  Text,
-  Container,
-  Button,
-} from '@mantine/core';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 import { useNavigate } from 'react-router-dom';
+import SignInForm from '../components/sign-in/sign-in-form';
 
 const SignIn = () => {
   const theme = useMantineTheme();
@@ -45,13 +35,7 @@ const SignIn = () => {
               Sign up
             </Anchor>
           </Text>
-          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <TextInput label="Email" required />
-            <PasswordInput label="Password" required mt="md" />
-            <Button fullWidth mt="xl" color="violet">
-              Sign in
-            </Button>
-          </Paper>
+          <SignInForm />
         </Container>
       </AppShell>
     </>
