@@ -1,18 +1,7 @@
-import {
-  AppShell,
-  useMantineTheme,
-  TextInput,
-  PasswordInput,
-  Anchor,
-  Paper,
-  Title,
-  Text,
-  Container,
-  Button,
-  Group,
-} from '@mantine/core';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 import { useNavigate } from 'react-router-dom';
+import SignUpForm from '../components/sign-up/sign-up-form';
 
 const SignUp = () => {
   const theme = useMantineTheme();
@@ -24,15 +13,12 @@ const SignUp = () => {
         padding="md"
         styles={{
           main: {
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
+            background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
           },
         }}
         header={<LandingHeader />}
       >
-        <Container size={520} my={40}>
+        <Container size={420} my={40}>
           <Title
             align="center"
             sx={(theme) => ({
@@ -49,20 +35,7 @@ const SignUp = () => {
               Sign in
             </Anchor>
           </Text>
-          <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <Group grow>
-              <TextInput label="First name" required />
-              <TextInput label="Last name" required />
-            </Group>
-            <TextInput label="Email" required mt="md" />
-            <Group grow>
-              <PasswordInput label="Password" required mt="md" />
-              <PasswordInput label="Confirm Password" required mt="md" />
-            </Group>
-            <Button fullWidth mt="xl" color="violet">
-              Sign up
-            </Button>
-          </Paper>
+          <SignUpForm />
         </Container>
       </AppShell>
     </>

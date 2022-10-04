@@ -1,11 +1,4 @@
-import {
-  AppShell,
-  useMantineTheme,
-  Text,
-  Center,
-  Image,
-  Stack,
-} from '@mantine/core';
+import { AppShell, useMantineTheme, Text, Center, Image, Stack } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 
 const Root = () => {
@@ -17,10 +10,7 @@ const Root = () => {
         padding="md"
         styles={{
           main: {
-            background:
-              theme.colorScheme === 'dark'
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
+            background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
           },
         }}
         header={<LandingHeader />}
