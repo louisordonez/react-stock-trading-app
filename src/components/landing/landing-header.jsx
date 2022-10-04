@@ -1,21 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
 
 const LandingHeader = () => {
+  const navigate = useNavigate();
+
   const hideButtons = () => {
     const urlPath = window.location.pathname.split('/');
 
     if (urlPath[1] !== 'sign_in' && urlPath[1] !== 'sign_up') {
       return (
         <>
-          <Link to="/sign_in">
-            <Button variant="white" color="dark">
-              Sign in
-            </Button>
+          <Anchor
+            onClick={() => navigate('/sign_in')}
+            style={{
+              color: 'white',
+              fontWeight: '700',
+              marginRight: '1rem',
+            }}
+          >
+            Sign in
+          </Anchor>
+          <Link to="/sign_up">
+            <Button color="violet">Sign up</Button>
           </Link>
-          <Space w="sm" />
-          <Button color="violet">Sign up</Button>
         </>
       );
     }

@@ -9,11 +9,12 @@ import {
   Text,
   Container,
   Button,
+  Group,
 } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
 import { useNavigate } from 'react-router-dom';
 
-const SignIn = () => {
+const SignUp = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const SignIn = () => {
         }}
         header={<LandingHeader />}
       >
-        <Container size={420} my={40}>
+        <Container size={520} my={40}>
           <Title
             align="center"
             sx={(theme) => ({
@@ -40,19 +41,26 @@ const SignIn = () => {
               color: 'white',
             })}
           >
-            Welcome back!
+            Create an account
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
-            Do not have an account yet?{' '}
-            <Anchor size="sm" onClick={() => navigate('/sign_up')}>
-              Sign up
+            Already have an account?{' '}
+            <Anchor size="sm" onClick={() => navigate('/sign_in')}>
+              Sign in
             </Anchor>
           </Text>
           <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <TextInput label="Email" required />
-            <PasswordInput label="Password" required mt="md" />
+            <Group grow>
+              <TextInput label="First name" required />
+              <TextInput label="Last name" required />
+            </Group>
+            <TextInput label="Email" required mt="md" />
+            <Group grow>
+              <PasswordInput label="Password" required mt="md" />
+              <PasswordInput label="Confirm Password" required mt="md" />
+            </Group>
             <Button fullWidth mt="xl" color="violet">
-              Sign in
+              Sign up
             </Button>
           </Paper>
         </Container>
@@ -61,4 +69,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

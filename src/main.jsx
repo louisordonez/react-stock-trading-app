@@ -11,12 +11,14 @@ import './index.css';
 import Root from './routes/root';
 import ErrorPage from './error-page';
 import SignIn from './routes/sign-in';
+import SignUp from './routes/sign-up';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Root />} errorElement={<ErrorPage />}></Route>
+      <Route path="/" element={<Root />} errorElement={<ErrorPage />} />
       <Route path="/sign_in" element={<SignIn />} />
+      <Route path="/sign_up" element={<SignUp />} />
     </>
   )
 );
