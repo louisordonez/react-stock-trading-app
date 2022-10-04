@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  createRoutesFromElements,
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-} from 'react-router-dom';
+import { createRoutesFromElements, createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import './index.css';
 import Root from './routes/root';
 import ErrorPage from './error-page';
 import SignIn from './routes/sign-in';
 import SignUp from './routes/sign-up';
+import { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +22,7 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <Toaster position="top-right" reverseOrder={true} />
       <RouterProvider router={router} />
     </MantineProvider>
   </React.StrictMode>
