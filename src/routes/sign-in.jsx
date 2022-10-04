@@ -1,11 +1,28 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/landing/landing-header';
-import { useNavigate } from 'react-router-dom';
 import SignInForm from '../components/sign-in/sign-in-form';
+import { notifySuccess, notifyError } from '../services/utilities/toast';
+import { axiosPost } from '../services/utilities/axios';
 
 const SignIn = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
+
+  const [isError, setIsError] = useState(false);
+
+  const handleSignInSubmit = (signInInfo) => {
+    axiosPost('/auth/sign_in', signInInfo).then((response) => {
+      if (response.status === 200) {
+        setIsError(false);
+        notifySuccess(`${response.data.token}`);
+      } else {
+        setIsError(true);
+        notifyError(`Invalid email or password.`);
+      }
+    });
+  };
 
   return (
     <>
@@ -35,7 +52,7 @@ const SignIn = () => {
               Sign up
             </Anchor>
           </Text>
-          <SignInForm />
+          <SignInForm onSignInSubmit={handleSignInSubmit} isError={isError} />
         </Container>
       </AppShell>
     </>

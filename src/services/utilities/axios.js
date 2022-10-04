@@ -13,8 +13,8 @@ export const axiosGet = async (endpoint) => {
     .catch((error) => error);
 };
 
-export const axiosPut = async (endpoint, body) => {
-  return StockTradingRef.put(endpoint, body, axiosTimeOut)
+export const axiosPost = async (endpoint, body) => {
+  return StockTradingRef.post(endpoint, body, axiosTimeOut)
     .then((response) => response)
     .catch((error) => error);
 };
