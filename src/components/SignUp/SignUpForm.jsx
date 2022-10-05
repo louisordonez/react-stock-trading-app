@@ -35,13 +35,13 @@ const SignUpForm = ({ onSignUpSubmit }) => {
 
     if (firstName === '') {
       setIsFirstNameError(true);
-      showErrorNotification('First name cannot be empty');
+      showErrorNotification('First name cannot be empty.');
       errors.firstName = 'invalid';
     }
 
     if (lastName === '') {
       setIsLastNameError(true);
-      showErrorNotification('Last name cannot be empty');
+      showErrorNotification('Last name cannot be empty.');
       errors.lastName = 'invalid';
     }
 

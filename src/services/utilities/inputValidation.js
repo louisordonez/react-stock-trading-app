@@ -5,7 +5,7 @@ export const isInvalidPassword = (password, confirmPassword) => {
 
   if (password.length === passwordMinLength) {
     if (password !== confirmPassword) {
-      showErrorNotification('Password and Confirm Password  match.');
+      showErrorNotification('Password and Confirm Password do not match.');
       return true;
     }
   } else {
