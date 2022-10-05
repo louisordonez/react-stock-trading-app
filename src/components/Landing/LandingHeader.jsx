@@ -1,10 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
 
 const LandingHeader = () => {
-  const navigate = useNavigate();
-
   const hideButtons = () => {
     const urlPath = window.location.pathname.split('/');
 
@@ -12,7 +9,7 @@ const LandingHeader = () => {
       return (
         <>
           <Anchor
-            onClick={() => navigate('/sign_in')}
+            href="/sign_in"
             style={{
               color: 'white',
               fontWeight: '700',
@@ -21,51 +18,53 @@ const LandingHeader = () => {
           >
             Sign in
           </Anchor>
-          <Link to="/sign_up">
+          <Anchor href="/sign_up">
             <Button color="violet">Sign up</Button>
-          </Link>
+          </Anchor>
         </>
       );
     }
   };
 
   return (
-    <Header height={70} p="xs">
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '100%',
-        }}
-      >
-        <Link
-          to="/"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            height: '100%',
-            textDecoration: 'none',
-          }}
-        >
-          <AiOutlineStock color="white" size={36} />
-          <Space w="xs" />
-          <Text weight={700} color="white">
-            Stock Trading
-          </Text>
-        </Link>
+    <>
+      <Header height={70} p="md">
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'space-between',
             height: '100%',
-            textDecoration: 'none',
           }}
         >
-          {hideButtons()}
+          <Anchor
+            href="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+              textDecoration: 'none',
+            }}
+          >
+            <AiOutlineStock color="white" size={36} />
+            <Space w="xs" />
+            <Text weight={700} color="white">
+              Stock Trading
+            </Text>
+          </Anchor>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              height: '100%',
+              textDecoration: 'none',
+            }}
+          >
+            {hideButtons()}
+          </div>
         </div>
-      </div>
-    </Header>
+      </Header>
+    </>
   );
 };
 

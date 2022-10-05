@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
@@ -9,7 +8,6 @@ import { setCookie, getCookie } from '../services/utilities/cookie';
 
 const SignIn = () => {
   const theme = useMantineTheme();
-  const navigate = useNavigate();
 
   const [isError, setIsError] = useState(false);
 
@@ -44,14 +42,13 @@ const SignIn = () => {
             sx={(theme) => ({
               fontFamily: `Greycliff CF, ${theme.fontFamily}`,
               fontWeight: 900,
-              color: 'white',
             })}
           >
             Welcome back!
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
             Do not have an account yet?{' '}
-            <Anchor size="sm" onClick={() => navigate('/sign_up')}>
+            <Anchor size="sm" href="/sign_up">
               Sign up
             </Anchor>
           </Text>

@@ -1,11 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 
 const SignUp = () => {
   const theme = useMantineTheme();
-  const navigate = useNavigate();
 
   return (
     <>
@@ -24,14 +22,13 @@ const SignUp = () => {
             sx={(theme) => ({
               fontFamily: `Greycliff CF, ${theme.fontFamily}`,
               fontWeight: 900,
-              color: 'white',
             })}
           >
             Create an account
           </Title>
           <Text color="dimmed" size="sm" align="center" mt={5}>
             Already have an account?{' '}
-            <Anchor size="sm" onClick={() => navigate('/sign_in')}>
+            <Anchor size="sm" href="/sign_in">
               Sign in
             </Anchor>
           </Text>

@@ -22,7 +22,6 @@ const Root = () => {
                 style={{
                   fontSize: '36px',
                   fontWeight: '700',
-                  color: 'white',
                   textAlign: 'center',
                   marginBottom: '3rem',
                 }}
