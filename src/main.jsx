@@ -5,7 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
 import Root from './routes/Root';
-import ErrorPage from './Error';
+import Error from './routes/Error';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import Client from './routes/Client';
@@ -13,7 +13,7 @@ import Client from './routes/Client';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Root />} errorElement={<ErrorPage />} />
+      <Route path="/" element={<Root />} errorElement={<Error />} />
       <Route path="/sign_in" element={<SignIn />} />
       <Route path="/sign_up" element={<SignUp />} />
       <Route path="/client" element={<Client />} />

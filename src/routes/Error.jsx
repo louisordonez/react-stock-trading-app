@@ -1,7 +1,14 @@
 import { useRouteError } from 'react-router-dom';
-import { createStyles, Title, Text, Button, Container, Group, useMantineTheme } from '@mantine/core';
+import { createStyles, Title, Text, Button, Container, Group } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
+  container: {
+    width: '100vw',
+    height: '100vh',
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+  },
+
   root: {
     paddingTop: 80,
     paddingBottom: 80,
@@ -13,7 +20,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: 220,
     lineHeight: 1,
     marginBottom: theme.spacing.xl * 1.5,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[2],
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: 120,
@@ -21,10 +28,21 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     textAlign: 'center',
     fontWeight: 900,
     fontSize: 38,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[2],
+
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: 32,
+    },
+  },
+
+  subtitle: {
+    textAlign: 'center',
+    fontWeight: 900,
+    fontSize: 38,
+    marginBottom: theme.spacing.xl * 1.5,
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[2],
 
     [theme.fn.smallerThan('sm')]: {
@@ -40,23 +58,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ErrorPage = () => {
+const Error = () => {
   const error = useRouteError();
   const { classes } = useStyles();
-  const theme = useMantineTheme();
 
   return (
     <>
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-        }}
-      >
+      <div className={classes.container}>
         <Container className={classes.root}>
           <div className={classes.label}>404</div>
-          <Title className={classes.title}>{error.statusText || error.message}. You have found a secret place.</Title>
+          <Title className={classes.subtitle}>{error.statusText || error.message}</Title>
+          <Title className={classes.title}>You have found a secret place.</Title>
           <Text color="dimmed" size="lg" align="center" className={classes.description}>
             Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has been moved to
             another URL.
@@ -72,4 +84,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default Error;
