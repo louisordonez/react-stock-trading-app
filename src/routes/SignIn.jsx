@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
-import LandingHeader from '../components/landing/landing-header';
-import SignInForm from '../components/sign-in/sign-in-form';
-import { notifyError } from '../components/toast';
+import LandingHeader from '../components/Landing/LandingHeader';
+import SignInForm from '../components/SignIn/SignInForm';
+import { notifyError } from '../components/Toast';
 import { axiosPost } from '../services/utilities/axios';
 import { setCookie, getCookie } from '../services/utilities/cookie';
 

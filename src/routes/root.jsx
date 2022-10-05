@@ -1,5 +1,5 @@
 import { AppShell, useMantineTheme, Text, Center, Image, Stack } from '@mantine/core';
-import LandingHeader from '../components/landing/landing-header';
+import LandingHeader from '../components/Landing/LandingHeader';
 
 const Root = () => {
   const theme = useMantineTheme();

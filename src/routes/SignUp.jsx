@@ -1,7 +1,7 @@
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
-import LandingHeader from '../components/landing/landing-header';
 import { useNavigate } from 'react-router-dom';
-import SignUpForm from '../components/sign-up/sign-up-form';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
+import LandingHeader from '../components/Landing/LandingHeader';
+import SignUpForm from '../components/SignUp/SignUpForm';
 
 const SignUp = () => {
   const theme = useMantineTheme();

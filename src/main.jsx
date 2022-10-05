@@ -4,11 +4,11 @@ import { createRoutesFromElements, createBrowserRouter, RouterProvider, Route } 
 import { MantineProvider } from '@mantine/core';
 import { Toaster } from 'react-hot-toast';
 import './index.css';
-import Root from './routes/root';
-import ErrorPage from './error-page';
-import SignIn from './routes/sign-in';
-import SignUp from './routes/sign-up';
-import Client from './routes/client';
+import Root from './routes/Root';
+import ErrorPage from './Error';
+import SignIn from './routes/SignIn';
+import SignUp from './routes/SignUp';
+import Client from './routes/Client';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
