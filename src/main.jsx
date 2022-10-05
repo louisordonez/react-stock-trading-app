@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createRoutesFromElements, createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
-import { Toaster } from 'react-hot-toast';
+import { NotificationsProvider } from '@mantine/notifications';
 import './index.css';
 import Root from './routes/Root';
 import Error from './routes/Error';
@@ -24,8 +24,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MantineProvider theme={{ colorScheme: 'dark' }}>
-      <Toaster position="top-right" reverseOrder={true} />
-      <RouterProvider router={router} />
+      <NotificationsProvider position="top-right" zIndex={2077}>
+        <RouterProvider router={router} />
+      </NotificationsProvider>
     </MantineProvider>
   </React.StrictMode>
 );

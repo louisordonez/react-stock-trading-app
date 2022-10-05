@@ -1,15 +1,15 @@
-import { notifyError } from '../../components/Toast';
+import { showErrorNotification } from '../../components/Notification';
 
 export const isInvalidPassword = (password, confirmPassword) => {
   const passwordMinLength = 6;
 
   if (password.length === passwordMinLength) {
     if (password !== confirmPassword) {
-      notifyError('Password and Confirm Password  match.');
+      showErrorNotification('Password and Confirm Password  match.');
       return true;
     }
   } else {
-    notifyError('Password must be at least 6 characters.');
+    showErrorNotification('Password must be at least 6 characters.');
     return true;
   }
 
@@ -20,7 +20,7 @@ export const isInvalidEmail = (email) => {
   const validate = /^\S+@\S+$/.test(email);
 
   if (!validate) {
-    notifyError('Invalid Email.');
+    showErrorNotification('Invalid Email.');
     return true;
   }
 

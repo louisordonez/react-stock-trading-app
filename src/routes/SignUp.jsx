@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
-import { notifySuccess } from '../components/Toast';
+import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { usersEndpoint } from '../services/constants/usersEndpoint';
 
@@ -15,7 +15,7 @@ const SignUp = () => {
     signUpInfo.role = 'user';
 
     axiosPost(usersEndpoint, signUpInfo).then(() => {
-      notifySuccess('An email has been sent to verify your account!');
+      showSuccessNotification('An email has been sent to verify your account!');
       navigate('/sign_in');
     });
   };

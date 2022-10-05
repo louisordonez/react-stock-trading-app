@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
-import { notifyError } from '../components/Toast';
+import { showErrorNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { signInUserEndpoint } from '../services/constants/usersEndpoint';
 import { setCookie, getCookie } from '../services/utilities/cookie';
@@ -22,7 +22,7 @@ const SignIn = () => {
         window.location.assign('/client');
       } else {
         setIsError(true);
-        notifyError(`Invalid email or password.`);
+        showErrorNotification('Invalid email or password.');
       }
     });
   };

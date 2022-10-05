@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextInput, PasswordInput, Paper, Button, Group } from '@mantine/core';
 import { isInvalidEmail, isInvalidPassword } from '../../services/utilities/inputValidation';
-import { notifyError } from '../Toast';
+import { showSuccessNotification, showErrorNotification } from '../Notification';
 
 const SignUpForm = ({ onSignUpSubmit }) => {
   const [firstName, setFirstName] = useState('');
@@ -35,13 +35,13 @@ const SignUpForm = ({ onSignUpSubmit }) => {
 
     if (firstName === '') {
       setIsFirstNameError(true);
-      notifyError('First name cannot be empty');
+      showErrorNotification('First name cannot be empty');
       errors.firstName = 'invalid';
     }
 
     if (lastName === '') {
       setIsLastNameError(true);
-      notifyError('Last name cannot be empty');
+      showErrorNotification('Last name cannot be empty');
       errors.lastName = 'invalid';
     }
 
