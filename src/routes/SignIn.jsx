@@ -19,6 +19,7 @@ const SignIn = () => {
         setCookie('access-token', response.data['access-token'], 7);
         console.log(`access-token: ${response.data['access-token']}`);
         console.log(`getCookie: ${getCookie('access-token')}`);
+        window.location.assign('/client');
       } else {
         setIsError(true);
         notifyError(`Invalid email or password.`);
