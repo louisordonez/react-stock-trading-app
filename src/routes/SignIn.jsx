@@ -4,6 +4,7 @@ import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
 import { notifyError } from '../components/Toast';
 import { axiosPost } from '../services/utilities/axios';
+import { signInUserEndpoint } from '../services/constants/usersEndpoint';
 import { setCookie, getCookie } from '../services/utilities/cookie';
 
 const SignIn = () => {
@@ -12,7 +13,7 @@ const SignIn = () => {
   const [isError, setIsError] = useState(false);
 
   const handleSignInSubmit = (signInInfo) => {
-    axiosPost('/auth/sign_in', signInInfo).then((response) => {
+    axiosPost(signInUserEndpoint, signInInfo).then((response) => {
       if (response.status === 200) {
         setIsError(false);
         setCookie('access-token', response.data['access-token'], 7);

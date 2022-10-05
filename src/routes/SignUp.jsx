@@ -1,9 +1,24 @@
+import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
+import { notifySuccess } from '../components/Toast';
+import { axiosPost } from '../services/utilities/axios';
+import { usersEndpoint } from '../services/constants/usersEndpoint';
 
 const SignUp = () => {
   const theme = useMantineTheme();
+
+  const navigate = useNavigate();
+
+  const handleSignUpSubmit = (signUpInfo) => {
+    signUpInfo.role = 'user';
+
+    axiosPost(usersEndpoint, signUpInfo).then(() => {
+      notifySuccess('You may now sign in to your account!');
+      navigate('/sign_in');
+    });
+  };
 
   return (
     <>
@@ -32,7 +47,7 @@ const SignUp = () => {
               Sign in
             </Anchor>
           </Text>
-          <SignUpForm />
+          <SignUpForm onSignUpSubmit={handleSignUpSubmit} />
         </Container>
       </AppShell>
     </>
