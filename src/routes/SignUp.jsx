@@ -15,7 +15,7 @@ const SignUp = () => {
     signUpInfo.role = 'user';
 
     axiosPost(usersEndpoint, signUpInfo).then(() => {
-      notifySuccess('You may now sign in to your account!');
+      notifySuccess('An email has been sent to verify your account!');
       navigate('/sign_in');
     });
   };
