@@ -5,7 +5,7 @@ import SignInForm from '../components/SignIn/SignInForm';
 import { showErrorNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { signInUserEndpoint } from '../services/constants/usersEndpoint';
-import { setCookie, getCookie } from '../services/utilities/cookie';
+import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
 
 const SignIn = () => {
@@ -20,8 +20,7 @@ const SignIn = () => {
       if (response.status === 200) {
         setIsError(false);
         setCookie('access-token', response.data['access-token'], 7);
-        console.log(`access-token: ${response.data['access-token']}`);
-        console.log(`getCookie: ${getCookie('access-token')}`);
+
         window.location.assign('/client/dashboard');
       } else {
         setIsError(true);
