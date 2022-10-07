@@ -16,7 +16,7 @@ const ClientHeader = ({ opened, setOpened, theme }) => {
             />
           </MediaQuery>
           <Anchor
-            href="/client"
+            href="/"
             style={{
               display: 'flex',
               alignItems: 'center',
