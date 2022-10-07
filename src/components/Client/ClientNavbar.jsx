@@ -29,12 +29,13 @@ const useStyles = createStyles((theme, _params, getRef) => {
       ...theme.fn.focusStyles(),
       display: 'flex',
       alignItems: 'center',
-      textDecoration: 'none',
+      textDecoration: 'none !important',
       fontSize: theme.fontSizes.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
+      cursor: 'pointer',
 
       '&:hover': {
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -80,23 +81,33 @@ const ClientNavbar = ({ opened }) => {
 
   useEffect(() => {
     const setActiveLink = () => {
-      switch (location.pathname) {
+      const pathName = location.pathname;
+      switch (pathName) {
         case clientDashboardLink:
           setActive('Dashboard');
+          break;
+        case clientPortfolioLink:
+          setActive('Portfolio');
+          break;
+        case clientTransactionsLink:
+          setActive('Transactions');
+          break;
+        case clientAccountLink:
+          setActive('Account');
+          break;
       }
     };
 
     setActiveLink();
-  }, []);
+  }, [active]);
 
   const links = data.map((item) => (
     <a
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-      href={item.link}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         setActive(item.label);
+        navigate(item.link);
       }}
     >
       <item.icon className={classes.linkIcon} />
@@ -108,11 +119,17 @@ const ClientNavbar = ({ opened }) => {
     <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
       <Navbar.Section grow>{links}</Navbar.Section>
       <Navbar.Section className={classes.footer}>
-        <a href={`${clientAccountLink}`} className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          className={cx(classes.link, { [classes.linkActive]: 'Account' === active })}
+          onClick={() => {
+            setActive('Account');
+            navigate(clientAccountLink);
+          }}
+        >
           <TbUser className={classes.linkIcon} />
           <span>Account</span>
         </a>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a className={classes.link} onClick={(event) => event.preventDefault()}>
           <TbLogout className={classes.linkIcon} />
           <span>Sign out</span>
         </a>

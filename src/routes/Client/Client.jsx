@@ -11,6 +11,9 @@ import {
 } from '../../services/constants/clientLinks';
 import ClientAdminDashboard from './Admin/ClientAdminDashboard';
 import ClientUserDashboard from './User/ClientUserDashboard';
+import ClientUserPortolio from './User/ClientUserPortolio';
+import ClientUserTransactions from './User/ClientUserTransactions';
+import ClientAccount from './ClientAccount';
 
 const Client = () => {
   const theme = useMantineTheme();
@@ -21,7 +24,13 @@ const Client = () => {
   const useDisplayContent = () => {
     switch (location.pathname) {
       case clientDashboardLink:
-        return <ClientAdminDashboard />;
+        return <ClientUserDashboard />;
+      case clientPortfolioLink:
+        return <ClientUserPortolio />;
+      case clientTransactionsLink:
+        return <ClientUserTransactions />;
+      case clientAccountLink:
+        return <ClientAccount />;
     }
   };
 

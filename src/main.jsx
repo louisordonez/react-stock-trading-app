@@ -26,6 +26,9 @@ const router = createBrowserRouter(
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
           <Route path={`${clientDashboardLink}`} element={<Client />} />
+          <Route path={`${clientPortfolioLink}`} element={<Client />} />
+          <Route path={`${clientTransactionsLink}`} element={<Client />} />
+          <Route path={`${clientAccountLink}`} element={<Client />} />
         </Route>
       </Route>
     </>
