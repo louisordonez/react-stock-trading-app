@@ -1,7 +1,10 @@
 import { AppShell, useMantineTheme, Text, Center, Image, Stack } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
+import { useRedirect } from '../services/utilities/useRedirect';
 
 const Root = () => {
+  useRedirect();
+
   const theme = useMantineTheme();
 
   return (

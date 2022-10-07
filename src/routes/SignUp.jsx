@@ -5,8 +5,11 @@ import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { usersEndpoint } from '../services/constants/usersEndpoint';
+import { useRedirect } from '../services/utilities/useRedirect';
 
 const SignUp = () => {
+  useRedirect();
+
   const theme = useMantineTheme();
   const navigate = useNavigate();
 

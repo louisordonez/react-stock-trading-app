@@ -6,8 +6,11 @@ import { showErrorNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { signInUserEndpoint } from '../services/constants/usersEndpoint';
 import { setCookie, getCookie } from '../services/utilities/cookie';
+import { useRedirect } from '../services/utilities/useRedirect';
 
 const SignIn = () => {
+  useRedirect();
+
   const theme = useMantineTheme();
 
   const [isError, setIsError] = useState(false);
