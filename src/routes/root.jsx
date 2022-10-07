@@ -38,7 +38,7 @@ const Root = () => {
               paddingRight: '3rem',
             }}
           >
-            <Image src="src/assets/landing.png" />
+            <Image src="../../src/assets/landing.png" />
           </div>
         </Stack>
       </Center>

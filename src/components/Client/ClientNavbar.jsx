@@ -8,6 +8,7 @@ import {
   clientTransactionsLink,
   clientAccountLink,
 } from '../../services/constants/clientLinks';
+import { deleteCookie } from '../../services/utilities/cookie';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -101,6 +102,11 @@ const ClientNavbar = ({ opened }) => {
     setActiveLink();
   }, [active]);
 
+  const userSignOut = () => {
+    deleteCookie('access-token');
+    window.location.assign('/sign_in');
+  };
+
   const links = data.map((item) => (
     <a
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
@@ -129,7 +135,7 @@ const ClientNavbar = ({ opened }) => {
           <TbUser className={classes.linkIcon} />
           <span>Account</span>
         </a>
-        <a className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a className={classes.link} onClick={userSignOut}>
           <TbLogout className={classes.linkIcon} />
           <span>Sign out</span>
         </a>
