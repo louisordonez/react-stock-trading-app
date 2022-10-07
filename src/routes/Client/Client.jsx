@@ -3,6 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { AppShell, useMantineTheme } from '@mantine/core';
 import ClientHeader from '../../components/Client/ClientHeader';
 import ClientNavbar from '../../components/Client/ClientNavbar';
+import {
+  clientDashboardLink,
+  clientPortfolioLink,
+  clientTransactionsLink,
+  clientAccountLink,
+} from '../../services/constants/clientLinks';
 import ClientAdminDashboard from './Admin/ClientAdminDashboard';
 import ClientUserDashboard from './User/ClientUserDashboard';
 
@@ -14,7 +20,7 @@ const Client = () => {
 
   const useDisplayContent = () => {
     switch (location.pathname) {
-      case '/client/dashboard':
+      case clientDashboardLink:
         return <ClientAdminDashboard />;
     }
   };

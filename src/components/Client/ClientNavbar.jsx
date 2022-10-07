@@ -1,16 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles, Navbar } from '@mantine/core';
+import { TbDeviceAnalytics, TbFolder, TbReceipt, TbUser, TbLogout } from 'react-icons/tb';
 import {
-  TbBellRinging,
-  TbReceipt2,
-  TbFingerprint,
-  TbKey,
-  TbDatabaseImport,
-  Tb2Fa,
-  TbSettings,
-  TbSwitchHorizontal,
-  TbLogout,
-} from 'react-icons/tb';
+  clientDashboardLink,
+  clientPortfolioLink,
+  clientTransactionsLink,
+  clientAccountLink,
+} from '../../services/constants/clientLinks';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -69,19 +66,28 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-  { link: '', label: 'Notifications', icon: TbBellRinging },
-  { link: '', label: 'Billing', icon: TbReceipt2 },
-  { link: '', label: 'Security', icon: TbFingerprint },
-  { link: '', label: 'SSH Keys', icon: TbKey },
-  { link: '', label: 'Databases', icon: TbDatabaseImport },
-  { link: '', label: 'Authentication', icon: Tb2Fa },
-  { link: '', label: 'Other Settings', icon: TbSettings },
+  { link: clientDashboardLink, label: 'Dashboard', icon: TbDeviceAnalytics },
+  { link: clientPortfolioLink, label: 'Portfolio', icon: TbFolder },
+  { link: clientTransactionsLink, label: 'Transactions', icon: TbReceipt },
 ];
 
 const ClientNavbar = ({ opened }) => {
   const { classes, cx } = useStyles();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [active, setActive] = useState('Notifications');
+  const [active, setActive] = useState('');
+
+  useEffect(() => {
+    const setActiveLink = () => {
+      switch (location.pathname) {
+        case clientDashboardLink:
+          setActive('Dashboard');
+      }
+    };
+
+    setActiveLink();
+  }, []);
 
   const links = data.map((item) => (
     <a
@@ -102,13 +108,13 @@ const ClientNavbar = ({ opened }) => {
     <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
       <Navbar.Section grow>{links}</Navbar.Section>
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <TbSwitchHorizontal className={classes.linkIcon} />
-          <span>Change account</span>
+        <a href={`${clientAccountLink}`} className={classes.link} onClick={(event) => event.preventDefault()}>
+          <TbUser className={classes.linkIcon} />
+          <span>Account</span>
         </a>
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <TbLogout className={classes.linkIcon} />
-          <span>Logout</span>
+          <span>Sign out</span>
         </a>
       </Navbar.Section>
     </Navbar>

@@ -9,6 +9,12 @@ import Error from './routes/Error';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import ProtectedRoute from './routes/ProtectedRoute';
+import {
+  clientDashboardLink,
+  clientPortfolioLink,
+  clientTransactionsLink,
+  clientAccountLink,
+} from './services/constants/clientLinks';
 import Client from './routes/Client/Client';
 
 const router = createBrowserRouter(
@@ -19,7 +25,7 @@ const router = createBrowserRouter(
       <Route path="/sign_up" element={<SignUp />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
-          <Route path="/client/dashboard" element={<Client />} />
+          <Route path={`${clientDashboardLink}`} element={<Client />} />
         </Route>
       </Route>
     </>
