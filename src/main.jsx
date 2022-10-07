@@ -8,7 +8,8 @@ import Root from './routes/Root';
 import Error from './routes/Error';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
-import Client from './routes/Client';
+import ProtectedRoute from './routes/ProtectedRoute';
+import Client from './routes/Client/Client';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,7 +17,11 @@ const router = createBrowserRouter(
       <Route path="/" element={<Root />} errorElement={<Error />} />
       <Route path="/sign_in" element={<SignIn />} />
       <Route path="/sign_up" element={<SignUp />} />
-      <Route path="/client" element={<Client />} />
+      <Route element={<ProtectedRoute />}>
+        <Route errorElement={<Error />}>
+          <Route path="/client/dashboard" element={<Client />} />
+        </Route>
+      </Route>
     </>
   )
 );

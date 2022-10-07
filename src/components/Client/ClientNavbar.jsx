@@ -99,21 +99,19 @@ const ClientNavbar = ({ opened }) => {
   ));
 
   return (
-    <>
-      <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-        <Navbar.Section grow>{links}</Navbar.Section>
-        <Navbar.Section className={classes.footer}>
-          <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-            <TbSwitchHorizontal className={classes.linkIcon} />
-            <span>Change account</span>
-          </a>
-          <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-            <TbLogout className={classes.linkIcon} />
-            <span>Logout</span>
-          </a>
-        </Navbar.Section>
-      </Navbar>
-    </>
+    <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+      <Navbar.Section grow>{links}</Navbar.Section>
+      <Navbar.Section className={classes.footer}>
+        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <TbSwitchHorizontal className={classes.linkIcon} />
+          <span>Change account</span>
+        </a>
+        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+          <TbLogout className={classes.linkIcon} />
+          <span>Logout</span>
+        </a>
+      </Navbar.Section>
+    </Navbar>
   );
 };
 
