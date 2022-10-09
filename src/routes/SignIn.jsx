@@ -22,8 +22,7 @@ const SignIn = () => {
     axiosPost(SIGN_IN_USER_ENDPOINT, signInInfo).then((response) => {
       if (response.status === 200) {
         setIsError(false);
-        setCookie('access-token', response.data['access-token'], 7);
-
+        setCookie('access-token', response.data['access_token'], response.data.expiration);
         navigate('/client/dashboard');
       } else {
         if (response.response.data.error === 'Invalid login credentials') {

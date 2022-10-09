@@ -104,7 +104,7 @@ const ClientNavbar = ({ opened }) => {
 
   const userSignOut = () => {
     deleteCookie('access-token');
-    window.location.assign('/sign_in');
+    navigate('/sign_in');
   };
 
   const links = data.map((item) => (
