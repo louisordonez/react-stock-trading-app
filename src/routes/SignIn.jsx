@@ -4,7 +4,7 @@ import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
 import { showErrorNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
-import { SIGN_IN_USER_ENDPOINT } from '../services/constants/USERS_ENDPOINT';
+import { SIGN_IN_USER_ENDPOINT } from '../services/constants/usersEndpoints';
 import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
 

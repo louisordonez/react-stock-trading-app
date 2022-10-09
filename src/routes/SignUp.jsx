@@ -4,7 +4,7 @@ import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
-import { USERS_ENDPOINT } from '../services/constants/USERS_ENDPOINT';
+import { USERS_ENDPOINT } from '../services/constants/usersEndpoints';
 import { useRedirect } from '../services/utilities/useRedirect';
 
 const SignUp = () => {
