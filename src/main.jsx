@@ -10,10 +10,10 @@ import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import ProtectedRoute from './routes/ProtectedRoute';
 import {
-  clientDashboardLink,
-  clientPortfolioLink,
-  clientTransactionsLink,
-  clientAccountLink,
+  CLIENT_DASHBOARD_LINK,
+  CLIENT_PORTFOLIO_LINK,
+  CLIENT_TRANSACTIONS_LINK,
+  CLIENT_ACCOUNT_LINK,
 } from './services/constants/clientLinks';
 import Client from './routes/Client/Client';
 
@@ -25,10 +25,10 @@ const router = createBrowserRouter(
       <Route path="/sign_up" element={<SignUp />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
-          <Route path={`${clientDashboardLink}`} element={<Client />} />
-          <Route path={`${clientPortfolioLink}`} element={<Client />} />
-          <Route path={`${clientTransactionsLink}`} element={<Client />} />
-          <Route path={`${clientAccountLink}`} element={<Client />} />
+          <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />
+          <Route path={`${CLIENT_PORTFOLIO_LINK}`} element={<Client />} />
+          <Route path={`${CLIENT_TRANSACTIONS_LINK}`} element={<Client />} />
+          <Route path={`${CLIENT_ACCOUNT_LINK}`} element={<Client />} />
         </Route>
       </Route>
     </>

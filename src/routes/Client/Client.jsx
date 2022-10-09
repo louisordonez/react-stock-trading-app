@@ -4,10 +4,10 @@ import { AppShell, useMantineTheme } from '@mantine/core';
 import ClientHeader from '../../components/Client/ClientHeader';
 import ClientNavbar from '../../components/Client/ClientNavbar';
 import {
-  clientDashboardLink,
-  clientPortfolioLink,
-  clientTransactionsLink,
-  clientAccountLink,
+  CLIENT_DASHBOARD_LINK,
+  CLIENT_PORTFOLIO_LINK,
+  CLIENT_TRANSACTIONS_LINK,
+  CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/clientLinks';
 import ClientAdminDashboard from './Admin/ClientAdminDashboard';
 import ClientUserDashboard from './User/ClientUserDashboard';
@@ -23,13 +23,13 @@ const Client = () => {
 
   const useDisplayContent = () => {
     switch (location.pathname) {
-      case clientDashboardLink:
+      case CLIENT_DASHBOARD_LINK:
         return <ClientUserDashboard />;
-      case clientPortfolioLink:
+      case CLIENT_PORTFOLIO_LINK:
         return <ClientUserPortolio />;
-      case clientTransactionsLink:
+      case CLIENT_TRANSACTIONS_LINK:
         return <ClientUserTransactions />;
-      case clientAccountLink:
+      case CLIENT_ACCOUNT_LINK:
         return <ClientAccount />;
     }
   };

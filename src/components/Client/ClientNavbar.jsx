@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles, Navbar } from '@mantine/core';
 import { TbDeviceAnalytics, TbFolder, TbReceipt, TbUser, TbLogout } from 'react-icons/tb';
 import {
-  clientDashboardLink,
-  clientPortfolioLink,
-  clientTransactionsLink,
-  clientAccountLink,
+  CLIENT_DASHBOARD_LINK,
+  CLIENT_PORTFOLIO_LINK,
+  CLIENT_TRANSACTIONS_LINK,
+  CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/clientLinks';
 import { deleteCookie } from '../../services/utilities/cookie';
 
@@ -68,9 +68,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-  { link: clientDashboardLink, label: 'Dashboard', icon: TbDeviceAnalytics },
-  { link: clientPortfolioLink, label: 'Portfolio', icon: TbFolder },
-  { link: clientTransactionsLink, label: 'Transactions', icon: TbReceipt },
+  { link: CLIENT_DASHBOARD_LINK, label: 'Dashboard', icon: TbDeviceAnalytics },
+  { link: CLIENT_PORTFOLIO_LINK, label: 'Portfolio', icon: TbFolder },
+  { link: CLIENT_TRANSACTIONS_LINK, label: 'Transactions', icon: TbReceipt },
 ];
 
 const ClientNavbar = ({ opened }) => {
@@ -84,16 +84,16 @@ const ClientNavbar = ({ opened }) => {
     const setActiveLink = () => {
       const pathName = location.pathname;
       switch (pathName) {
-        case clientDashboardLink:
+        case CLIENT_DASHBOARD_LINK:
           setActive('Dashboard');
           break;
-        case clientPortfolioLink:
+        case CLIENT_PORTFOLIO_LINK:
           setActive('Portfolio');
           break;
-        case clientTransactionsLink:
+        case CLIENT_TRANSACTIONS_LINK:
           setActive('Transactions');
           break;
-        case clientAccountLink:
+        case CLIENT_ACCOUNT_LINK:
           setActive('Account');
           break;
       }
@@ -129,7 +129,7 @@ const ClientNavbar = ({ opened }) => {
           className={cx(classes.link, { [classes.linkActive]: 'Account' === active })}
           onClick={() => {
             setActive('Account');
-            navigate(clientAccountLink);
+            navigate(CLIENT_ACCOUNT_LINK);
           }}
         >
           <TbUser className={classes.linkIcon} />

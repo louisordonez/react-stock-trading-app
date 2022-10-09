@@ -1,5 +1,5 @@
-export const clientDashboardLink = '/client/dashboard';
-export const clientPortfolioLink = '/client/portfolio';
-export const clientTransactionsLink = '/client/transactions';
-export const clientAccountLink = '/client/account';
-export const clientSignOutLink = '/client/sign_out';
+export const CLIENT_DASHBOARD_LINK = '/client/dashboard';
+export const CLIENT_PORTFOLIO_LINK = '/client/portfolio';
+export const CLIENT_TRANSACTIONS_LINK = '/client/transactions';
+export const CLIENT_ACCOUNT_LINK = '/client/account';
+export const CLIENT_SIGN_OUT_LINK = '/client/sign_out';
