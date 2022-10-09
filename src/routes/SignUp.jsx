@@ -4,7 +4,7 @@ import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
-import { usersEndpoint } from '../services/constants/usersEndpoint';
+import { USERS_ENDPOINT } from '../services/constants/USERS_ENDPOINT';
 import { useRedirect } from '../services/utilities/useRedirect';
 
 const SignUp = () => {
@@ -16,7 +16,7 @@ const SignUp = () => {
   const handleSignUpSubmit = (signUpInfo) => {
     signUpInfo.role = 'user';
 
-    axiosPost(usersEndpoint, signUpInfo).then(() => {
+    axiosPost(USERS_ENDPOINT, signUpInfo).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
       navigate('/sign_in');
     });
