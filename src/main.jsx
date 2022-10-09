@@ -8,6 +8,7 @@ import Root from './routes/Root';
 import Error from './routes/Error';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
+import VerifyEmail from './routes/VerifyEmail';
 import ProtectedRoute from './routes/ProtectedRoute';
 import {
   CLIENT_DASHBOARD_LINK,
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Root />} errorElement={<Error />} />
       <Route path="/sign_in" element={<SignIn />} />
       <Route path="/sign_up" element={<SignUp />} />
+      <Route path="/verify_email/:email" element={<VerifyEmail />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
           <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
@@ -7,11 +8,13 @@ import { axiosPost } from '../services/utilities/axios';
 import { SIGN_IN_USER_ENDPOINT } from '../services/constants/usersEndpoints';
 import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
+import { encodeEmail } from '../services/utilities/encodeEmail';
 
 const SignIn = () => {
   useRedirect();
 
   const theme = useMantineTheme();
+  const navigate = useNavigate();
 
   const [isError, setIsError] = useState(false);
 
@@ -21,10 +24,16 @@ const SignIn = () => {
         setIsError(false);
         setCookie('access-token', response.data['access-token'], 7);
 
-        window.location.assign('/client/dashboard');
+        navigate('/client/dashboard');
       } else {
-        setIsError(true);
-        showErrorNotification('Invalid email or password.');
+        if (response.response.data.error === 'Invalid login credentials') {
+          setIsError(true);
+          showErrorNotification('Invalid email or password.');
+        } else if (response.response.data.error.message === 'Account needs to be verified.') {
+          const email = encodeEmail(signInInfo.email);
+
+          navigate(`/verify_email/${email}`);
+        }
       }
     });
   };

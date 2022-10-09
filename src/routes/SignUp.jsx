@@ -6,6 +6,7 @@ import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { USERS_ENDPOINT } from '../services/constants/usersEndpoints';
 import { useRedirect } from '../services/utilities/useRedirect';
+import { encodeEmail } from '../services/utilities/encodeEmail';
 
 const SignUp = () => {
   useRedirect();
@@ -14,11 +15,10 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUpSubmit = (signUpInfo) => {
-    signUpInfo.role = 'user';
-
     axiosPost(USERS_ENDPOINT, signUpInfo).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
-      navigate('/sign_in');
+
+      navigate(`/verify_email/${email}`);
     });
   };
 
