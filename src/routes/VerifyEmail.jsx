@@ -10,12 +10,13 @@ const VerifyEmail = () => {
   useRedirect();
 
   const theme = useMantineTheme();
-  const email = useParams().email.split('%dot%').join('.');
+  const emailParam = new URLSearchParams(window.location.search);
+  const email = emailParam.get('email');
 
   const handleResendEmail = () => {
-    axiosPost(RESEND_EMAIL_VERIFICATION_ENDPOINT, { email: `${email}` }).then(() =>
-      showSuccessNotification('An email has been sent to verify your account!')
-    );
+    axiosPost(RESEND_EMAIL_VERIFICATION_ENDPOINT, { email: `${email}` }).then(() => {
+      showSuccessNotification('An email has been sent to verify your account!');
+    });
   };
 
   return (

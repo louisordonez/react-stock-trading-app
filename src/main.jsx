@@ -24,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Root />} errorElement={<Error />} />
       <Route path="/sign_in" element={<SignIn />} />
       <Route path="/sign_up" element={<SignUp />} />
-      <Route path="/verify_email/:email" element={<VerifyEmail />} />
+      <Route path="/verify_email" element={<VerifyEmail />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
           <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />
