@@ -58,7 +58,7 @@ const SignIn = () => {
           Welcome back!
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
-          Do not have an account yet?{' '}
+          Don't have an account yet?{' '}
           <Anchor size="sm" href="/sign_up">
             Sign up
           </Anchor>
