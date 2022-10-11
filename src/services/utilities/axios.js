@@ -1,26 +1,39 @@
 import axios from 'axios';
 
-const axiosTimeOut = { timeout: 1000 };
+const axiosTimeout = { timeout: 1000 };
 
 export const StockTradingRef = axios.create({
   baseURL: 'http://localhost:3000/api/v1',
-  timeout: axiosTimeOut.timeout,
+  timeout: axiosTimeout.timeout,
 });
 
-export const axiosGet = async (endpoint) => {
-  return StockTradingRef.get(endpoint, axiosTimeOut)
+export const axiosGet = async (endpoint, headers) => {
+  return StockTradingRef.get(
+    endpoint,
+    {
+      headers,
+    },
+    axiosTimeout
+  )
     .then((response) => response)
     .catch((error) => error);
 };
 
-export const axiosPost = async (endpoint, body) => {
-  return StockTradingRef.post(endpoint, body, axiosTimeOut)
+export const axiosPost = async (endpoint, body, headers) => {
+  return StockTradingRef.post(
+    endpoint,
+    body,
+    {
+      headers,
+    },
+    axiosTimeout
+  )
     .then((response) => response)
     .catch((error) => error);
 };
 
 export const axiosDelete = async (endpoint, id) => {
-  return StockTradingRef.delete(`${endpoint}${id}`, axiosTimeOut)
+  return StockTradingRef.delete(`${endpoint}${id}`, axiosTimeout)
     .then((response) => response)
     .catch((error) => error);
 };

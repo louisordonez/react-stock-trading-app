@@ -1,3 +1,5 @@
+export const accessTokenCookie = 'access_token';
+
 export const setCookie = (cname, cvalue, exp) => {
   const expires = new Date(exp * 1000).toUTCString();
 

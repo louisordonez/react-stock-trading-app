@@ -1,20 +1,30 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Title, Text, Container, Paper, Button, Center } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import { showSuccessNotification } from '../components/Notification';
-import { axiosPost } from '../services/utilities/axios';
-import { RESEND_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
-import { useRedirect } from '../services/utilities/useRedirect';
+import { axiosGet } from '../services/utilities/axios';
+import { SHOW_USER_ENDPOINT, REQUEST_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
+import { accessTokenCookie, getCookie } from '../services/utilities/cookie';
 
 const VerifyEmail = () => {
-  useRedirect();
-
+  const navigate = useNavigate();
   const theme = useMantineTheme();
-  const emailParam = new URLSearchParams(window.location.search);
-  const email = emailParam.get('email');
+  const accessToken = getCookie(accessTokenCookie);
+  const headers = {
+    Authorization: `${accessToken}`,
+  };
+
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+      response.data.email_verified ? navigate('/client/dashboard') : setEmail(response.data.email);
+    });
+  }, []);
 
   const handleResendEmail = () => {
-    axiosPost(RESEND_EMAIL_VERIFICATION_ENDPOINT, { email: `${email}` }).then(() => {
+    axiosGet(REQUEST_EMAIL_VERIFICATION_ENDPOINT, headers).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
     });
   };

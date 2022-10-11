@@ -3,12 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles, Navbar } from '@mantine/core';
 import { TbDeviceAnalytics, TbFolder, TbReceipt, TbUser, TbLogout } from 'react-icons/tb';
 import {
+  SIGN_IN_LINK,
   CLIENT_DASHBOARD_LINK,
   CLIENT_PORTFOLIO_LINK,
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/links';
-import { deleteCookie } from '../../services/utilities/cookie';
+import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -103,8 +104,8 @@ const ClientNavbar = ({ opened }) => {
   }, [active]);
 
   const userSignOut = () => {
-    deleteCookie('access-token');
-    navigate('/sign_in');
+    deleteCookie(accessTokenCookie);
+    navigate(SIGN_IN_LINK);
   };
 
   const links = data.map((item) => (
