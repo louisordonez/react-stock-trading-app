@@ -37,7 +37,7 @@ const LandingHeader = () => {
               window.location.assign(SIGN_IN_LINK);
             }}
           >
-            Log out
+            Sign out
           </Button>
         </Anchor>
       );

@@ -1,3 +1,3 @@
-import { getCookie } from './cookie';
+import { accessTokenCookie, getCookie } from './cookie';
 
-export const isLoggedIn = () => (getCookie('access-token') === '' ? false : true);
+export const isLoggedIn = () => (getCookie(accessTokenCookie) === '' ? false : true);

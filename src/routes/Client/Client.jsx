@@ -14,8 +14,11 @@ import ClientUserDashboard from './User/ClientUserDashboard';
 import ClientUserPortolio from './User/ClientUserPortolio';
 import ClientUserTransactions from './User/ClientUserTransactions';
 import ClientAccount from './ClientAccount';
+import { useRedirect } from '../../services/utilities/useRedirect';
 
 const Client = () => {
+  useRedirect();
+
   const theme = useMantineTheme();
   const location = useLocation();
 
