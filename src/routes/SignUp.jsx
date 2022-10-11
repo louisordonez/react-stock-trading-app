@@ -18,7 +18,7 @@ const SignUp = () => {
     axiosPost(USERS_ENDPOINT, signUpInfo).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
 
-      navigate(`/verify_email/${email}`);
+      navigate('/sign_in');
     });
   };
 
