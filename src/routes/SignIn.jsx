@@ -6,7 +6,7 @@ import SignInForm from '../components/SignIn/SignInForm';
 import { showErrorNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { SIGN_IN_USER_ENDPOINT } from '../services/constants/usersEndpoints';
-import { setCookie } from '../services/utilities/cookie';
+import { accessTokenCookie, setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
 import { CLIENT_DASHBOARD_LINK, VERIFY_EMAIL_LINK } from '../services/constants/links';
 
@@ -22,7 +22,7 @@ const SignIn = () => {
     axiosPost(SIGN_IN_USER_ENDPOINT, signInInfo).then((response) => {
       if (response.status === 200) {
         setIsError(false);
-        setCookie('access_token', response.data['access_token'], response.data.expiration);
+        setCookie(accessTokenCookie, response.data[accessTokenCookie], response.data.expiration);
 
         if (response.data.user.email_verified) {
           navigate(`${CLIENT_DASHBOARD_LINK}`);

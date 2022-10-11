@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Title, Text, Container, Paper, Button, Center } from '@mantine/core';
-import LandingHeader from '../components/Landing/LandingHeader';
 import { showSuccessNotification } from '../components/Notification';
-import { axiosGet } from '../services/utilities/axios';
+import LandingHeader from '../components/Landing/LandingHeader';
 import { SHOW_USER_ENDPOINT, REQUEST_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
+import { SIGN_IN_LINK, CLIENT_DASHBOARD_LINK } from '../services/constants/links';
+import { axiosGet } from '../services/utilities/axios';
 import { accessTokenCookie, getCookie } from '../services/utilities/cookie';
+import { isLoggedIn } from '../services/utilities/isLoggedIn';
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -18,9 +20,13 @@ const VerifyEmail = () => {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-      response.data.email_verified ? navigate('/client/dashboard') : setEmail(response.data.email);
-    });
+    if (isLoggedIn) {
+      axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+        response.data.email_verified ? navigate(CLIENT_DASHBOARD_LINK) : setEmail(response.data.email);
+      });
+    } else {
+      navigate(SIGN_IN_LINK);
+    }
   }, []);
 
   const handleResendEmail = () => {

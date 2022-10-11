@@ -1,12 +1,15 @@
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
-import { SIGN_IN_LINK, SIGN_UP_LINK } from '../../services/constants/links';
+import { SIGN_IN_LINK, SIGN_UP_LINK, VERIFY_EMAIL_LINK } from '../../services/constants/links';
+import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
 
 const LandingHeader = () => {
   const hideButtons = () => {
-    const urlPath = window.location.pathname.split('/');
+    let urlPath = window.location.pathname.split('/');
 
-    if (urlPath[1] !== 'sign_in' && urlPath[1] !== 'sign_up') {
+    urlPath = `/${urlPath[1]}`;
+
+    if (urlPath !== SIGN_IN_LINK && urlPath !== SIGN_UP_LINK && urlPath !== VERIFY_EMAIL_LINK) {
       return (
         <>
           <Anchor
@@ -23,6 +26,20 @@ const LandingHeader = () => {
             <Button color="violet">Sign up</Button>
           </Anchor>
         </>
+      );
+    } else if (urlPath === VERIFY_EMAIL_LINK) {
+      return (
+        <Anchor>
+          <Button
+            color="violet"
+            onClick={() => {
+              deleteCookie(accessTokenCookie);
+              window.location.assign(SIGN_IN_LINK);
+            }}
+          >
+            Log out
+          </Button>
+        </Anchor>
       );
     }
   };
