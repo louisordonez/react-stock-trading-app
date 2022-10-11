@@ -16,9 +16,7 @@ export const useRedirect = () => {
   useEffect(() => {
     if (isLoggedIn()) {
       axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-        if (response.data.email_verified === false) {
-          navigate(VERIFY_EMAIL_LINK);
-        }
+        response.data.email_verified === false ? navigate(VERIFY_EMAIL_LINK) : navigate(CLIENT_DASHBOARD_LINK);
       });
     } else {
       navigate(SIGN_IN_LINK);
