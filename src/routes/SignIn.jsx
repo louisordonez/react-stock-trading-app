@@ -29,7 +29,7 @@ const SignIn = () => {
         } else {
           navigate(`${VERIFY_EMAIL_LINK}`);
         }
-      } else if (response.response.data.error === 'Invalid login credentials') {
+      } else {
         setIsError(true);
         showErrorNotification('Invalid email or password.');
       }
