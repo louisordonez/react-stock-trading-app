@@ -11,20 +11,23 @@ import SignUp from './routes/SignUp';
 import VerifyEmail from './routes/VerifyEmail';
 import ProtectedRoute from './routes/ProtectedRoute';
 import {
+  SIGN_IN_LINK,
+  SIGN_UP_LINK,
+  VERIFY_EMAIL_LINK,
   CLIENT_DASHBOARD_LINK,
   CLIENT_PORTFOLIO_LINK,
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
-} from './services/constants/clientLinks';
+} from './services/constants/links';
 import Client from './routes/Client/Client';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Root />} errorElement={<Error />} />
-      <Route path="/sign_in" element={<SignIn />} />
-      <Route path="/sign_up" element={<SignUp />} />
-      <Route path="/verify_email" element={<VerifyEmail />} />
+      <Route path={`${SIGN_IN_LINK}`} element={<SignIn />} />
+      <Route path={`${SIGN_UP_LINK}`} element={<SignUp />} />
+      <Route path={`${VERIFY_EMAIL_LINK}`} element={<VerifyEmail />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
           <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />

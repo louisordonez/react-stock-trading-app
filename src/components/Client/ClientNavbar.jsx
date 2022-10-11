@@ -7,7 +7,7 @@ import {
   CLIENT_PORTFOLIO_LINK,
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
-} from '../../services/constants/clientLinks';
+} from '../../services/constants/links';
 import { deleteCookie } from '../../services/utilities/cookie';
 
 const useStyles = createStyles((theme, _params, getRef) => {

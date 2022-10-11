@@ -6,7 +6,7 @@ import { showSuccessNotification } from '../components/Notification';
 import { axiosPost } from '../services/utilities/axios';
 import { USERS_ENDPOINT } from '../services/constants/usersEndpoints';
 import { useRedirect } from '../services/utilities/useRedirect';
-import { encodeEmail } from '../services/utilities/encodeEmail';
+import { SIGN_IN_LINK } from '../services/constants/links';
 
 const SignUp = () => {
   useRedirect();
@@ -18,7 +18,7 @@ const SignUp = () => {
     axiosPost(USERS_ENDPOINT, signUpInfo).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
 
-      navigate('/sign_in');
+      navigate(`${SIGN_IN_LINK}`);
     });
   };
 

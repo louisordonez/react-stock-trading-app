@@ -8,7 +8,7 @@ import {
   CLIENT_PORTFOLIO_LINK,
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
-} from '../../services/constants/clientLinks';
+} from '../../services/constants/links';
 import ClientAdminDashboard from './Admin/ClientAdminDashboard';
 import ClientUserDashboard from './User/ClientUserDashboard';
 import ClientUserPortolio from './User/ClientUserPortolio';

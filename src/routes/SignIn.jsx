@@ -8,7 +8,7 @@ import { axiosPost } from '../services/utilities/axios';
 import { SIGN_IN_USER_ENDPOINT } from '../services/constants/usersEndpoints';
 import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
-import { encodeEmail } from '../services/utilities/encodeEmail';
+import { VERIFY_EMAIL_LINK } from '../services/constants/links';
 
 const SignIn = () => {
   useRedirect();
@@ -20,19 +20,13 @@ const SignIn = () => {
 
   const handleSignInSubmit = (signInInfo) => {
     axiosPost(SIGN_IN_USER_ENDPOINT, signInInfo).then((response) => {
-      if (response.status === 200) {
+      if (response.response.data.error === 'Invalid login credentials') {
+        setIsError(true);
+        showErrorNotification('Invalid email or password.');
+      } else {
         setIsError(false);
         setCookie('access-token', response.data['access_token'], response.data.expiration);
-        navigate('/client/dashboard');
-      } else {
-        if (response.response.data.error === 'Invalid login credentials') {
-          setIsError(true);
-          showErrorNotification('Invalid email or password.');
-        } else if (response.response.data.error.message === 'Account needs to be verified.') {
-          const email = encodeEmail(signInInfo.email);
-
-          navigate(`/verify_email/${email}`);
-        }
+        navigate(`${VERIFY_EMAIL_LINK}`);
       }
     });
   };

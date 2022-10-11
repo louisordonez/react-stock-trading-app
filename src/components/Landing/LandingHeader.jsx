@@ -1,5 +1,6 @@
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
+import { SIGN_IN_LINK, SIGN_UP_LINK } from '../../services/constants/links';
 
 const LandingHeader = () => {
   const hideButtons = () => {
@@ -9,7 +10,7 @@ const LandingHeader = () => {
       return (
         <>
           <Anchor
-            href="/sign_in"
+            href={`${SIGN_IN_LINK}`}
             style={{
               color: 'white',
               fontWeight: '700',
@@ -18,7 +19,7 @@ const LandingHeader = () => {
           >
             Sign in
           </Anchor>
-          <Anchor href="/sign_up">
+          <Anchor href={`${SIGN_UP_LINK}`}>
             <Button color="violet">Sign up</Button>
           </Anchor>
         </>
