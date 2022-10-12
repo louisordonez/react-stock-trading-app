@@ -15,9 +15,15 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleSignUpSubmit = (signUpInfo) => {
-    axiosPost(USERS_ENDPOINT, signUpInfo).then(() => {
-      showSuccessNotification('An email has been sent to verify your account!');
+    const headers = { 'Content-Type': 'multipart/form-data' };
+    const formData = new FormData();
 
+    Object.entries(signUpInfo).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    axiosPost(USERS_ENDPOINT, signUpInfo, headers).then(() => {
+      showSuccessNotification('An email has been sent to verify your account!');
       navigate(`${SIGN_IN_LINK}`);
     });
   };
