@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
@@ -14,7 +13,6 @@ const SignIn = () => {
   useRedirect();
 
   const theme = useMantineTheme();
-  const navigate = useNavigate();
 
   const [isError, setIsError] = useState(false);
 
@@ -25,9 +23,9 @@ const SignIn = () => {
         setCookie(accessTokenCookie, response.data[accessTokenCookie], response.data.expiration);
 
         if (response.data.user.email_verified) {
-          navigate(`${CLIENT_DASHBOARD_LINK}`);
+          window.location.assign(`${CLIENT_DASHBOARD_LINK}`);
         } else {
-          navigate(`${VERIFY_EMAIL_LINK}`);
+          window.location.assign(`${VERIFY_EMAIL_LINK}`);
         }
       } else {
         setIsError(true);

@@ -1,7 +1,7 @@
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
 import { SIGN_IN_LINK, SIGN_UP_LINK, VERIFY_EMAIL_LINK } from '../../services/constants/links';
-import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
+import { userSignOut } from '../../services/utilities/userSignOut';
 
 const LandingHeader = () => {
   const hideButtons = () => {
@@ -30,13 +30,7 @@ const LandingHeader = () => {
     } else if (urlPath === VERIFY_EMAIL_LINK) {
       return (
         <Anchor>
-          <Button
-            color="violet"
-            onClick={() => {
-              deleteCookie(accessTokenCookie);
-              window.location.assign(SIGN_IN_LINK);
-            }}
-          >
+          <Button color="violet" onClick={userSignOut}>
             Sign out
           </Button>
         </Anchor>

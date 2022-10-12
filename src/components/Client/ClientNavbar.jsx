@@ -11,9 +11,8 @@ import {
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/links';
-import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
+import { userSignOut } from '../../services/utilities/userSignOut';
 import { getNavbarData } from '../../services/utilities/getNavbarData';
-import { getUserRole } from '../../services/utilities/getUserRole';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -72,7 +71,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const ClientNavbar = ({ opened, onOpened }) => {
+const ClientNavbar = ({ opened, onOpened, userRole }) => {
   const { classes, cx } = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
@@ -81,12 +80,6 @@ const ClientNavbar = ({ opened, onOpened }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const displayNavbarData = () => {
-      getUserRole().then((response) => {
-        setData(getNavbarData(response));
-      });
-    };
-
     const setActiveLink = () => {
       const pathName = location.pathname;
 
@@ -112,14 +105,9 @@ const ClientNavbar = ({ opened, onOpened }) => {
       }
     };
 
-    displayNavbarData();
+    setData(getNavbarData(userRole));
     setActiveLink();
-  }, [active]);
-
-  const userSignOut = () => {
-    deleteCookie(accessTokenCookie);
-    navigate(SIGN_IN_LINK);
-  };
+  }, [userRole, active]);
 
   const links = data.map((item) => (
     <a
