@@ -21,7 +21,7 @@ const ClientHeader = ({ opened, onOpened, theme }) => {
             <AiOutlineStock color="white" size={36} />
             <Space w="xs" />
             <Text weight={700} color="white">
-              Stock Trading
+              Fintrader
             </Text>
           </Anchor>
         </div>

@@ -22,8 +22,8 @@ export const useRedirect = () => {
         response.data.email_verified ? navigate(CLIENT_DASHBOARD_LINK) : navigate(VERIFY_EMAIL_LINK);
       });
     } else {
-      if (urlPath !== SIGN_UP_LINK) {
-        navigate(SIGN_IN_LINK);
+      if (urlPath === SIGN_UP_LINK) {
+        navigate(SIGN_UP_LINK);
       }
     }
   }, []);
