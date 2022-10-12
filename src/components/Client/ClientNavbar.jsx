@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles, Navbar } from '@mantine/core';
-import { TbDeviceAnalytics, TbFolder, TbReceipt, TbUser, TbLogout } from 'react-icons/tb';
+import { TbUser, TbLogout } from 'react-icons/tb';
 import {
   SIGN_IN_LINK,
   CLIENT_DASHBOARD_LINK,
@@ -10,6 +10,7 @@ import {
   CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/links';
 import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
+import { getNavbarData } from '../../services/utilities/getNavbarData';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -68,11 +69,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const data = [
-  { link: CLIENT_DASHBOARD_LINK, label: 'Dashboard', icon: TbDeviceAnalytics },
-  { link: CLIENT_PORTFOLIO_LINK, label: 'Portfolio', icon: TbFolder },
-  { link: CLIENT_TRANSACTIONS_LINK, label: 'Transactions', icon: TbReceipt },
-];
+const data = getNavbarData('user');
 
 const ClientNavbar = ({ opened, onOpened }) => {
   const { classes, cx } = useStyles();
