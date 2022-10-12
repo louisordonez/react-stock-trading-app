@@ -24,6 +24,10 @@ const Client = () => {
 
   const [opened, setOpened] = useState(false);
 
+  const handleOpened = () => {
+    setOpened((opened) => !opened);
+  };
+
   const useDisplayContent = () => {
     switch (location.pathname) {
       case CLIENT_DASHBOARD_LINK:
@@ -46,8 +50,8 @@ const Client = () => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<ClientNavbar opened={opened} />}
-      header={<ClientHeader opened={opened} setOpened={setOpened} theme={theme} />}
+      navbar={<ClientNavbar opened={opened} onOpened={handleOpened} />}
+      header={<ClientHeader opened={opened} onOpened={handleOpened} theme={theme} />}
     >
       {useDisplayContent()}
     </AppShell>

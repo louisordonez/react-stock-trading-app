@@ -74,7 +74,7 @@ const data = [
   { link: CLIENT_TRANSACTIONS_LINK, label: 'Transactions', icon: TbReceipt },
 ];
 
-const ClientNavbar = ({ opened }) => {
+const ClientNavbar = ({ opened, onOpened }) => {
   const { classes, cx } = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ const ClientNavbar = ({ opened }) => {
   useEffect(() => {
     const setActiveLink = () => {
       const pathName = location.pathname;
+
       switch (pathName) {
         case CLIENT_DASHBOARD_LINK:
           setActive('Dashboard');
@@ -115,6 +116,7 @@ const ClientNavbar = ({ opened }) => {
       onClick={() => {
         setActive(item.label);
         navigate(item.link);
+        onOpened();
       }}
     >
       <item.icon className={classes.linkIcon} />
