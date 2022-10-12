@@ -5,12 +5,15 @@ import { TbUser, TbLogout } from 'react-icons/tb';
 import {
   SIGN_IN_LINK,
   CLIENT_DASHBOARD_LINK,
+  CLIENT_MARKET_LINK,
   CLIENT_PORTFOLIO_LINK,
+  CLIENT_USERS_LINK,
   CLIENT_TRANSACTIONS_LINK,
   CLIENT_ACCOUNT_LINK,
 } from '../../services/constants/links';
 import { accessTokenCookie, deleteCookie } from '../../services/utilities/cookie';
 import { getNavbarData } from '../../services/utilities/getNavbarData';
+import { getUserRole } from '../../services/utilities/getUserRole';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -69,16 +72,21 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const data = getNavbarData('user');
-
 const ClientNavbar = ({ opened, onOpened }) => {
   const { classes, cx } = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
 
   const [active, setActive] = useState('');
+  const [data, setData] = useState([]);
 
   useEffect(() => {
+    const displayNavbarData = () => {
+      getUserRole().then((response) => {
+        setData(getNavbarData(response));
+      });
+    };
+
     const setActiveLink = () => {
       const pathName = location.pathname;
 
@@ -86,8 +94,14 @@ const ClientNavbar = ({ opened, onOpened }) => {
         case CLIENT_DASHBOARD_LINK:
           setActive('Dashboard');
           break;
+        case CLIENT_MARKET_LINK:
+          setActive('Market');
+          break;
         case CLIENT_PORTFOLIO_LINK:
           setActive('Portfolio');
+          break;
+        case CLIENT_USERS_LINK:
+          setActive('Users');
           break;
         case CLIENT_TRANSACTIONS_LINK:
           setActive('Transactions');
@@ -98,6 +112,7 @@ const ClientNavbar = ({ opened, onOpened }) => {
       }
     };
 
+    displayNavbarData();
     setActiveLink();
   }, [active]);
 
