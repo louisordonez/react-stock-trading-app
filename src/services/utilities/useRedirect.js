@@ -9,9 +9,7 @@ import { accessTokenCookie, getCookie } from './cookie';
 export const useRedirect = () => {
   const navigate = useNavigate();
   const accessToken = getCookie(accessTokenCookie);
-  const headers = {
-    Authorization: `${accessToken}`,
-  };
+  const headers = { Authorization: `${accessToken}` };
   let urlPath = window.location.pathname.split('/');
 
   urlPath = `/${urlPath[1]}`;
@@ -19,11 +17,33 @@ export const useRedirect = () => {
   useEffect(() => {
     if (isLoggedIn()) {
       axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-        response.data.email_verified ? navigate(CLIENT_DASHBOARD_LINK) : navigate(VERIFY_EMAIL_LINK);
+        if (!response.data.email_verified) {
+          navigate(VERIFY_EMAIL_LINK);
+        }
       });
+
+      switch (urlPath) {
+        case '/':
+          navigate(CLIENT_DASHBOARD_LINK);
+          break;
+        case SIGN_IN_LINK:
+          navigate(CLIENT_DASHBOARD_LINK);
+          break;
+        case SIGN_UP_LINK:
+          navigate(CLIENT_DASHBOARD_LINK);
+          break;
+      }
     } else {
-      if (urlPath === SIGN_UP_LINK) {
-        navigate(SIGN_UP_LINK);
+      switch (urlPath) {
+        case '/':
+          navigate('/');
+          break;
+        case SIGN_UP_LINK:
+          navigate(SIGN_UP_LINK);
+          break;
+        default:
+          navigate(SIGN_IN_LINK);
+          break;
       }
     }
   }, []);

@@ -1,26 +1,27 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppShell, useMantineTheme, Title, Text, Container, Paper, Button, Center } from '@mantine/core';
 import { showSuccessNotification } from '../components/Notification';
 import LandingHeader from '../components/Landing/LandingHeader';
 import { SHOW_USER_ENDPOINT, REQUEST_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
 import { axiosGet } from '../services/utilities/axios';
 import { accessTokenCookie, getCookie } from '../services/utilities/cookie';
-import { useRedirect } from '../services/utilities/useRedirect';
 
 const VerifyEmail = () => {
-  useRedirect();
-
   const theme = useMantineTheme();
+  const navigate = useNavigate();
   const accessToken = getCookie(accessTokenCookie);
-  const headers = {
-    Authorization: `${accessToken}`,
-  };
+  const headers = { Authorization: `${accessToken}` };
 
   const [email, setEmail] = useState('');
 
   useEffect(() => {
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-      setEmail(response.data.email);
+      if (!response.data.email_verified) {
+        setEmail(response.data.email);
+      } else {
+        navigate('/error');
+      }
     });
   }, []);
 
