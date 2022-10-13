@@ -1,5 +1,6 @@
 import { CHECK_ROLE_ENDPOINT } from '../constants/usersEndpoints';
-import { accessTokenCookie, getCookie } from './cookie';
+import { accessTokenCookie } from '../constants/cookies';
+import { getCookie } from './cookie';
 import { axiosGet } from './axios';
 
 const accessToken = getCookie(accessTokenCookie);

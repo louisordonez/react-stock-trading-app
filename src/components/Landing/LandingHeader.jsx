@@ -2,7 +2,6 @@ import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
 import { SIGN_IN_LINK, SIGN_UP_LINK, VERIFY_EMAIL_LINK } from '../../services/constants/links';
 import { userSignOut } from '../../services/utilities/userSignOut';
-import ThemeToggle from '../ThemeToggle';
 
 const LandingHeader = () => {
   const hideButtons = () => {
@@ -74,7 +73,6 @@ const LandingHeader = () => {
             }}
           >
             {hideButtons()}
-            <ThemeToggle />
           </div>
         </div>
       </Header>

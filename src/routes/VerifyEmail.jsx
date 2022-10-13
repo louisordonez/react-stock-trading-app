@@ -4,8 +4,9 @@ import { AppShell, useMantineTheme, Title, Text, Container, Paper, Button, Cente
 import { showSuccessNotification } from '../components/Notification';
 import LandingHeader from '../components/Landing/LandingHeader';
 import { SHOW_USER_ENDPOINT, REQUEST_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
+import { accessTokenCookie } from '../services/constants/cookies';
 import { axiosGet } from '../services/utilities/axios';
-import { accessTokenCookie, getCookie } from '../services/utilities/cookie';
+import { getCookie } from '../services/utilities/cookie';
 
 const VerifyEmail = () => {
   const theme = useMantineTheme();
