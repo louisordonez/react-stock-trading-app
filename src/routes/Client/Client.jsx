@@ -6,6 +6,7 @@ import ClientNavbar from '../../components/Client/ClientNavbar';
 import {
   CLIENT_DASHBOARD_LINK,
   CLIENT_MARKET_LINK,
+  CLIENT_WALLET_LINK,
   CLIENT_PORTFOLIO_LINK,
   CLIENT_USERS_LINK,
   CLIENT_TRANSACTIONS_LINK,
@@ -16,6 +17,7 @@ import ClientAdminTransactions from './Admin/ClientAdminTransactions';
 import ClientAdminUsers from './Admin/ClientAdminUsers';
 import ClientUserDashboard from './User/ClientUserDashboard';
 import ClientUserMarket from './User/ClientUserMarket';
+import ClientUserWallet from './User/ClientUserWallet';
 import ClientUserPortolio from './User/ClientUserPortolio';
 import ClientUserTransactions from './User/ClientUserTransactions';
 import ClientAccount from './ClientAccount';
@@ -49,6 +51,8 @@ const Client = () => {
         return userRole === 'admin' ? <ClientAdminDashboard /> : <ClientUserDashboard />;
       case CLIENT_MARKET_LINK:
         return <ClientUserMarket />;
+      case CLIENT_WALLET_LINK:
+        return <ClientUserWallet />;
       case CLIENT_PORTFOLIO_LINK:
         return <ClientUserPortolio />;
       case CLIENT_USERS_LINK:

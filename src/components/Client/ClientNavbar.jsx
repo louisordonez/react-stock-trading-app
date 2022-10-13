@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { createStyles, Navbar } from '@mantine/core';
 import { TbUser, TbLogout } from 'react-icons/tb';
 import {
-  SIGN_IN_LINK,
   CLIENT_DASHBOARD_LINK,
   CLIENT_MARKET_LINK,
+  CLIENT_WALLET_LINK,
   CLIENT_PORTFOLIO_LINK,
   CLIENT_USERS_LINK,
   CLIENT_TRANSACTIONS_LINK,
@@ -89,6 +89,9 @@ const ClientNavbar = ({ opened, onOpened, userRole }) => {
           break;
         case CLIENT_MARKET_LINK:
           setActive('Market');
+          break;
+        case CLIENT_WALLET_LINK:
+          setActive('Wallet');
           break;
         case CLIENT_PORTFOLIO_LINK:
           setActive('Portfolio');

@@ -16,6 +16,7 @@ import {
   VERIFY_EMAIL_LINK,
   CLIENT_DASHBOARD_LINK,
   CLIENT_MARKET_LINK,
+  CLIENT_WALLET_LINK,
   CLIENT_PORTFOLIO_LINK,
   CLIENT_USERS_LINK,
   CLIENT_TRANSACTIONS_LINK,
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
         <Route errorElement={<Error />}>
           <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />
           <Route path={`${CLIENT_MARKET_LINK}`} element={<Client />} />
+          <Route path={`${CLIENT_WALLET_LINK}`} element={<Client />} />
           <Route path={`${CLIENT_PORTFOLIO_LINK}`} element={<Client />} />
           <Route path={`${CLIENT_USERS_LINK}`} element={<Client />} />
           <Route path={`${CLIENT_TRANSACTIONS_LINK}`} element={<Client />} />
