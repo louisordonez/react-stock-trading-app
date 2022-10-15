@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Title, Text, Paper, Group, ScrollArea, Stack, Button, ThemeIcon, Table } from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
 
