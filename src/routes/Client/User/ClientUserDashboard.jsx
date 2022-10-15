@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Title, Text, Paper, Group, ThemeIcon, Table, Anchor, ScrollArea } from '@mantine/core';
 import { TbWallet, TbChartBar } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
+import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 
 const ClientUserDashboard = () => {
+  const navigate = useNavigate();
+
   const [balance, setBalance] = useState(10000);
   const [stocksOwned, setStocksOwned] = useState(10);
 
@@ -118,7 +122,14 @@ const ClientUserDashboard = () => {
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <Group position="apart" pb={16}>
             <Title order={3}>Wallet Transactions</Title>
-            <Anchor size={22}>View All</Anchor>
+            <Anchor
+              size={22}
+              onClick={() => {
+                navigate(CLIENT_WALLET_LINK);
+              }}
+            >
+              View All
+            </Anchor>
           </Group>
           <ScrollArea>
             <Table>
@@ -138,7 +149,14 @@ const ClientUserDashboard = () => {
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <Group position="apart" pb={16}>
             <Title order={3}>Stock Transactions</Title>
-            <Anchor size={22}>View All</Anchor>
+            <Anchor
+              size={22}
+              onClick={() => {
+                navigate(CLIENT_TRANSACTIONS_LINK);
+              }}
+            >
+              View All
+            </Anchor>
           </Group>
           <ScrollArea>
             <Table>

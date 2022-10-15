@@ -81,9 +81,7 @@ const ClientNavbar = ({ opened, onOpened, userRole }) => {
 
   useEffect(() => {
     const setActiveLink = () => {
-      const pathName = location.pathname;
-
-      switch (pathName) {
+      switch (location.pathname) {
         case CLIENT_DASHBOARD_LINK:
           setActive('Dashboard');
           break;
@@ -110,7 +108,7 @@ const ClientNavbar = ({ opened, onOpened, userRole }) => {
 
     setData(getNavbarData(userRole));
     setActiveLink();
-  }, [userRole, active]);
+  }, [userRole, location]);
 
   const links = data.map((item) => (
     <a
