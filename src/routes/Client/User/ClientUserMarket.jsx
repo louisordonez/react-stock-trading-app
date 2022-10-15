@@ -15,27 +15,24 @@ const ClientUserMarket = () => {
             <Paper p="xl" withBorder>
               <ScrollArea>
                 <Group>
-                  <div style={{ width: 130 }}>
+                  <div style={{ width: 180 }}>
                     <Image
                       radius="md"
                       src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-                      alt="Random unsplash image"
                     />
                   </div>
                   <Stack>
                     <Text weight={700}>MSFT</Text>
                     <Text>Microsoft</Text>
                     <Text>$100.00</Text>
+                    <Text>Owned: 10</Text>
                   </Stack>
                 </Group>
-                <Group position="apart" mt={16}>
-                  <Text>Owned: 10</Text>
-                  <Group>
-                    <Button color="violet">Buy</Button>
-                    <Button color="violet">Sell</Button>
-                  </Group>
-                </Group>
               </ScrollArea>
+              <Group position="right" mt={16}>
+                <Button color="violet">Buy</Button>
+                <Button color="violet">Sell</Button>
+              </Group>
             </Paper>
           </Group>
         </Stack>
