@@ -12,7 +12,7 @@ const ClientUserMarket = () => {
             Most Active
           </Title>
           <Group grow mt={16}>
-            <Paper p="xl" withBorder>
+            <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Group>
                   <div style={{ width: 180 }}>

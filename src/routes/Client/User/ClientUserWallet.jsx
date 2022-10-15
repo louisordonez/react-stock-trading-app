@@ -23,7 +23,7 @@ const ClientUserWallet = () => {
       <Group px={16} grow>
         <Stack>
           <Group grow mt={16}>
-            <Paper p="xl" withBorder>
+            <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Group>
                   <Group>
@@ -49,7 +49,7 @@ const ClientUserWallet = () => {
           </Group>
           <Title order={3}>Transactions</Title>
           <Group grow>
-            <Paper p="xl" withBorder>
+            <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Table>
                   <thead>
