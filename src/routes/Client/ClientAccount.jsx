@@ -11,7 +11,7 @@ const ClientAccount = () => {
               <TextInput label="First name" />
               <TextInput label="Last name" />
             </Group>
-            <TextInput label="Email" mt="md" />
+            {/* <TextInput label="Email" mt="md" /> */}
             <Group grow>
               <PasswordInput label="Password" mt="md" />
               <PasswordInput label="Confirm Password" mt="md" />
