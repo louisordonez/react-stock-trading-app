@@ -34,7 +34,7 @@ const ClientAccount = () => {
     formData.append('first_name', firstName);
     formData.append('last_name', lastName);
 
-    axiosPut(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
+    axiosPut(UPDATE_USER_ENDPOINT, formData, headers).then(() => {
       showSuccessNotification('Account has been updated!');
     });
   };
