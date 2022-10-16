@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { Title, Paper, Group, TextInput, PasswordInput, Button, Container } from '@mantine/core';
 import { accessTokenCookie } from '../../services/constants/cookies';
 import { getCookie } from '../../services/utilities/cookie';
-import { SHOW_USER_ENDPOINT } from '../../services/constants/usersEndpoints';
-import { axiosGet, axiosPost } from '../../services/utilities/axios';
+import { SHOW_USER_ENDPOINT, UPDATE_USER_ENDPOINT } from '../../services/constants/usersEndpoints';
+import { axiosGet, axiosPut } from '../../services/utilities/axios';
+import { showSuccessNotification } from '../../components/Notification';
 
 const ClientAccount = () => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: `${accessToken}` };
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -16,11 +16,28 @@ const ClientAccount = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
+    const headers = { Authorization: `${accessToken}` };
+
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
       setFirstName(response.data.first_name);
       setLastName(response.data.last_name);
     });
   }, []);
+
+  const handleSubmit = () => {
+    const headers = {
+      Authorization: `${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
+    const formData = new FormData();
+
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+
+    axiosPut(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
+      showSuccessNotification('Account has been updated!');
+    });
+  };
 
   return (
     <>
@@ -55,7 +72,7 @@ const ClientAccount = () => {
               />
             </Group>
             <Group>
-              <Button fullWidth mt="xl" color="violet">
+              <Button fullWidth mt="xl" color="violet" onClick={handleSubmit}>
                 Submit
               </Button>
             </Group>

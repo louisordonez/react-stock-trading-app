@@ -22,7 +22,7 @@ const SignUp = () => {
       formData.append(key, value);
     });
 
-    axiosPost(USERS_ENDPOINT, signUpInfo, headers).then(() => {
+    axiosPost(USERS_ENDPOINT, formData, headers).then(() => {
       showSuccessNotification('An email has been sent to verify your account!');
       navigate(`${SIGN_IN_LINK}`);
     });
