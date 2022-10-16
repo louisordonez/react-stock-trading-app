@@ -89,9 +89,9 @@ const ClientUserDashboard = () => {
 
   return (
     <>
-      <Title pl={16}>Dashboard</Title>
-      <Group px={16} py={16} grow>
-        <Paper p="xl" radius="md" shadow="md" withBorder mr={16}>
+      <Title pl="md">Dashboard</Title>
+      <Group px="md" py="md" grow>
+        <Paper p="xl" radius="md" shadow="md" withBorder mr="md">
           <ScrollArea>
             <ThemeIcon radius={48} size={48} color="violet">
               <TbWallet size={28} />
@@ -119,9 +119,9 @@ const ClientUserDashboard = () => {
           </ScrollArea>
         </Paper>
       </Group>
-      <Group px={16} py={16} grow>
+      <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
-          <Group position="apart" pb={16}>
+          <Group position="apart" pb="md">
             <Title order={3}>Wallet Transactions</Title>
             <Anchor
               size={22}
@@ -146,9 +146,9 @@ const ClientUserDashboard = () => {
           </ScrollArea>
         </Paper>
       </Group>
-      <Group px={16} py={16} grow>
+      <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
-          <Group position="apart" pb={16}>
+          <Group position="apart" pb="md">
             <Title order={3}>Stock Transactions</Title>
             <Anchor
               size={22}

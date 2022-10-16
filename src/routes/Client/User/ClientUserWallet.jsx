@@ -70,8 +70,8 @@ const ClientUserWallet = () => {
 
   return (
     <>
-      <Title pl={16}>Wallet</Title>
-      <Group px={16} grow>
+      <Title pl="md">Wallet</Title>
+      <Group px="md" pt="md" grow>
         <Stack>
           <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>

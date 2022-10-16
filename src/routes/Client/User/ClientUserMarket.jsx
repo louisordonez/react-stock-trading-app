@@ -7,8 +7,8 @@ const ClientUserMarket = () => {
 
   return (
     <>
-      <Title pl={16}>Market</Title>
-      <Group px={16} pt={16} grow>
+      <Title pl="md">Market</Title>
+      <Group px="md" pt="md" grow>
         <Stack>
           <Input icon={<TbSearch />} placeholder="Search stock symbol" size="xl" />
           <Title order={3} mb={-16}>

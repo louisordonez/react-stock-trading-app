@@ -64,8 +64,8 @@ const ClientUserTransactions = () => {
 
   return (
     <>
-      <Title pl={16}>Transactions</Title>
-      <Group px={16} py={16} grow>
+      <Title pl="md">Transactions</Title>
+      <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <ScrollArea>
             <Table>

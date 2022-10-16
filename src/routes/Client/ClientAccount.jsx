@@ -41,8 +41,8 @@ const ClientAccount = () => {
 
   return (
     <>
-      <Title pl={16}>Account</Title>
-      <Container size={520} my={16}>
+      <Title pl="md">Account</Title>
+      <Container size={520} my="md">
         <Group grow>
           <Paper p="xl" radius="md" shadow="md" withBorder>
             <Group grow>
