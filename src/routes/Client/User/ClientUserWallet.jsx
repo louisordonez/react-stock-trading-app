@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Title, Text, Paper, Group, ScrollArea, Stack, Button, ThemeIcon, Table } from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
+import ClientWithdrawModal from '../../../components/Client/ClientWithdrawModal';
+import ClientDepositModal from '../../../components/Client/ClientDepositModal';
 
 const ClientUserWallet = () => {
   const walletTransactions = [
@@ -10,6 +13,9 @@ const ClientUserWallet = () => {
     { datetime: '2022-02-05', action: 'Withdraw', amount: 5000.0 },
   ];
 
+  const [withdrawModal, setWithdrawModal] = useState(false);
+  const [depositModal, setDepositModal] = useState(false);
+
   const walletTransactionsRows = walletTransactions.map((column, index) => (
     <tr key={index}>
       <td>{column.datetime}</td>
@@ -17,6 +23,7 @@ const ClientUserWallet = () => {
       <td>{column.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
     </tr>
   ));
+
   return (
     <>
       <Title pl={16}>Wallet</Title>
@@ -42,8 +49,12 @@ const ClientUserWallet = () => {
                 </Group>
               </ScrollArea>
               <Group position="right" mt={16}>
-                <Button color="violet">Withdraw</Button>
-                <Button color="violet">Deposit</Button>
+                <Button color="violet" onClick={() => setWithdrawModal((opened) => !opened)}>
+                  Withdraw
+                </Button>
+                <Button color="violet" onClick={() => setDepositModal((opened) => !opened)}>
+                  Deposit
+                </Button>
               </Group>
             </Paper>
           </Group>
@@ -66,6 +77,8 @@ const ClientUserWallet = () => {
           </Group>
         </Stack>
       </Group>
+      <ClientWithdrawModal opened={withdrawModal} setWithdrawModal={setWithdrawModal} />
+      <ClientDepositModal opened={depositModal} setDepositModal={setDepositModal} />
     </>
   );
 };
