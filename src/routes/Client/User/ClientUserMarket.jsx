@@ -11,9 +11,7 @@ const ClientUserMarket = () => {
       <Group px="md" pt="md" grow>
         <Stack>
           <Input icon={<TbSearch />} placeholder="Search stock symbol" size="xl" />
-          <Title order={3} mb={-16}>
-            Most Active
-          </Title>
+          <Title order={3}>Most Active</Title>
           <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
