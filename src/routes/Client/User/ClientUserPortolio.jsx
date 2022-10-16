@@ -25,7 +25,7 @@ const ClientUserPortolio = () => {
               </Stack>
             </Group>
           </ScrollArea>
-          <Group position="right" mt={16}>
+          <Group position="right">
             <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
               Sell
             </Button>

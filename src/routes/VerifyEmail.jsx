@@ -67,7 +67,7 @@ const VerifyEmail = () => {
           <Text color="dimmed" size="sm" align="center">
             We sent an email to <b>{email}</b>
           </Text>
-          <Text color="dimmed" size="sm" align="center" mt={16}>
+          <Text color="dimmed" size="sm" align="center" mt="md">
             Still can't find the email?
           </Text>
           <Center style={{ marginTop: '16px' }}>

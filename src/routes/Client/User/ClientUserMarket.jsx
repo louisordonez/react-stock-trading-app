@@ -14,7 +14,7 @@ const ClientUserMarket = () => {
           <Title order={3} mb={-16}>
             Most Active
           </Title>
-          <Group grow mt={16}>
+          <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Group>
@@ -32,7 +32,7 @@ const ClientUserMarket = () => {
                   </Stack>
                 </Group>
               </ScrollArea>
-              <Group position="right" mt={16}>
+              <Group position="right">
                 <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
                   Buy
                 </Button>

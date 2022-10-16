@@ -73,7 +73,7 @@ const ClientUserWallet = () => {
       <Title pl={16}>Wallet</Title>
       <Group px={16} grow>
         <Stack>
-          <Group grow mt={16}>
+          <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Group>
@@ -92,7 +92,7 @@ const ClientUserWallet = () => {
                   </Stack>
                 </Group>
               </ScrollArea>
-              <Group position="right" mt={16}>
+              <Group position="right">
                 <Button color="violet" onClick={() => handleModal('Withdraw', 'Withdraw')}>
                   Withdraw
                 </Button>
