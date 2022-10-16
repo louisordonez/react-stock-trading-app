@@ -1,6 +1,9 @@
-import { Title, Text, Paper, Group, ScrollArea, Input, Stack, Button, Image } from '@mantine/core';
+import { useState } from 'react';
+import { Title, Text, Paper, Group, ScrollArea, Input, Stack, Button, Image, Modal, TextInput } from '@mantine/core';
 
 const ClientUserPortolio = () => {
+  const [opened, setOpened] = useState(false);
+
   return (
     <>
       <Title pl={16}>Portfolio</Title>
@@ -23,10 +26,20 @@ const ClientUserPortolio = () => {
             </Group>
           </ScrollArea>
           <Group position="right" mt={16}>
-            <Button color="violet">Sell</Button>
+            <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+              Sell
+            </Button>
           </Group>
         </Paper>
       </Group>
+      <Modal opened={opened} onClose={() => setOpened(false)} title="Sell" centered>
+        <TextInput label="Quantity" />
+        <Group position="right">
+          <Button color="violet" mt={32}>
+            Submit
+          </Button>
+        </Group>
+      </Modal>
     </>
   );
 };
