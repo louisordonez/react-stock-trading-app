@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/stockEndpoints';
+import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
-import { accessTokenCookie } from '../../../services/constants/cookies';
 import { toProperCase } from '../../../services/utilities/toProperCase';
 import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
@@ -35,25 +35,33 @@ const ClientUserDashboard = () => {
     });
   }, []);
 
-  const walletTransactionsRows = walletTransactions.map((column, index) => (
-    <tr key={index}>
-      <td>{convertDatetime(column.created_at)}</td>
-      <td>{toProperCase(column.action_type)}</td>
-      <td>{showCurrency(column.total_amount)}</td>
-    </tr>
-  ));
+  const walletTransactionsRows = walletTransactions.slice(0, 5).map((column, index) => {
+    const { created_at, action_type, total_amount } = column;
 
-  const stockTransactionsRows = stockTransactions.map((column, index) => (
-    <tr key={index}>
-      <td>{convertDatetime(column.created_at)}</td>
-      <td>{toProperCase(column.action_type)}</td>
-      <td>{column.stock_name}</td>
-      <td>{column.stock_symbol}</td>
-      <td>{showCurrency(column.stock_price)}</td>
-      <td>{column.stock_quantity}</td>
-      <td>{showCurrency(column.total_amount)}</td>
-    </tr>
-  ));
+    return (
+      <tr key={index}>
+        <td>{convertDatetime(created_at)}</td>
+        <td>{toProperCase(action_type)}</td>
+        <td>{showCurrency(total_amount)}</td>
+      </tr>
+    );
+  });
+
+  const stockTransactionsRows = stockTransactions.slice(0, 5).map((column, index) => {
+    const { created_at, action_type, stock_name, stock_symbol, stock_price, stock_quantity, total_amount } = column;
+
+    return (
+      <tr key={index}>
+        <td>{convertDatetime(created_at)}</td>
+        <td>{toProperCase(action_type)}</td>
+        <td>{stock_name}</td>
+        <td>{stock_symbol}</td>
+        <td>{showCurrency(stock_price)}</td>
+        <td>{stock_quantity}</td>
+        <td>{showCurrency(total_amount)}</td>
+      </tr>
+    );
+  });
 
   return (
     <>

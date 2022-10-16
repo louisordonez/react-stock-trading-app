@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Title,
   Text,
@@ -13,20 +13,31 @@ import {
   Modal,
 } from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
+import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
+import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
+import { axiosGet } from '../../../services/utilities/axios';
+import { getCookie } from '../../../services/utilities/cookie';
+import { toProperCase } from '../../../services/utilities/toProperCase';
+import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
 const ClientUserWallet = () => {
-  const walletTransactions = [
-    { datetime: '2022-02-01', action: 'Withdraw', amount: 1000.0 },
-    { datetime: '2022-02-02', action: 'Deposit', amount: 2000.0 },
-    { datetime: '2022-02-03', action: 'Deposit', amount: 3000.0 },
-    { datetime: '2022-02-04', action: 'Deposit', amount: 4000.0 },
-    { datetime: '2022-02-05', action: 'Withdraw', amount: 5000.0 },
-  ];
+  const accessToken = getCookie(accessTokenCookie);
+  const headers = { Authorization: accessToken };
+
+  const [balance, setBalance] = useState(0);
+  const [walletTransactions, setWalletTransactions] = useState([]);
 
   const [opened, setOpened] = useState(false);
   const [modalType, setModalType] = useState('');
   const [modalTitle, setModalTitle] = useState('');
+
+  useEffect(() => {
+    axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+      setBalance(showCurrency(response.data.wallet.balance));
+      setWalletTransactions(response.data.transactions);
+    });
+  }, []);
 
   const handleModal = (modal, title) => {
     setOpened((opened) => !opened);
@@ -60,13 +71,17 @@ const ClientUserWallet = () => {
     }
   };
 
-  const walletTransactionsRows = walletTransactions.map((column, index) => (
-    <tr key={index}>
-      <td>{column.datetime}</td>
-      <td>{column.action}</td>
-      <td>{showCurrency(column.amount)}</td>
-    </tr>
-  ));
+  const walletTransactionsRows = walletTransactions.map((column, index) => {
+    const { created_at, action_type, total_amount } = column;
+
+    return (
+      <tr key={index}>
+        <td>{convertDatetime(created_at)}</td>
+        <td>{toProperCase(action_type)}</td>
+        <td>{showCurrency(total_amount)}</td>
+      </tr>
+    );
+  });
 
   return (
     <>
@@ -84,7 +99,7 @@ const ClientUserWallet = () => {
                   </Group>
                   <Stack>
                     <Text weight={700} size={28}>
-                      $10,000.00
+                      {balance}
                       <Text weight={400} size={22} color="dimmed">
                         Balance
                       </Text>
