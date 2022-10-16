@@ -1,4 +1,5 @@
 import { Title, Paper, Group, ScrollArea, Table } from '@mantine/core';
+import { showCurrency } from '../../../services/utilities/showCurrency';
 
 const ClientUserTransactions = () => {
   const stockTransactions = [
@@ -55,9 +56,9 @@ const ClientUserTransactions = () => {
       <td>{column.action}</td>
       <td>{column.stock_name}</td>
       <td>{column.stock_symbol}</td>
-      <td>{column.stock_price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.stock_price)}</td>
       <td>{column.quantity}</td>
-      <td>{column.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.total_amount)}</td>
     </tr>
   ));
 

@@ -3,6 +3,7 @@ import { Title, Text, Paper, Group, ThemeIcon, Table, Anchor, ScrollArea } from 
 import { TbWallet, TbChartBar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
+import { showCurrency } from '../../../services/utilities/showCurrency';
 
 const ClientUserDashboard = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const ClientUserDashboard = () => {
     <tr key={index}>
       <td>{column.datetime}</td>
       <td>{column.action}</td>
-      <td>{column.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.amount)}</td>
     </tr>
   ));
 
@@ -80,9 +81,9 @@ const ClientUserDashboard = () => {
       <td>{column.action}</td>
       <td>{column.stock_name}</td>
       <td>{column.stock_symbol}</td>
-      <td>{column.stock_price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.stock_price)}</td>
       <td>{column.quantity}</td>
-      <td>{column.total_amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.total_amount)}</td>
     </tr>
   ));
 
@@ -96,7 +97,7 @@ const ClientUserDashboard = () => {
               <TbWallet size={28} />
             </ThemeIcon>
             <Text mt={16} weight={700} size={28}>
-              {balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+              {showCurrency(balance)}
             </Text>
             <Text size={22} color="dimmed">
               Balance

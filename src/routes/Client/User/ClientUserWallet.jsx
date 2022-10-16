@@ -13,6 +13,7 @@ import {
   Modal,
 } from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
+import { showCurrency } from '../../../services/utilities/showCurrency';
 
 const ClientUserWallet = () => {
   const walletTransactions = [
@@ -63,7 +64,7 @@ const ClientUserWallet = () => {
     <tr key={index}>
       <td>{column.datetime}</td>
       <td>{column.action}</td>
-      <td>{column.amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</td>
+      <td>{showCurrency(column.amount)}</td>
     </tr>
   ));
 
