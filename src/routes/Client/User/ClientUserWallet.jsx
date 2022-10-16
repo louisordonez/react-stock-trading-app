@@ -1,8 +1,18 @@
 import { useState } from 'react';
-import { Title, Text, Paper, Group, ScrollArea, Stack, Button, ThemeIcon, Table } from '@mantine/core';
+import {
+  Title,
+  Text,
+  Paper,
+  Group,
+  ScrollArea,
+  Stack,
+  Button,
+  ThemeIcon,
+  Table,
+  TextInput,
+  Modal,
+} from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
-import ClientWithdrawModal from '../../../components/Client/ClientWithdrawModal';
-import ClientDepositModal from '../../../components/Client/ClientDepositModal';
 
 const ClientUserWallet = () => {
   const walletTransactions = [
@@ -13,8 +23,41 @@ const ClientUserWallet = () => {
     { datetime: '2022-02-05', action: 'Withdraw', amount: 5000.0 },
   ];
 
-  const [withdrawModal, setWithdrawModal] = useState(false);
-  const [depositModal, setDepositModal] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const [modalType, setModalType] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+
+  const handleModal = (modal, title) => {
+    setOpened((opened) => !opened);
+    setModalType(modal);
+    setModalTitle(title);
+  };
+
+  const showModalContent = () => {
+    if (modalType === 'Withdraw') {
+      return (
+        <>
+          <TextInput label="Amount" />
+          <Group position="right">
+            <Button color="violet" mt={32}>
+              Submit
+            </Button>
+          </Group>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <TextInput label="Amount" />
+          <Group position="right">
+            <Button color="violet" mt={32}>
+              Submit
+            </Button>
+          </Group>
+        </>
+      );
+    }
+  };
 
   const walletTransactionsRows = walletTransactions.map((column, index) => (
     <tr key={index}>
@@ -49,10 +92,10 @@ const ClientUserWallet = () => {
                 </Group>
               </ScrollArea>
               <Group position="right" mt={16}>
-                <Button color="violet" onClick={() => setWithdrawModal((opened) => !opened)}>
+                <Button color="violet" onClick={() => handleModal('Withdraw', 'Withdraw')}>
                   Withdraw
                 </Button>
-                <Button color="violet" onClick={() => setDepositModal((opened) => !opened)}>
+                <Button color="violet" onClick={() => handleModal('Deposit', 'Deposit')}>
                   Deposit
                 </Button>
               </Group>
@@ -77,8 +120,9 @@ const ClientUserWallet = () => {
           </Group>
         </Stack>
       </Group>
-      <ClientWithdrawModal opened={withdrawModal} setWithdrawModal={setWithdrawModal} />
-      <ClientDepositModal opened={depositModal} setDepositModal={setDepositModal} />
+      <Modal opened={opened} onClose={() => setOpened(false)} title={`${modalTitle}`} centered>
+        {showModalContent()}
+      </Modal>
     </>
   );
 };
