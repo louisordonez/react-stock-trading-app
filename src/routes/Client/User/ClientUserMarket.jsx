@@ -1,7 +1,10 @@
-import { Title, Text, Paper, Group, ScrollArea, Input, Stack, Button, Image } from '@mantine/core';
+import { useState } from 'react';
+import { Title, Text, Paper, Group, ScrollArea, Input, Stack, Button, Image, Modal, TextInput } from '@mantine/core';
 import { TbSearch } from 'react-icons/tb';
 
 const ClientUserMarket = () => {
+  const [opened, setOpened] = useState(false);
+
   return (
     <>
       <Title pl={16}>Market</Title>
@@ -30,12 +33,22 @@ const ClientUserMarket = () => {
                 </Group>
               </ScrollArea>
               <Group position="right" mt={16}>
-                <Button color="violet">Buy</Button>
+                <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+                  Buy
+                </Button>
               </Group>
             </Paper>
           </Group>
         </Stack>
       </Group>
+      <Modal opened={opened} onClose={() => setOpened(false)} title="Buy" centered>
+        <TextInput label="Quantity" />
+        <Group position="right">
+          <Button color="violet" mt={32}>
+            Submit
+          </Button>
+        </Group>
+      </Modal>
     </>
   );
 };
