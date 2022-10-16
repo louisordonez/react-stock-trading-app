@@ -1,23 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Title, Text, Paper, Group, ThemeIcon, Table, Anchor, ScrollArea } from '@mantine/core';
 import { TbWallet, TbChartBar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
+import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 import { showCurrency } from '../../../services/utilities/showCurrency';
+import { axiosGet } from '../../../services/utilities/axios';
+import { getCookie } from '../../../services/utilities/cookie';
+import { accessTokenCookie } from '../../../services/constants/cookies';
 
 const ClientUserDashboard = () => {
+  const accessToken = getCookie(accessTokenCookie);
+  const headers = { Authorization: accessToken };
   const navigate = useNavigate();
 
   const [balance, setBalance] = useState(10000);
   const [stocksOwned, setStocksOwned] = useState(10);
+  const [walletTransactions, setWalletTransactions] = useState([]);
 
-  const walletTransactions = [
-    { datetime: '2022-02-01', action: 'Withdraw', amount: 1000.0 },
-    { datetime: '2022-02-02', action: 'Deposit', amount: 2000.0 },
-    { datetime: '2022-02-03', action: 'Deposit', amount: 3000.0 },
-    { datetime: '2022-02-04', action: 'Deposit', amount: 4000.0 },
-    { datetime: '2022-02-05', action: 'Withdraw', amount: 5000.0 },
-  ];
+  useEffect(() => {
+    axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+      setBalance(parseFloat(response.data.wallet.balance));
+      setWalletTransactions(response.data.transactions);
+    });
+  }, []);
 
   const stockTransactions = [
     {
