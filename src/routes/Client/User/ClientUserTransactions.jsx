@@ -1,66 +1,40 @@
+import { useState, useEffect } from 'react';
 import { Title, Paper, Group, ScrollArea, Table } from '@mantine/core';
+import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/stockEndpoints';
+import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
+import { axiosGet } from '../../../services/utilities/axios';
+import { getCookie } from '../../../services/utilities/cookie';
+import { toProperCase } from '../../../services/utilities/toProperCase';
+import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
 const ClientUserTransactions = () => {
-  const stockTransactions = [
-    {
-      datetime: '2022-02-01',
-      action: 'Buy',
-      stock_name: 'Stock 1',
-      stock_symbol: 'ST 1',
-      stock_price: 1000.0,
-      quantity: 1,
-      total_amount: 500.0,
-    },
-    {
-      datetime: '2022-02-02',
-      action: 'Sell',
-      stock_name: 'Stock 2',
-      stock_symbol: 'ST 2',
-      stock_price: 2000.0,
-      quantity: 2,
-      total_amount: 1000.0,
-    },
-    {
-      datetime: '2022-02-03',
-      action: 'Buy',
-      stock_name: 'Stock 3',
-      stock_symbol: 'ST 3',
-      stock_price: 3000.0,
-      quantity: 3,
-      total_amount: 1500.0,
-    },
-    {
-      datetime: '2022-02-04',
-      action: 'Sell',
-      stock_name: 'Stock 4',
-      stock_symbol: 'ST 4',
-      stock_price: 4000.0,
-      quantity: 4,
-      total_amount: 2000.0,
-    },
-    {
-      datetime: '2022-02-05',
-      action: 'Buy',
-      stock_name: 'Stock 5',
-      stock_symbol: 'ST 5',
-      stock_price: 5000.0,
-      quantity: 5,
-      total_amount: 2500.0,
-    },
-  ];
+  const accessToken = getCookie(accessTokenCookie);
+  const headers = { Authorization: accessToken };
 
-  const stockTransactionsRows = stockTransactions.map((column, index) => (
-    <tr key={index}>
-      <td>{column.datetime}</td>
-      <td>{column.action}</td>
-      <td>{column.stock_name}</td>
-      <td>{column.stock_symbol}</td>
-      <td>{showCurrency(column.stock_price)}</td>
-      <td>{column.quantity}</td>
-      <td>{showCurrency(column.total_amount)}</td>
-    </tr>
-  ));
+  const [stockTransactions, setStockTransactions] = useState([]);
+
+  useEffect(() => {
+    axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      setStockTransactions(response.data);
+    });
+  }, []);
+
+  const stockTransactionsRows = stockTransactions.map((column, index) => {
+    const { created_at, action_type, stock_name, stock_symbol, stock_price, stock_quantity, total_amount } = column;
+
+    return (
+      <tr key={index}>
+        <td>{convertDatetime(created_at)}</td>
+        <td>{toProperCase(action_type)}</td>
+        <td>{stock_name}</td>
+        <td>{stock_symbol}</td>
+        <td>{showCurrency(stock_price)}</td>
+        <td>{stock_quantity}</td>
+        <td>{showCurrency(total_amount)}</td>
+      </tr>
+    );
+  });
 
   return (
     <>
