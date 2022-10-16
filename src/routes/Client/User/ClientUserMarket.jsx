@@ -10,7 +10,7 @@ const ClientUserMarket = () => {
       <Title pl="md">Market</Title>
       <Group px="md" pt="md" grow>
         <Stack>
-          <Input icon={<TbSearch />} placeholder="Search stock symbol" size="xl" />
+          <Input icon={<TbSearch />} placeholder="Search by stock symbol" size="xl" />
           <Title order={3}>Most Active</Title>
           <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
