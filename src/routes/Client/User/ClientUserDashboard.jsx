@@ -96,7 +96,7 @@ const ClientUserDashboard = () => {
             <ThemeIcon radius={48} size={48} color="violet">
               <TbWallet size={28} />
             </ThemeIcon>
-            <Text weight={700} size={28}>
+            <Text weight={700} size={28} mt="md">
               {showCurrency(balance)}
             </Text>
             <Text size={22} color="dimmed">
@@ -109,7 +109,7 @@ const ClientUserDashboard = () => {
             <ThemeIcon radius={48} size={48} color="violet">
               <TbChartBar size={28} />
             </ThemeIcon>
-            <Text weight={700} size={28}>
+            <Text weight={700} size={28} mt="md">
               {stocksOwned}
             </Text>
 
