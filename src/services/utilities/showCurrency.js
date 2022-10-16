@@ -1,1 +1,2 @@
-export const showCurrency = (amount) => amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+export const showCurrency = (amount) =>
+  parseFloat(amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' });

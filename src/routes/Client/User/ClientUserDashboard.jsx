@@ -4,91 +4,53 @@ import { TbWallet, TbChartBar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
+import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/stockEndpoints';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
 import { accessTokenCookie } from '../../../services/constants/cookies';
+import { toProperCase } from '../../../services/utilities/toProperCase';
+import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
 const ClientUserDashboard = () => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = { Authorization: accessToken };
   const navigate = useNavigate();
 
-  const [balance, setBalance] = useState(10000);
-  const [stocksOwned, setStocksOwned] = useState(10);
+  const [balance, setBalance] = useState(0);
+  const [stocksOwned, setStocksOwned] = useState(0);
   const [walletTransactions, setWalletTransactions] = useState([]);
+  const [stockTransactions, setStockTransactions] = useState([]);
 
   useEffect(() => {
     axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
-      setBalance(parseFloat(response.data.wallet.balance));
+      setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
+    });
+    axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      const stocksQuantity = response.data.map((array) => parseFloat(array.stock_quantity)).reduce((x, y) => x + y);
+
+      setStocksOwned(stocksQuantity.toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 }));
+      setStockTransactions(response.data);
     });
   }, []);
 
-  const stockTransactions = [
-    {
-      datetime: '2022-02-01',
-      action: 'Buy',
-      stock_name: 'Stock 1',
-      stock_symbol: 'ST 1',
-      stock_price: 1000.0,
-      quantity: 1,
-      total_amount: 500.0,
-    },
-    {
-      datetime: '2022-02-02',
-      action: 'Sell',
-      stock_name: 'Stock 2',
-      stock_symbol: 'ST 2',
-      stock_price: 2000.0,
-      quantity: 2,
-      total_amount: 1000.0,
-    },
-    {
-      datetime: '2022-02-03',
-      action: 'Buy',
-      stock_name: 'Stock 3',
-      stock_symbol: 'ST 3',
-      stock_price: 3000.0,
-      quantity: 3,
-      total_amount: 1500.0,
-    },
-    {
-      datetime: '2022-02-04',
-      action: 'Sell',
-      stock_name: 'Stock 4',
-      stock_symbol: 'ST 4',
-      stock_price: 4000.0,
-      quantity: 4,
-      total_amount: 2000.0,
-    },
-    {
-      datetime: '2022-02-05',
-      action: 'Buy',
-      stock_name: 'Stock 5',
-      stock_symbol: 'ST 5',
-      stock_price: 5000.0,
-      quantity: 5,
-      total_amount: 2500.0,
-    },
-  ];
-
   const walletTransactionsRows = walletTransactions.map((column, index) => (
     <tr key={index}>
-      <td>{column.datetime}</td>
-      <td>{column.action}</td>
-      <td>{showCurrency(column.amount)}</td>
+      <td>{convertDatetime(column.created_at)}</td>
+      <td>{toProperCase(column.action_type)}</td>
+      <td>{showCurrency(column.total_amount)}</td>
     </tr>
   ));
 
   const stockTransactionsRows = stockTransactions.map((column, index) => (
     <tr key={index}>
-      <td>{column.datetime}</td>
-      <td>{column.action}</td>
+      <td>{convertDatetime(column.created_at)}</td>
+      <td>{toProperCase(column.action_type)}</td>
       <td>{column.stock_name}</td>
       <td>{column.stock_symbol}</td>
       <td>{showCurrency(column.stock_price)}</td>
-      <td>{column.quantity}</td>
+      <td>{column.stock_quantity}</td>
       <td>{showCurrency(column.total_amount)}</td>
     </tr>
   ));
@@ -103,7 +65,7 @@ const ClientUserDashboard = () => {
               <TbWallet size={28} />
             </ThemeIcon>
             <Text weight={700} size={28} mt="md">
-              {showCurrency(balance)}
+              {balance}
             </Text>
             <Text size={22} color="dimmed">
               Balance
