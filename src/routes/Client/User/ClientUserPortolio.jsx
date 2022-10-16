@@ -22,6 +22,9 @@ const ClientUserPortolio = () => {
               </Stack>
             </Group>
           </ScrollArea>
+          <Group position="right" mt={16}>
+            <Button color="violet">Sell</Button>
+          </Group>
         </Paper>
       </Group>
     </>

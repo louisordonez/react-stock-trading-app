@@ -31,7 +31,6 @@ const ClientUserMarket = () => {
               </ScrollArea>
               <Group position="right" mt={16}>
                 <Button color="violet">Buy</Button>
-                <Button color="violet">Sell</Button>
               </Group>
             </Paper>
           </Group>
