@@ -126,7 +126,7 @@ const ClientAccount = () => {
             <Group grow>
               <PasswordInput
                 label="Current Password"
-                description="Leave blank if you don't want to change the current password"
+                description="Leave blank if you don't want to change the password"
                 mt="md"
                 error={currentPasswordError}
                 value={currentPassword}
