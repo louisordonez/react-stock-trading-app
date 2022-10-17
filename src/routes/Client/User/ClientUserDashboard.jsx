@@ -62,14 +62,14 @@ const ClientUserDashboard = () => {
   });
 
   const stockTransactionsRows = stockTransactions.slice(0, 5).map((column, index) => {
-    const { created_at, action_type, stock_name, stock_symbol, stock_price, stock_quantity, total_amount } = column;
+    const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
 
     return (
       <tr key={index}>
         <td>{convertDatetime(created_at)}</td>
         <td>{toProperCase(action_type)}</td>
-        <td>{stock_name}</td>
         <td>{stock_symbol}</td>
+        <td>{stock_name}</td>
         <td>{showCurrency(stock_price)}</td>
         <td>{stock_quantity}</td>
         <td>{showCurrency(total_amount)}</td>
@@ -165,8 +165,8 @@ const ClientUserDashboard = () => {
                 <tr>
                   <th>Datetime</th>
                   <th>Action</th>
-                  <th>Name</th>
                   <th>Symbol</th>
+                  <th>Name</th>
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Amount</th>
