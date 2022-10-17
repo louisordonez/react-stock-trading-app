@@ -25,7 +25,9 @@ const ClientAccount = ({ setVisible }) => {
   useEffect(() => {
     const headers = { Authorization: `${accessToken}` };
 
+    setVisible(true);
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+      setVisible(false);
       setEmail(response.data.email);
       setFirstName(response.data.first_name);
       setLastName(response.data.last_name);
@@ -64,8 +66,10 @@ const ClientAccount = ({ setVisible }) => {
         resetForm();
       } else {
         resetErrors();
+        setVisible(true);
         axiosPost(SIGN_IN_USER_ENDPOINT, userInfo).then((response) => {
           if (response.status !== 200) {
+            setVisible(false);
             showErrorNotification('Account was not updated. Invalid current password.');
             setCurrentPasswordError(true);
             resetForm();
@@ -73,6 +77,8 @@ const ClientAccount = ({ setVisible }) => {
             formData.append('password', password);
 
             axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
+              setVisible(false);
+
               if (response.status === 200) {
                 showSuccessNotification('Account has been updated!');
                 resetErrors();
@@ -90,6 +96,7 @@ const ClientAccount = ({ setVisible }) => {
       formData.append('last_name', lastName);
 
       axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
+        setVisible(false);
         response.status === 200
           ? showSuccessNotification('Account has been updated!')
           : showErrorNotification('Account was not updated.');
@@ -102,7 +109,17 @@ const ClientAccount = ({ setVisible }) => {
       <Title pl="md">Account</Title>
       <Container size={520} my="md">
         <Group grow>
-          <Paper p="xl" radius="md" shadow="md" withBorder>
+          <Paper
+            p="xl"
+            radius="md"
+            shadow="md"
+            withBorder
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleSubmit();
+              }
+            }}
+          >
             <Group grow>
               <TextInput label="First name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
               <TextInput label="Last name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
