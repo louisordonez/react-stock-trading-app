@@ -111,6 +111,7 @@ const ClientUserWallet = () => {
         <>
           <TextInput
             label="Amount"
+            type="number"
             error={error}
             onChange={(event) => setAmount(event.target.value)}
             onKeyDown={(event) => {
