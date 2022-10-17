@@ -13,9 +13,9 @@ const SignUp = () => {
 
   const theme = useMantineTheme();
   const navigate = useNavigate();
+  const headers = { 'Content-Type': 'multipart/form-data' };
 
   const handleSignUpSubmit = (signUpInfo) => {
-    const headers = { 'Content-Type': 'multipart/form-data' };
     const formData = new FormData();
 
     Object.entries(signUpInfo).forEach(([key, value]) => {
