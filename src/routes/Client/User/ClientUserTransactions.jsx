@@ -15,7 +15,9 @@ const ClientUserTransactions = ({ setVisible }) => {
   const [stockTransactions, setStockTransactions] = useState([]);
 
   useEffect(() => {
+    setVisible(true);
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      setVisible(false);
       setStockTransactions(response.data);
     });
   }, []);
