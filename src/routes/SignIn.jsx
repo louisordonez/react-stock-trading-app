@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container, LoadingOverlay } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
 import { showErrorNotification } from '../components/Notification';
@@ -16,9 +16,13 @@ const SignIn = () => {
   const theme = useMantineTheme();
 
   const [isError, setIsError] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const handleSignInSubmit = (signInInfo) => {
+    setVisible(true);
     axiosPost(SIGN_IN_USER_ENDPOINT, signInInfo).then((response) => {
+      setVisible(false);
+
       if (response.status === 200) {
         setIsError(false);
         setCookie(accessTokenCookie, response.data[accessTokenCookie], response.data.expiration);
@@ -45,6 +49,7 @@ const SignIn = () => {
       }}
       header={<LandingHeader />}
     >
+      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       <Container size={420} my={40}>
         <Title
           align="center"

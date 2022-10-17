@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container } from '@mantine/core';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container, LoadingOverlay } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
@@ -15,6 +16,8 @@ const SignUp = () => {
   const navigate = useNavigate();
   const headers = { 'Content-Type': 'multipart/form-data' };
 
+  const [visible, setVisible] = useState(false);
+
   const handleSignUpSubmit = (signUpInfo) => {
     const formData = new FormData();
 
@@ -22,7 +25,9 @@ const SignUp = () => {
       formData.append(key, value);
     });
 
+    setVisible(true);
     axiosPost(USERS_ENDPOINT, formData, headers).then(() => {
+      setVisible(false);
       showSuccessNotification('An email has been sent to verify your account!');
       navigate(`${SIGN_IN_LINK}`);
     });
@@ -38,6 +43,7 @@ const SignUp = () => {
       }}
       header={<LandingHeader />}
     >
+      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       <Container size={420} my={40}>
         <Title
           align="center"
