@@ -3,7 +3,7 @@ import { showErrorNotification } from '../../components/Notification';
 export const isInvalidPassword = (password, confirmPassword) => {
   const passwordMinLength = 6;
 
-  if (password.length === passwordMinLength) {
+  if (password.length >= passwordMinLength) {
     if (password !== confirmPassword) {
       showErrorNotification('Password and Confirm Password do not match.');
       return true;
