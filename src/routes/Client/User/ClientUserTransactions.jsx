@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Title, Paper, Group, ScrollArea, Table, Text } from '@mantine/core';
-import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/stockEndpoints';
+import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet } from '../../../services/utilities/axios';
