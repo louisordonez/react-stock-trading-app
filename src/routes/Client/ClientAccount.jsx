@@ -54,37 +54,36 @@ const ClientAccount = () => {
     const formData = new FormData();
 
     if (password !== '') {
-      if (password.length >= 6) {
-        if (password === confirmPassword) {
-          axiosPost(SIGN_IN_USER_ENDPOINT, userInfo).then((response) => {
-            if (response.status === 200) {
-              formData.append('password', password);
-
-              axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
-                if (response.status === 200) {
-                  showSuccessNotification('Account has been updated!');
-                  resetErrors();
-                  resetForm();
-                } else {
-                  showErrorNotification('Account was not updated.');
-                  resetForm();
-                }
-              });
-            } else {
-              showErrorNotification('Account was not updated. Invalid current password.');
-              setCurrentPasswordError(true);
-              resetForm();
-            }
-          });
-        } else {
-          showErrorNotification('Account was not updated. Password and Confirm Password does not match.');
-          setPasswordError(true);
-          resetForm();
-        }
-      } else {
+      if (password.length < 6) {
         showErrorNotification('Account was not updated. Password is too short (minimum is 6 characters).');
         setPasswordError(true);
         resetForm();
+      } else if (password !== confirmPassword) {
+        showErrorNotification('Account was not updated. Password and Confirm Password does not match.');
+        setPasswordError(true);
+        resetForm();
+      } else {
+        resetErrors();
+        axiosPost(SIGN_IN_USER_ENDPOINT, userInfo).then((response) => {
+          if (response.status !== 200) {
+            showErrorNotification('Account was not updated. Invalid current password.');
+            setCurrentPasswordError(true);
+            resetForm();
+          } else {
+            formData.append('password', password);
+
+            axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
+              if (response.status === 200) {
+                showSuccessNotification('Account has been updated!');
+                resetErrors();
+                resetForm();
+              } else {
+                showErrorNotification('Account was not updated.');
+                resetForm();
+              }
+            });
+          }
+        });
       }
     } else {
       formData.append('first_name', firstName);
