@@ -45,6 +45,19 @@ export const axiosPut = async (endpoint, body, headers) => {
     .catch((error) => error);
 };
 
+export const axiosPatch = async (endpoint, body, headers) => {
+  return StockTradingRef.patch(
+    endpoint,
+    body,
+    {
+      headers,
+    },
+    axiosTimeout
+  )
+    .then((response) => response)
+    .catch((error) => error);
+};
+
 export const axiosDelete = async (endpoint, id) => {
   return StockTradingRef.delete(`${endpoint}${id}`, axiosTimeout)
     .then((response) => response)
