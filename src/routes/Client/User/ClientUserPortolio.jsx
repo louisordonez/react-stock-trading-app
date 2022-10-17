@@ -33,7 +33,9 @@ const ClientUserPortolio = ({ setVisible }) => {
   const [stockOwned, setStockOwned] = useState(0);
 
   useEffect(() => {
+    setVisible(true);
     axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
+      setVisible(false);
       setPortfolio(response.data);
     });
   }, []);
@@ -66,7 +68,9 @@ const ClientUserPortolio = ({ setVisible }) => {
   };
 
   const getStockInfo = (symbol) => {
+    setVisible(true);
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
+      setVisible(false);
       setStockLogo(response.data.logo.url);
       setStockSymbol(response.data.company.symbol);
       setStockName(response.data.company.company_name);
