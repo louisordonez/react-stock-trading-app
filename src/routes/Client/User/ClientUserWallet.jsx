@@ -53,7 +53,7 @@ const ClientUserWallet = () => {
 
   const handleDeposit = () => {
     if (parseFloat(amount) <= 0 || amount === '') {
-      showErrorNotification('Amount must be greater than 0.');
+      showErrorNotification('Invalid amount.');
       setError(true);
     } else {
       const formData = new FormData();
