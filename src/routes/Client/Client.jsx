@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AppShell, useMantineTheme } from '@mantine/core';
+import { AppShell, useMantineTheme, LoadingOverlay } from '@mantine/core';
 import ClientHeader from '../../components/Client/ClientHeader';
 import ClientNavbar from '../../components/Client/ClientNavbar';
 import {
@@ -32,6 +32,7 @@ const Client = () => {
 
   const [opened, setOpened] = useState(false);
   const [userRole, setUserRole] = useState('');
+  const [visible, setVisible] = useState(false);
 
   const handleOpened = () => {
     setOpened((opened) => !opened);
@@ -48,19 +49,19 @@ const Client = () => {
   const useDisplayContent = () => {
     switch (location.pathname) {
       case CLIENT_DASHBOARD_LINK:
-        return userRole === 'admin' ? <ClientAdminDashboard /> : <ClientUserDashboard />;
+        return userRole === 'admin' ? <ClientAdminDashboard /> : <ClientUserDashboard setVisible={setVisible} />;
       case CLIENT_MARKET_LINK:
-        return <ClientUserMarket />;
+        return <ClientUserMarket setVisible={setVisible} />;
       case CLIENT_WALLET_LINK:
-        return <ClientUserWallet />;
+        return <ClientUserWallet setVisible={setVisible} />;
       case CLIENT_PORTFOLIO_LINK:
-        return <ClientUserPortolio />;
+        return <ClientUserPortolio setVisible={setVisible} />;
       case CLIENT_USERS_LINK:
         return <ClientAdminUsers />;
       case CLIENT_TRANSACTIONS_LINK:
-        return userRole === 'admin' ? <ClientAdminTransactions /> : <ClientUserTransactions />;
+        return userRole === 'admin' ? <ClientAdminTransactions /> : <ClientUserTransactions setVisible={setVisible} />;
       case CLIENT_ACCOUNT_LINK:
-        return <ClientAccount />;
+        return <ClientAccount setVisible={setVisible} />;
     }
   };
 
@@ -76,6 +77,7 @@ const Client = () => {
       navbar={<ClientNavbar opened={opened} onOpened={handleOpened} userRole={userRole} />}
       header={<ClientHeader opened={opened} onOpened={handleOpened} theme={theme} />}
     >
+      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       {useDisplayContent()}
     </AppShell>
   );

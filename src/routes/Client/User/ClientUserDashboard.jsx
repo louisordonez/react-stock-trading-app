@@ -12,7 +12,7 @@ import { getCookie } from '../../../services/utilities/cookie';
 import { toProperCase } from '../../../services/utilities/toProperCase';
 import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
-const ClientUserDashboard = () => {
+const ClientUserDashboard = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = { Authorization: accessToken };
   const navigate = useNavigate();
@@ -23,7 +23,9 @@ const ClientUserDashboard = () => {
   const [stockTransactions, setStockTransactions] = useState([]);
 
   useEffect(() => {
+    setVisible(true);
     axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+      setVisible(false);
       setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
     });

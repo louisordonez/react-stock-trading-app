@@ -26,7 +26,7 @@ import { toProperCase } from '../../../services/utilities/toProperCase';
 import { convertDatetime } from '../../../services/utilities/convertDatetime';
 import { showSuccessNotification, showErrorNotification } from '../../../components/Notification';
 
-const ClientUserWallet = () => {
+const ClientUserWallet = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = {
     'Content-Type': 'multipart/form-data',
@@ -43,7 +43,9 @@ const ClientUserWallet = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    setVisible(true);
     axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+      setVisible(false);
       setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
     });
@@ -72,25 +74,31 @@ const ClientUserWallet = () => {
       formData.append(totalAmountKey, amount);
 
       if (type.toLowerCase() === 'withdraw') {
+        setVisible(true);
         axiosPost(WITHDRAW_WALLET_ENDPOINT, formData, headers).then((response) => {
           if (response.status === 200) {
+            setVisible(false);
             showSuccessNotification('Money has been withdrew from your account!');
             setBalance(showCurrency(response.data.wallet.balance));
             setOpened(false);
             resetForm();
           } else {
+            setVisible(false);
             showErrorNotification('Withdraw failed.');
             setError(true);
           }
         });
       } else if (type.toLowerCase() === 'deposit') {
+        setVisible(true);
         axiosPost(DEPOSIT_WALLET_ENDPOINT, formData, headers).then((response) => {
           if (response.status === 200) {
+            setVisible(false);
             showSuccessNotification('Money has been deposited into your account!');
             setBalance(showCurrency(response.data.wallet.balance));
             setOpened(false);
             resetForm();
           } else {
+            setVisible(false);
             showErrorNotification('Deposit failed.');
             setError(true);
           }

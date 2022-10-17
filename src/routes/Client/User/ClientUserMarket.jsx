@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Title, Text, Paper, Group, ScrollArea, Input, Stack, Button, Image, Modal, TextInput } from '@mantine/core';
 import { TbSearch } from 'react-icons/tb';
 
-const ClientUserMarket = () => {
+const ClientUserMarket = ({ setVisible }) => {
   const [opened, setOpened] = useState(false);
 
   return (

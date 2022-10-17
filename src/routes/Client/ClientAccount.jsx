@@ -10,7 +10,7 @@ import {
 import { axiosGet, axiosPost, axiosPatch } from '../../services/utilities/axios';
 import { showErrorNotification, showSuccessNotification } from '../../components/Notification';
 
-const ClientAccount = () => {
+const ClientAccount = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
 
   const [email, setEmail] = useState('');

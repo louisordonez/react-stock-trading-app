@@ -8,7 +8,7 @@ import { getCookie } from '../../../services/utilities/cookie';
 import { toProperCase } from '../../../services/utilities/toProperCase';
 import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
-const ClientUserTransactions = () => {
+const ClientUserTransactions = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = { Authorization: accessToken };
 

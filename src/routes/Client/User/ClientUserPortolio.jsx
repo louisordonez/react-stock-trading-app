@@ -20,7 +20,7 @@ import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
 
-const ClientUserPortolio = () => {
+const ClientUserPortolio = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = { Authorization: accessToken };
 
