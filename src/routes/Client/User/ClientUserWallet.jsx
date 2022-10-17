@@ -20,6 +20,7 @@ import { axiosGet } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
 import { toProperCase } from '../../../services/utilities/toProperCase';
 import { convertDatetime } from '../../../services/utilities/convertDatetime';
+import { DEPOSIT_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 
 const ClientUserWallet = () => {
   const accessToken = getCookie(accessTokenCookie);
@@ -38,6 +39,8 @@ const ClientUserWallet = () => {
       setWalletTransactions(response.data.transactions);
     });
   }, []);
+
+  const handleDeposit = () => {};
 
   const handleModal = (modal, title) => {
     setOpened((opened) => !opened);

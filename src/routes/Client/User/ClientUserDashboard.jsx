@@ -30,7 +30,12 @@ const ClientUserDashboard = () => {
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
       const stocksQuantity = response.data.map((array) => parseFloat(array.stock_quantity)).reduce((x, y) => x + y);
 
-      setStocksOwned(stocksQuantity.toLocaleString('en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 }));
+      setStocksOwned(
+        stocksQuantity.toLocaleString('en-US', {
+          maximumFractionDigits: 1,
+          minimumFractionDigits: 1,
+        })
+      );
       setStockTransactions(response.data);
     });
   }, []);

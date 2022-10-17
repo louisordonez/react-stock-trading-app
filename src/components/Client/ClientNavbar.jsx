@@ -112,7 +112,9 @@ const ClientNavbar = ({ opened, onOpened, userRole }) => {
 
   const links = data.map((item) => (
     <a
-      className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+      className={cx(classes.link, {
+        [classes.linkActive]: item.label === active,
+      })}
       key={item.label}
       onClick={() => {
         setActive(item.label);
@@ -130,7 +132,9 @@ const ClientNavbar = ({ opened, onOpened, userRole }) => {
       <Navbar.Section grow>{links}</Navbar.Section>
       <Navbar.Section className={classes.footer}>
         <a
-          className={cx(classes.link, { [classes.linkActive]: 'Account' === active })}
+          className={cx(classes.link, {
+            [classes.linkActive]: 'Account' === active,
+          })}
           onClick={() => {
             setActive('Account');
             navigate(CLIENT_ACCOUNT_LINK);
