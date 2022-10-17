@@ -12,7 +12,107 @@ const ClientUserMarket = () => {
         <Stack>
           <Input icon={<TbSearch />} placeholder="Search by stock symbol" size="xl" />
           <Title order={3}>Most Active</Title>
-          <Group grow>
+          <Group grow mb="md">
+            <Paper p="xl" radius="md" shadow="md" withBorder>
+              <ScrollArea>
+                <Group>
+                  <div style={{ width: 180 }}>
+                    <Image
+                      radius="md"
+                      src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                    />
+                  </div>
+                  <Stack>
+                    <Text weight={700}>MSFT</Text>
+                    <Text>Microsoft</Text>
+                    <Text>$100.00</Text>
+                    <Text>Owned: 10</Text>
+                  </Stack>
+                </Group>
+              </ScrollArea>
+              <Group position="right">
+                <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+                  Buy
+                </Button>
+              </Group>
+            </Paper>
+          </Group>
+          <Group grow mb="md">
+            <Paper p="xl" radius="md" shadow="md" withBorder>
+              <ScrollArea>
+                <Group>
+                  <div style={{ width: 180 }}>
+                    <Image
+                      radius="md"
+                      src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                    />
+                  </div>
+                  <Stack>
+                    <Text weight={700}>MSFT</Text>
+                    <Text>Microsoft</Text>
+                    <Text>$100.00</Text>
+                    <Text>Owned: 10</Text>
+                  </Stack>
+                </Group>
+              </ScrollArea>
+              <Group position="right">
+                <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+                  Buy
+                </Button>
+              </Group>
+            </Paper>
+          </Group>
+          <Group grow mb="md">
+            <Paper p="xl" radius="md" shadow="md" withBorder>
+              <ScrollArea>
+                <Group>
+                  <div style={{ width: 180 }}>
+                    <Image
+                      radius="md"
+                      src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                    />
+                  </div>
+                  <Stack>
+                    <Text weight={700}>MSFT</Text>
+                    <Text>Microsoft</Text>
+                    <Text>$100.00</Text>
+                    <Text>Owned: 10</Text>
+                  </Stack>
+                </Group>
+              </ScrollArea>
+              <Group position="right">
+                <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+                  Buy
+                </Button>
+              </Group>
+            </Paper>
+          </Group>
+          <Group grow mb="md">
+            <Paper p="xl" radius="md" shadow="md" withBorder>
+              <ScrollArea>
+                <Group>
+                  <div style={{ width: 180 }}>
+                    <Image
+                      radius="md"
+                      src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+                    />
+                  </div>
+                  <Stack>
+                    <Text weight={700}>MSFT</Text>
+                    <Text>Microsoft</Text>
+                    <Text>$100.00</Text>
+                    <Text>Owned: 10</Text>
+                  </Stack>
+                </Group>
+              </ScrollArea>
+              <Group position="right">
+                <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+                  Buy
+                </Button>
+              </Group>
+            </Paper>
+          </Group>
+          <Group grow mb="md">
             <Paper p="xl" radius="md" shadow="md" withBorder>
               <ScrollArea>
                 <Group>

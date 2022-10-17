@@ -28,14 +28,23 @@ const ClientUserDashboard = () => {
       setWalletTransactions(response.data.transactions);
     });
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
-      const stocksQuantity = response.data.map((array) => parseFloat(array.stock_quantity)).reduce((x, y) => x + y);
+      const stocksQuantity = () => {
+        if (response.data.length === 0) {
+          setStocksOwned(0);
+        } else {
+          setStocksOwned(
+            response.data
+              .map((array) => parseFloat(array.stock_quantity))
+              .reduce((x, y) => x + y)
+              .toLocaleString('en-US', {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              })
+          );
+        }
+      };
 
-      setStocksOwned(
-        stocksQuantity.toLocaleString('en-US', {
-          maximumFractionDigits: 1,
-          minimumFractionDigits: 1,
-        })
-      );
+      stocksQuantity();
       setStockTransactions(response.data);
     });
   }, []);
@@ -122,7 +131,17 @@ const ClientUserDashboard = () => {
                   <th>Amount</th>
                 </tr>
               </thead>
-              <tbody>{walletTransactionsRows}</tbody>
+              <tbody>
+                {walletTransactionsRows.length > 0 ? (
+                  walletTransactionsRows
+                ) : (
+                  <tr>
+                    <td colSpan={3}>
+                      <Text align="center">No transactions</Text>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </Table>
           </ScrollArea>
         </Paper>
@@ -153,7 +172,17 @@ const ClientUserDashboard = () => {
                   <th>Amount</th>
                 </tr>
               </thead>
-              <tbody>{stockTransactionsRows}</tbody>
+              <tbody>
+                {stockTransactionsRows.length > 0 ? (
+                  stockTransactionsRows
+                ) : (
+                  <tr>
+                    <td colSpan={7}>
+                      <Text align="center">No transactions</Text>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </Table>
           </ScrollArea>
         </Paper>

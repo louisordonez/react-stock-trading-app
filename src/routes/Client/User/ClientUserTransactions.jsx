@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Title, Paper, Group, ScrollArea, Table } from '@mantine/core';
+import { Title, Paper, Group, ScrollArea, Table, Text } from '@mantine/core';
 import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/stockEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
@@ -54,7 +54,17 @@ const ClientUserTransactions = () => {
                   <th>Amount</th>
                 </tr>
               </thead>
-              <tbody>{stockTransactionsRows}</tbody>
+              <tbody>
+                {stockTransactionsRows.length > 0 ? (
+                  stockTransactionsRows
+                ) : (
+                  <tr>
+                    <td colSpan={7}>
+                      <Text align="center">No transactions</Text>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </Table>
           </ScrollArea>
         </Paper>

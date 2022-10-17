@@ -7,7 +7,7 @@ const ClientUserPortolio = () => {
   return (
     <>
       <Title pl="md">Portfolio</Title>
-      <Group px="md" pt="md" grow>
+      <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <ScrollArea>
             <Group>

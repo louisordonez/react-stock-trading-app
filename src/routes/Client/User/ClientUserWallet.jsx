@@ -13,7 +13,11 @@ import {
   Modal,
 } from '@mantine/core';
 import { TbWallet } from 'react-icons/tb';
-import { SHOW_WALLET_ENDPOINT, DEPOSIT_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
+import {
+  SHOW_WALLET_ENDPOINT,
+  WITHDRAW_WALLET_ENDPOINT,
+  DEPOSIT_WALLET_ENDPOINT,
+} from '../../../services/constants/walletEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet, axiosPost } from '../../../services/utilities/axios';
@@ -30,7 +34,6 @@ const ClientUserWallet = () => {
   };
   const totalAmountKey = 'total_amount';
 
-  const [wallet, setWallet] = useState({});
   const [balance, setBalance] = useState(0);
   const [walletTransactions, setWalletTransactions] = useState([]);
   const [opened, setOpened] = useState(false);
@@ -51,25 +54,46 @@ const ClientUserWallet = () => {
     setError(false);
   };
 
-  const handleDeposit = () => {
+  const checkAmount = () => {
     if (parseFloat(amount) <= 0 || amount === '') {
       showErrorNotification('Invalid amount.');
       setError(true);
+
+      return false;
     } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = (type) => {
+    if (checkAmount()) {
       const formData = new FormData();
 
       formData.append(totalAmountKey, amount);
 
-      axiosPost(DEPOSIT_WALLET_ENDPOINT, formData, headers).then((response) => {
-        if (response.status === 200) {
-          showSuccessNotification('Money has been deposited into your account!');
-          setBalance(showCurrency(response.data.wallet.balance));
-          setOpened(false);
-          resetForm();
-        } else {
-          showErrorNotification('Deposit failed.');
-        }
-      });
+      if (type.toLowerCase() === 'withdraw') {
+        axiosPost(WITHDRAW_WALLET_ENDPOINT, formData, headers).then((response) => {
+          if (response.status === 200) {
+            showSuccessNotification('Money has been withdrew from your account!');
+            setBalance(showCurrency(response.data.wallet.balance));
+            setOpened(false);
+            resetForm();
+          } else {
+            showErrorNotification('Withdraw failed.');
+          }
+        });
+      } else if (type.toLowerCase() === 'deposit') {
+        axiosPost(DEPOSIT_WALLET_ENDPOINT, formData, headers).then((response) => {
+          if (response.status === 200) {
+            showSuccessNotification('Money has been deposited into your account!');
+            setBalance(showCurrency(response.data.wallet.balance));
+            setOpened(false);
+            resetForm();
+          } else {
+            showErrorNotification('Deposit failed.');
+          }
+        });
+      }
     }
   };
 
@@ -80,18 +104,29 @@ const ClientUserWallet = () => {
   };
 
   const showModalContent = () => {
-    if (modalType === 'Withdraw') {
+    const modalTypeLowerCase = modalType.toLowerCase();
+
+    if (modalTypeLowerCase === 'withdraw') {
       return (
         <>
-          <TextInput label="Amount" />
+          <TextInput
+            label="Amount"
+            error={error}
+            onChange={(event) => setAmount(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleSubmit('withdraw');
+              }
+            }}
+          />
           <Group position="right">
-            <Button color="violet" mt={32}>
+            <Button color="violet" mt={32} onClick={() => handleSubmit('withdraw')}>
               Submit
             </Button>
           </Group>
         </>
       );
-    } else {
+    } else if (modalTypeLowerCase === 'deposit') {
       return (
         <>
           <TextInput
@@ -102,12 +137,12 @@ const ClientUserWallet = () => {
             onChange={(event) => setAmount(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
-                handleDeposit();
+                handleSubmit('deposit');
               }
             }}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={handleDeposit}>
+            <Button color="violet" mt={32} onClick={() => handleSubmit('deposit')}>
               Submit
             </Button>
           </Group>
@@ -131,7 +166,7 @@ const ClientUserWallet = () => {
   return (
     <>
       <Title pl="md">Wallet</Title>
-      <Group px="md" pt="md" grow>
+      <Group px="md" py="md" grow>
         <Stack>
           <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
@@ -174,7 +209,17 @@ const ClientUserWallet = () => {
                       <th>Amount</th>
                     </tr>
                   </thead>
-                  <tbody>{walletTransactionsRows}</tbody>
+                  <tbody>
+                    {walletTransactionsRows.length > 0 ? (
+                      walletTransactionsRows
+                    ) : (
+                      <tr>
+                        <td colSpan={3}>
+                          <Text align="center">No transactions</Text>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
                 </Table>
               </ScrollArea>
             </Paper>
