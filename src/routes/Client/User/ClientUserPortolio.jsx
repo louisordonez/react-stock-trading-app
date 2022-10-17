@@ -38,11 +38,19 @@ const ClientUserPortolio = () => {
     });
   }, []);
 
+  const resetModalContent = () => {
+    setStockSymbol('');
+    setStockName('');
+    setStockPrice(0);
+    setStockLogo('');
+    setStockOwned(0);
+  };
+
   const getModalContent = () => {
     return (
       <>
         <Group align="center" mb="md">
-          <div style={{ width: 90 }}>
+          <div style={{ width: 92 }}>
             {/* <Image radius="md" src={`${stockLogo}`} /> */}
             <Image radius="md" src={`https://storage.googleapis.com/iexcloud-hl37opg/api/logos/MSFT.png`} />
           </div>
@@ -119,7 +127,15 @@ const ClientUserPortolio = () => {
           </ScrollArea>
         </Paper>
       </Group>
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Sell" centered>
+      <Modal
+        opened={opened}
+        onClose={() => {
+          setOpened(false);
+          resetModalContent();
+        }}
+        title="Sell"
+        centered
+      >
         {getModalContent()}
         <TextInput label="Quantity" />
         <Group position="right">
