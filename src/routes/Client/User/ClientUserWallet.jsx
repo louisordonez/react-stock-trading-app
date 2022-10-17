@@ -80,6 +80,7 @@ const ClientUserWallet = () => {
             resetForm();
           } else {
             showErrorNotification('Withdraw failed.');
+            setError(true);
           }
         });
       } else if (type.toLowerCase() === 'deposit') {
@@ -91,6 +92,7 @@ const ClientUserWallet = () => {
             resetForm();
           } else {
             showErrorNotification('Deposit failed.');
+            setError(true);
           }
         });
       }
