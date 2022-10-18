@@ -40,7 +40,6 @@ const ClientUserMarket = ({ setVisible }) => {
   const [stockName, setStockName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [stockPrice, setStockPrice] = useState(0);
-  const [stocksOwned, setStocksOwned] = useState(0);
   const [error, setError] = useState(false);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
   const [isModalLoading, setIsModalLoading] = useState(false);
@@ -170,7 +169,6 @@ const ClientUserMarket = ({ setVisible }) => {
     setStockName('');
     setStockPrice(0);
     setStockLogo('');
-    setStocksOwned(0);
     setQuantity('');
     setError(false);
     setOpened(false);
@@ -188,7 +186,7 @@ const ClientUserMarket = ({ setVisible }) => {
               <Text>{stockSymbol}</Text>
               <Text>{stockName}</Text>
               <Text>{showCurrency(stockPrice)}</Text>
-              <Text>Owned: {stocksOwned}</Text>
+              <Text>Owned: {getStocksOwned(stockSymbol)}</Text>
             </div>
           </Group>
           <TextInput
