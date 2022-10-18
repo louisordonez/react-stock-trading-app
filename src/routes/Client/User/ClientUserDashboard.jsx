@@ -110,6 +110,7 @@ const ClientUserDashboard = ({ setVisible }) => {
           </ScrollArea>
         </Paper>
       </Group>
+      
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <Group position="apart" pb="md">

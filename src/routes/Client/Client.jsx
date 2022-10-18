@@ -49,7 +49,7 @@ const Client = () => {
   const useDisplayContent = () => {
     switch (location.pathname) {
       case CLIENT_DASHBOARD_LINK:
-        return userRole === 'admin' ? <ClientAdminDashboard /> : <ClientUserDashboard setVisible={setVisible} />;
+        return userRole === 'admin' ? <ClientAdminDashboard setVisible={setVisible}/> : <ClientUserDashboard setVisible={setVisible} />;
       case CLIENT_MARKET_LINK:
         return <ClientUserMarket setVisible={setVisible} />;
       case CLIENT_WALLET_LINK:
