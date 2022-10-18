@@ -41,13 +41,16 @@ const ClientUserWallet = ({ setVisible }) => {
   const [modalTitle, setModalTitle] = useState('');
   const [amount, setAmount] = useState('');
   const [error, setError] = useState(false);
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
 
   useEffect(() => {
     setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
-      setVisible(false);
       setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
+      setVisible(false);
+      setIsDoneLoading(true);
     });
   }, [balance]);
 
@@ -163,6 +166,33 @@ const ClientUserWallet = ({ setVisible }) => {
     }
   };
 
+  const displayTable = () => {
+    if (isDoneLoading) {
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Datetime</th>
+              <th>Action</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {walletTransactionsRows.length > 0 ? (
+              walletTransactionsRows
+            ) : (
+              <tr>
+                <td colSpan={3}>
+                  <Text align="center">No transactions</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
+  };
+
   const walletTransactionsRows = walletTransactions.map((column, index) => {
     const { created_at, action_type, total_amount } = column;
 
@@ -212,28 +242,7 @@ const ClientUserWallet = ({ setVisible }) => {
           <Title order={3}>Transactions</Title>
           <Group grow>
             <Paper p="xl" radius="md" shadow="md" withBorder>
-              <ScrollArea>
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Datetime</th>
-                      <th>Action</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {walletTransactionsRows.length > 0 ? (
-                      walletTransactionsRows
-                    ) : (
-                      <tr>
-                        <td colSpan={3}>
-                          <Text align="center">No transactions</Text>
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-              </ScrollArea>
+              <ScrollArea>{displayTable()}</ScrollArea>
             </Paper>
           </Group>
         </Stack>
