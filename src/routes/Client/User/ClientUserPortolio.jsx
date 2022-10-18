@@ -36,6 +36,7 @@ const ClientUserPortolio = ({ setVisible }) => {
   const [error, setError] = useState(false);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
   const [isModalLoading, setIsModalLoading] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
@@ -69,14 +70,14 @@ const ClientUserPortolio = ({ setVisible }) => {
       setError(true);
       setQuantity('');
     } else {
-      setVisible(true);
+      setIsButtonLoading(true);
       axiosPost(`${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
         if (response.status === 200) {
-          setVisible(false);
+          setIsButtonLoading(false);
           showSuccessNotification('Stock successfully sold!');
           resetModalContent();
         } else {
-          setVisible(false);
+          setIsButtonLoading(false);
           showErrorNotification('Transaction failed.');
           resetModalContent();
         }
@@ -112,7 +113,7 @@ const ClientUserPortolio = ({ setVisible }) => {
             error={error}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={handleSubmit}>
+            <Button color="violet" mt={32} onClick={handleSubmit} loading={isButtonLoading}>
               Submit
             </Button>
           </Group>
