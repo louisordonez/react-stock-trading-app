@@ -181,6 +181,11 @@ const ClientUserPortolio = ({ setVisible }) => {
         <TextInput
           label="Quantity"
           type="number"
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleSubmit();
+            }
+          }}
           onChange={(event) => setQuantity(parseFloat(event.target.value))}
           value={quantity}
           error={error}
