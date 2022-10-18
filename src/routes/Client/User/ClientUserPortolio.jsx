@@ -32,7 +32,38 @@ const ClientUserPortolio = ({ setVisible }) => {
     setStockName('');
     setStockPrice(0);
     setStockLogo('');
+<<<<<<< Updated upstream
     setStockOwned(0);
+=======
+    setStocksOwned(0);
+    setQuantity('');
+    setError(false);
+    setOpened(false);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append('stock_quantity', quantity);
+
+    if (quantity <= 0) {
+      showErrorNotification('Quantity must be greater than 0.');
+      setError(true);
+      setQuantity('');
+    } else {
+      setVisible(true);
+      axiosPost(`${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
+        if (response.status === 200) {
+          setVisible(false);
+          showSuccessNotification('Stock successfully sold!');
+          setOpened(false);
+        } else {
+          setVisible(false);
+          showErrorNotification('Transaction failed.');
+          setOpened(false);
+        }
+      });
+    }
+>>>>>>> Stashed changes
   };
 
   const getModalContent = () => {
