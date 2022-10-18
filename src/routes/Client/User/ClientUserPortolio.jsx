@@ -43,7 +43,7 @@ const ClientUserPortolio = ({ setVisible }) => {
     setIsDoneLoading(false);
     axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
       if (response.status === 200) {
-        setPortfolio(response.data);
+        setPortfolio(response.data.sort((x, y) => x.id > y.id));
         setVisible(false);
         setIsDoneLoading(true);
       }
@@ -61,15 +61,29 @@ const ClientUserPortolio = ({ setVisible }) => {
     setOpened(false);
   };
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append('stock_quantity', quantity);
-
+  const checkQuantity = () => {
     if (quantity <= 0) {
-      showErrorNotification('Quantity must be greater than 0.');
+      showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
+
+      return false;
+    } else if (parseFloat(stocksOwned) < parseFloat(quantity)) {
+      showErrorNotification('Invalid quantity.');
+      setError(true);
+      setQuantity('');
+
+      return false;
     } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (checkQuantity()) {
+      const formData = new FormData();
+      formData.append('stock_quantity', quantity);
+
       setIsButtonLoading(true);
       axiosPost(`${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
         if (response.status === 200) {

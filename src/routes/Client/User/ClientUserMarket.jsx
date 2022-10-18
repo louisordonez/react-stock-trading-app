@@ -84,7 +84,7 @@ const ClientUserMarket = ({ setVisible }) => {
     formData.append('stock_quantity', quantity);
 
     if (quantity <= 0) {
-      showErrorNotification('Quantity must be greater than 0.');
+      showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
     } else {

@@ -88,7 +88,7 @@ const ClientUserWallet = ({ setVisible }) => {
             resetForm();
           } else {
             setIsButtonLoading(false);
-            showErrorNotification('Withdraw failed.');
+            showErrorNotification('Transaction failed.');
             setError(true);
           }
         });
@@ -103,7 +103,7 @@ const ClientUserWallet = ({ setVisible }) => {
             resetForm();
           } else {
             setIsButtonLoading(false);
-            showErrorNotification('Deposit failed.');
+            showErrorNotification('Transaction failed.');
             setError(true);
           }
         });
