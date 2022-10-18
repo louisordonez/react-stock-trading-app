@@ -20,11 +20,13 @@ import {
   SYMBOLS_ENDPOINT,
   MOST_ACTIVE_ENDPOINT,
   STOCK_INFO_ENDPOINT,
+  BUY_STOCK_INFO_ENDPOINT,
 } from '../../../services/constants/stocksEndpoints';
-import { axiosGet } from '../../../services/utilities/axios';
+import { axiosGet, axiosPost } from '../../../services/utilities/axios';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { getCookie } from '../../../services/utilities/cookie';
 import { showCurrency } from '../../../services/utilities/showCurrency';
+import { showSuccessNotification, showErrorNotification } from '../../../components/Notification';
 
 const ClientUserMarket = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -43,27 +45,11 @@ const ClientUserMarket = ({ setVisible }) => {
   const [error, setError] = useState(false);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
   const [isModalLoading, setIsModalLoading] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
-    setVisible(true);
-    setIsDoneLoading(false);
-
-    axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
-      if (response.status === 200) {
-        setPortfolio(response.data);
-      }
-    });
-
-    axiosGet(MOST_ACTIVE_ENDPOINT, headers).then((response) => {
-      if (response.status === 200) {
-        setMostActiveList(response.data.most_active);
-      }
-    });
-
     axiosGet(SYMBOLS_ENDPOINT, headers).then((response) => {
       if (response.status === 200) {
-        setVisible(false);
-        setIsDoneLoading(true);
         setSymbolsList(
           response.data.symbols.map((item) => {
             return { value: item.symbol, label: `${item.symbol} | ${item.name}` };
@@ -72,6 +58,50 @@ const ClientUserMarket = ({ setVisible }) => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setVisible(true);
+    setIsDoneLoading(false);
+    axiosGet(MOST_ACTIVE_ENDPOINT, headers).then((response) => {
+      if (response.status === 200) {
+        setMostActiveList(response.data.most_active);
+        setVisible(false);
+        setIsDoneLoading(true);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
+      if (response.status === 200) {
+        setPortfolio(response.data);
+      }
+    });
+  }, [opened]);
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append('stock_quantity', quantity);
+
+    if (quantity <= 0) {
+      showErrorNotification('Quantity must be greater than 0.');
+      setError(true);
+      setQuantity('');
+    } else {
+      setIsButtonLoading(true);
+      axiosPost(`${BUY_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
+        if (response.status === 200) {
+          setIsButtonLoading(false);
+          showSuccessNotification('Stock successfully bought!');
+          resetModalContent();
+        } else {
+          setIsButtonLoading(false);
+          showErrorNotification('Transaction failed.');
+          resetModalContent();
+        }
+      });
+    }
+  };
 
   const handleSearch = (event) => {
     setSearch(event[0]);
@@ -202,7 +232,7 @@ const ClientUserMarket = ({ setVisible }) => {
             error={error}
           />
           <Group position="right">
-            <Button color="violet" mt={32}>
+            <Button color="violet" mt={32} onClick={handleSubmit} loading={isButtonLoading}>
               Submit
             </Button>
           </Group>
@@ -225,8 +255,9 @@ const ClientUserMarket = ({ setVisible }) => {
           <MultiSelect
             icon={<TbSearch />}
             searchable
+            clearable
             placeholder="Search"
-            nothingFound="Nothing found"
+            nothingFound={<Loader color="violet" />}
             size="xl"
             data={symbolsList}
             limit={20}
