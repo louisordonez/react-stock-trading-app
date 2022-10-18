@@ -98,12 +98,14 @@ const ClientUserMarket = ({ setVisible }) => {
   const handleSubmit = () => {
     if (checkQuantity()) {
       const formData = new FormData();
+
       formData.append('stock_quantity', quantity);
+
       setIsButtonLoading(true);
       axiosPost(`${BUY_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
         if (response.status === 200) {
           setIsButtonLoading(false);
-          showSuccessNotification('Stock successfully bought!');
+          showSuccessNotification('Stock bought successfully!');
           resetModalContent();
         } else {
           setIsButtonLoading(false);
@@ -112,11 +114,6 @@ const ClientUserMarket = ({ setVisible }) => {
         }
       });
     }
-  };
-
-  const handleSearch = (event) => {
-    setSearch(event[0]);
-    console.log(event[0]);
   };
 
   const getStocksOwned = (symbol) => {
@@ -145,6 +142,26 @@ const ClientUserMarket = ({ setVisible }) => {
     }
   };
 
+  const handleSearch = (event) => {
+    if (event.length !== 0) {
+      setSearch(event[0]);
+      setVisible(true);
+      setIsDoneLoading(false);
+      axiosGet(`${STOCK_INFO_ENDPOINT}${event[0]}`, headers).then((response) => {
+        // setStockLogo(response.data.logo.url);
+        setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+        setStockSymbol(response.data.company.symbol);
+        setStockName(response.data.company.company_name);
+        setStockPrice(response.data.quote.latest_price);
+        setVisible(false);
+        setIsDoneLoading(true);
+      });
+    } else {
+      setSearch('');
+      displayContent();
+    }
+  };
+
   const displaySearch = () => {
     return (
       <Group grow mb="md">
@@ -152,12 +169,13 @@ const ClientUserMarket = ({ setVisible }) => {
           <ScrollArea>
             <Group>
               <div style={{ width: 150 }}>
-                <Image radius="md" src={`https://storage.googleapis.com/iex/api/logos/${search}.png`} />
+                <Image radius="md" src={stockLogo} />
               </div>
               <Stack>
                 <Text>{search}</Text>
                 <Text>{stockName}</Text>
                 <Text>{showCurrency(stockPrice)}</Text>
+                <Text>Owned: {getStocksOwned(search)}</Text>
               </Stack>
             </Group>
           </ScrollArea>
@@ -269,11 +287,11 @@ const ClientUserMarket = ({ setVisible }) => {
       <Group px="md" pt="md" grow>
         <Stack>
           <MultiSelect
-            icon={<TbSearch />}
+            icon={symbolsList.length !== 0 ? <TbSearch /> : <Loader color="violet" />}
             searchable
             clearable
             placeholder="Search"
-            nothingFound={<Loader color="violet" />}
+            nothingFound="Nothing found"
             size="xl"
             data={symbolsList}
             limit={20}

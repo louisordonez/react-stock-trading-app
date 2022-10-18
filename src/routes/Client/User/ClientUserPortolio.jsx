@@ -85,7 +85,7 @@ const ClientUserPortolio = ({ setVisible }) => {
       axiosPost(`${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
         if (response.status === 200) {
           setIsButtonLoading(false);
-          showSuccessNotification('Stock successfully sold!');
+          showSuccessNotification('Stock sold successfully!');
           resetModalContent();
         } else {
           setIsButtonLoading(false);
