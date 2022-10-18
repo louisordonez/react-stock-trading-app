@@ -42,6 +42,7 @@ const ClientUserWallet = ({ setVisible }) => {
   const [amount, setAmount] = useState('');
   const [error, setError] = useState(false);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
@@ -77,31 +78,31 @@ const ClientUserWallet = ({ setVisible }) => {
       formData.append(totalAmountKey, amount);
 
       if (type.toLowerCase() === 'withdraw') {
-        setVisible(true);
+        setIsButtonLoading(true);
         axiosPost(WITHDRAW_WALLET_ENDPOINT, formData, headers).then((response) => {
           if (response.status === 200) {
-            setVisible(false);
+            setIsButtonLoading(false);
             showSuccessNotification('Money has been withdrew from your account!');
             setBalance(showCurrency(response.data.wallet.balance));
             setOpened(false);
             resetForm();
           } else {
-            setVisible(false);
+            setIsButtonLoading(false);
             showErrorNotification('Withdraw failed.');
             setError(true);
           }
         });
       } else if (type.toLowerCase() === 'deposit') {
-        setVisible(true);
+        setIsButtonLoading(true);
         axiosPost(DEPOSIT_WALLET_ENDPOINT, formData, headers).then((response) => {
           if (response.status === 200) {
-            setVisible(false);
+            setIsButtonLoading(false);
             showSuccessNotification('Money has been deposited into your account!');
             setBalance(showCurrency(response.data.wallet.balance));
             setOpened(false);
             resetForm();
           } else {
-            setVisible(false);
+            setIsButtonLoading(false);
             showErrorNotification('Deposit failed.');
             setError(true);
           }
@@ -135,7 +136,7 @@ const ClientUserWallet = ({ setVisible }) => {
             }}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={() => handleSubmit('withdraw')}>
+            <Button color="violet" mt={32} onClick={() => handleSubmit('withdraw')} loading={isButtonLoading}>
               Submit
             </Button>
           </Group>
@@ -157,7 +158,7 @@ const ClientUserWallet = ({ setVisible }) => {
             }}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={() => handleSubmit('deposit')}>
+            <Button color="violet" mt={32} onClick={() => handleSubmit('deposit')} loading={isButtonLoading}>
               Submit
             </Button>
           </Group>
