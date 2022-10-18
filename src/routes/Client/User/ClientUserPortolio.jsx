@@ -1,11 +1,24 @@
 import { useState, useEffect } from 'react';
-import { Title, Text, Paper, Group, ScrollArea, Button, Image, Modal, TextInput, Table } from '@mantine/core';
+import {
+  Title,
+  Text,
+  Paper,
+  Group,
+  ScrollArea,
+  Button,
+  Image,
+  Modal,
+  TextInput,
+  Table,
+  LoadingOverlay,
+} from '@mantine/core';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
-import { STOCK_INFO_ENDPOINT } from '../../../services/constants/stocksEndpoints';
+import { STOCK_INFO_ENDPOINT, SELL_STOCK_INFO_ENDPOINT } from '../../../services/constants/stocksEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
-import { axiosGet } from '../../../services/utilities/axios';
+import { axiosGet, axiosPost } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
+import { showSuccessNotification, showErrorNotification } from '../../../components/Notification';
 
 const ClientUserPortolio = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -17,24 +30,26 @@ const ClientUserPortolio = ({ setVisible }) => {
   const [stockName, setStockName] = useState('');
   const [stockPrice, setStockPrice] = useState(0);
   const [stockLogo, setStockLogo] = useState('');
-  const [stockOwned, setStockOwned] = useState(0);
+  const [stocksOwned, setStocksOwned] = useState(0);
+  const [quantity, setQuantity] = useState('');
+  const [error, setError] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
     axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
-      setVisible(false);
-      setPortfolio(response.data);
+      if (response.status === 200) {
+        setVisible(false);
+        setPortfolio(response.data);
+      }
     });
-  }, []);
+  }, [opened]);
 
   const resetModalContent = () => {
     setStockSymbol('');
     setStockName('');
     setStockPrice(0);
     setStockLogo('');
-<<<<<<< Updated upstream
-    setStockOwned(0);
-=======
     setStocksOwned(0);
     setQuantity('');
     setError(false);
@@ -63,7 +78,6 @@ const ClientUserPortolio = ({ setVisible }) => {
         }
       });
     }
->>>>>>> Stashed changes
   };
 
   const getModalContent = () => {
@@ -71,14 +85,13 @@ const ClientUserPortolio = ({ setVisible }) => {
       <>
         <Group align="center" mb="md">
           <div style={{ width: 92 }}>
-            {/* <Image radius="md" src={`${stockLogo}`} /> */}
-            <Image radius="md" src={`https://storage.googleapis.com/iexcloud-hl37opg/api/logos/MSFT.png`} />
+            <Image radius="md" src={`${stockLogo}`} />
           </div>
           <div>
             <Text>{stockSymbol}</Text>
             <Text>{stockName}</Text>
             <Text>{showCurrency(stockPrice)}</Text>
-            <Text>Owned: {stockOwned}</Text>
+            <Text>Owned: {stocksOwned}</Text>
           </div>
         </Group>
       </>
@@ -86,18 +99,22 @@ const ClientUserPortolio = ({ setVisible }) => {
   };
 
   const getStockInfo = (symbol) => {
-    setVisible(true);
+    setModalLoading(true);
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
-      setVisible(false);
-      setStockLogo(response.data.logo.url);
+      setStockLogo(`https://storage.googleapis.com/iexcloud-hl37opg/api/logos/${response.data.company.symbol}.png`);
       setStockSymbol(response.data.company.symbol);
       setStockName(response.data.company.company_name);
       setStockPrice(response.data.quote.latest_price);
+      setModalLoading(false);
     });
   };
 
   const portfolioRows = portfolio.map((column, index) => {
     const { stock_symbol, stock_name, stocks_owned_quantity } = column;
+
+    const disableSell = () => {
+      return parseInt(stocks_owned_quantity) === 0 ? true : false;
+    };
 
     return (
       <tr key={index}>
@@ -110,9 +127,10 @@ const ClientUserPortolio = ({ setVisible }) => {
             compact
             onClick={() => {
               setOpened((opened) => !opened);
-              setStockOwned(stocks_owned_quantity);
+              setStocksOwned(stocks_owned_quantity);
               getStockInfo(stock_symbol);
             }}
+            disabled={disableSell()}
           >
             Sell
           </Button>
@@ -123,6 +141,7 @@ const ClientUserPortolio = ({ setVisible }) => {
 
   return (
     <>
+      <LoadingOverlay visible={modalLoading} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       <Title pl="md">Portfolio</Title>
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
@@ -161,9 +180,15 @@ const ClientUserPortolio = ({ setVisible }) => {
         centered
       >
         {getModalContent()}
-        <TextInput label="Quantity" />
+        <TextInput
+          label="Quantity"
+          type="number"
+          onChange={(event) => setQuantity(parseFloat(event.target.value))}
+          value={quantity}
+          error={error}
+        />
         <Group position="right">
-          <Button color="violet" mt={32}>
+          <Button color="violet" mt={32} onClick={handleSubmit}>
             Submit
           </Button>
         </Group>
