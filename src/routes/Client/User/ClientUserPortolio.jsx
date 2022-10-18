@@ -10,7 +10,8 @@ import {
   Modal,
   TextInput,
   Table,
-  LoadingOverlay,
+  Loader,
+  Center,
 } from '@mantine/core';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
 import { STOCK_INFO_ENDPOINT, SELL_STOCK_INFO_ENDPOINT } from '../../../services/constants/stocksEndpoints';
@@ -33,14 +34,17 @@ const ClientUserPortolio = ({ setVisible }) => {
   const [stocksOwned, setStocksOwned] = useState(0);
   const [quantity, setQuantity] = useState('');
   const [error, setError] = useState(false);
-  const [modalLoading, setModalLoading] = useState(false);
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
+  const [isModalLoading, setIsModalLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
       if (response.status === 200) {
-        setVisible(false);
         setPortfolio(response.data);
+        setVisible(false);
+        setIsDoneLoading(true);
       }
     });
   }, [opened]);
@@ -70,43 +74,96 @@ const ClientUserPortolio = ({ setVisible }) => {
         if (response.status === 200) {
           setVisible(false);
           showSuccessNotification('Stock successfully sold!');
-          setOpened(false);
+          resetModalContent();
         } else {
           setVisible(false);
           showErrorNotification('Transaction failed.');
-          setOpened(false);
+          resetModalContent();
         }
       });
     }
   };
 
   const getModalContent = () => {
-    return (
-      <>
-        <Group align="center" mb="md">
-          <div style={{ width: 92 }}>
-            <Image radius="md" src={`${stockLogo}`} />
-          </div>
-          <div>
-            <Text>{stockSymbol}</Text>
-            <Text>{stockName}</Text>
-            <Text>{showCurrency(stockPrice)}</Text>
-            <Text>Owned: {stocksOwned}</Text>
-          </div>
-        </Group>
-      </>
-    );
+    if (!isModalLoading) {
+      return (
+        <>
+          <Group align="center" mb="md">
+            <div style={{ width: 92 }}>
+              <Image radius="md" src={`${stockLogo}`} />
+            </div>
+            <div>
+              <Text>{stockSymbol}</Text>
+              <Text>{stockName}</Text>
+              <Text>{showCurrency(stockPrice)}</Text>
+              <Text>Owned: {stocksOwned}</Text>
+            </div>
+          </Group>
+          <TextInput
+            label="Quantity"
+            type="number"
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleSubmit();
+              }
+            }}
+            onChange={(event) => setQuantity(parseFloat(event.target.value))}
+            value={quantity}
+            error={error}
+          />
+          <Group position="right">
+            <Button color="violet" mt={32} onClick={handleSubmit}>
+              Submit
+            </Button>
+          </Group>
+        </>
+      );
+    } else {
+      return (
+        <Center>
+          <Loader color="violet" />
+        </Center>
+      );
+    }
   };
 
   const getStockInfo = (symbol) => {
-    setModalLoading(true);
+    setIsModalLoading(true);
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
-      setStockLogo(`https://storage.googleapis.com/iexcloud-hl37opg/api/logos/${response.data.company.symbol}.png`);
+      setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
       setStockSymbol(response.data.company.symbol);
       setStockName(response.data.company.company_name);
       setStockPrice(response.data.quote.latest_price);
-      setModalLoading(false);
+      setIsModalLoading(false);
     });
+  };
+
+  const displayTable = () => {
+    if (isDoneLoading) {
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th>Owned</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {portfolioRows.length > 0 ? (
+              portfolioRows
+            ) : (
+              <tr>
+                <td colSpan={4}>
+                  <Text align="center">No portfolio</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
   };
 
   const portfolioRows = portfolio.map((column, index) => {
@@ -139,62 +196,14 @@ const ClientUserPortolio = ({ setVisible }) => {
 
   return (
     <>
-      <LoadingOverlay visible={modalLoading} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       <Title pl="md">Portfolio</Title>
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
-          <ScrollArea>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Symbol</th>
-                  <th>Name</th>
-                  <th>Owned</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {portfolioRows.length > 0 ? (
-                  portfolioRows
-                ) : (
-                  <tr>
-                    <td colSpan={4}>
-                      <Text align="center">No portfolio</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
       </Group>
-      <Modal
-        opened={opened}
-        onClose={() => {
-          setOpened(false);
-          resetModalContent();
-        }}
-        title="Sell"
-        centered
-      >
+      <Modal opened={opened} onClose={resetModalContent} title="Sell" centered>
         {getModalContent()}
-        <TextInput
-          label="Quantity"
-          type="number"
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              handleSubmit();
-            }
-          }}
-          onChange={(event) => setQuantity(parseFloat(event.target.value))}
-          value={quantity}
-          error={error}
-        />
-        <Group position="right">
-          <Button color="violet" mt={32} onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Group>
       </Modal>
     </>
   );
