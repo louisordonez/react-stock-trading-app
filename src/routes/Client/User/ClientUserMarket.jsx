@@ -9,10 +9,10 @@ import {
   Button,
   Image,
   Modal,
-  MultiSelect,
   TextInput,
   Loader,
   Center,
+  Select,
 } from '@mantine/core';
 import { TbSearch } from 'react-icons/tb';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
@@ -143,11 +143,11 @@ const ClientUserMarket = ({ setVisible }) => {
   };
 
   const handleSearch = (event) => {
-    if (event.length !== 0) {
-      setSearch(event[0]);
+    if (event !== null) {
+      setSearch(event);
       setVisible(true);
       setIsDoneLoading(false);
-      axiosGet(`${STOCK_INFO_ENDPOINT}${event[0]}`, headers).then((response) => {
+      axiosGet(`${STOCK_INFO_ENDPOINT}${event}`, headers).then((response) => {
         // setStockLogo(response.data.logo.url);
         setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
         setStockSymbol(response.data.company.symbol);
@@ -286,7 +286,7 @@ const ClientUserMarket = ({ setVisible }) => {
       <Title pl="md">Market</Title>
       <Group px="md" pt="md" grow>
         <Stack>
-          <MultiSelect
+          <Select
             icon={symbolsList.length !== 0 ? <TbSearch /> : <Loader color="violet" />}
             searchable
             clearable
@@ -296,7 +296,6 @@ const ClientUserMarket = ({ setVisible }) => {
             data={symbolsList}
             limit={20}
             maxDropdownHeight={160}
-            maxSelectedValues={1}
             onChange={(event) => handleSearch(event)}
           />
           <Title order={3}>{search ? search : 'Most Active'}</Title>
