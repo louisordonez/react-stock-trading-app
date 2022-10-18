@@ -44,6 +44,7 @@ const ClientAccount = ({ setVisible }) => {
     setPasswordError(false);
     setCurrentPasswordError(false);
   };
+
   const handleSubmit = () => {
     const userInfo = {
       email,

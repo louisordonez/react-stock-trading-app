@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
-import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet } from '../../../services/utilities/axios';
@@ -30,22 +29,24 @@ const ClientUserDashboard = ({ setVisible }) => {
       setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
     });
-    axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
-      if (response.data.length === 0) {
-        setStocksOwned(0);
-      } else {
-        setStocksOwned(
-          response.data
-            .map((item) => parseFloat(item.stocks_owned_quantity))
-            .reduce((x, y) => x + y)
-            .toLocaleString('en-US', {
-              maximumFractionDigits: 1,
-              minimumFractionDigits: 1,
-            })
-        );
-      }
-    });
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      const stocksQuantity = () => {
+        if (response.data.length === 0) {
+          setStocksOwned(0);
+        } else {
+          setStocksOwned(
+            response.data
+              .map((array) => parseFloat(array.stock_quantity))
+              .reduce((x, y) => x + y)
+              .toLocaleString('en-US', {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+              })
+          );
+        }
+      };
+
+      stocksQuantity();
       setStockTransactions(response.data);
     });
   }, []);
@@ -110,7 +111,6 @@ const ClientUserDashboard = ({ setVisible }) => {
           </ScrollArea>
         </Paper>
       </Group>
-      
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <Group position="apart" pb="md">

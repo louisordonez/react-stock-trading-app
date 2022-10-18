@@ -49,7 +49,11 @@ const Client = () => {
   const useDisplayContent = () => {
     switch (location.pathname) {
       case CLIENT_DASHBOARD_LINK:
-        return userRole === 'admin' ? <ClientAdminDashboard setVisible={setVisible}/> : <ClientUserDashboard setVisible={setVisible} />;
+        return userRole === 'admin' ? (
+          <ClientAdminDashboard setVisible={setVisible} />
+        ) : (
+          <ClientUserDashboard setVisible={setVisible} />
+        );
       case CLIENT_MARKET_LINK:
         return <ClientUserMarket setVisible={setVisible} />;
       case CLIENT_WALLET_LINK:
@@ -57,9 +61,13 @@ const Client = () => {
       case CLIENT_PORTFOLIO_LINK:
         return <ClientUserPortolio setVisible={setVisible} />;
       case CLIENT_USERS_LINK:
-        return <ClientAdminUsers />;
+        return <ClientAdminUsers setVisible={setVisible} />;
       case CLIENT_TRANSACTIONS_LINK:
-        return userRole === 'admin' ? <ClientAdminTransactions /> : <ClientUserTransactions setVisible={setVisible} />;
+        return userRole === 'admin' ? (
+          <ClientAdminTransactions setVisible={setVisible} />
+        ) : (
+          <ClientUserTransactions setVisible={setVisible} />
+        );
       case CLIENT_ACCOUNT_LINK:
         return <ClientAccount setVisible={setVisible} />;
     }
