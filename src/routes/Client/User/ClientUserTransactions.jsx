@@ -13,14 +13,48 @@ const ClientUserTransactions = ({ setVisible }) => {
   const headers = { Authorization: accessToken };
 
   const [stockTransactions, setStockTransactions] = useState([]);
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
 
   useEffect(() => {
     setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
-      setVisible(false);
       setStockTransactions(response.data);
+      setVisible(false);
+      setIsDoneLoading(true);
     });
   }, []);
+
+  const displayTable = () => {
+    if (isDoneLoading) {
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Datetime</th>
+              <th>Action</th>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stockTransactionsRows.length > 0 ? (
+              stockTransactionsRows
+            ) : (
+              <tr>
+                <td colSpan={7}>
+                  <Text align="center">No transactions</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
+  };
 
   const stockTransactionsRows = stockTransactions.map((column, index) => {
     const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
@@ -43,32 +77,7 @@ const ClientUserTransactions = ({ setVisible }) => {
       <Title pl="md">Transactions</Title>
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
-          <ScrollArea>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Datetime</th>
-                  <th>Action</th>
-                  <th>Symbol</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stockTransactionsRows.length > 0 ? (
-                  stockTransactionsRows
-                ) : (
-                  <tr>
-                    <td colSpan={7}>
-                      <Text align="center">No transactions</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
       </Group>
     </>
