@@ -1,18 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Title,
-  Text,
-  Paper,
-  Group,
-  ScrollArea,
-  Button,
-  Image,
-  Modal,
-  TextInput,
-  Table,
-  ActionIcon,
-} from '@mantine/core';
-import { TbEye } from 'react-icons/tb';
+import { Title, Text, Paper, Group, ScrollArea, Button, Image, Modal, TextInput, Table } from '@mantine/core';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
 import { STOCK_INFO_ENDPOINT } from '../../../services/constants/stocksEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
@@ -87,15 +74,17 @@ const ClientUserPortolio = ({ setVisible }) => {
         <td>{stock_name}</td>
         <td>{stocks_owned_quantity}</td>
         <td>
-          <ActionIcon
+          <Button
+            color="violet"
+            compact
             onClick={() => {
               setOpened((opened) => !opened);
               setStockOwned(stocks_owned_quantity);
               getStockInfo(stock_symbol);
             }}
           >
-            <TbEye />
-          </ActionIcon>
+            Sell
+          </Button>
         </td>
       </tr>
     );
