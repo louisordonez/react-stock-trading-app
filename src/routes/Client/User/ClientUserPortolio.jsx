@@ -112,9 +112,7 @@ const ClientUserPortolio = ({ setVisible }) => {
   const portfolioRows = portfolio.map((column, index) => {
     const { stock_symbol, stock_name, stocks_owned_quantity } = column;
 
-    const disableSell = () => {
-      return parseInt(stocks_owned_quantity) === 0 ? true : false;
-    };
+    const disableSell = () => parseInt(stocks_owned_quantity) === 0;
 
     return (
       <tr key={index}>
