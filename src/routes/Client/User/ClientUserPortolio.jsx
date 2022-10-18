@@ -66,14 +66,10 @@ const ClientUserPortolio = ({ setVisible }) => {
       showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
-
-      return false;
     } else if (parseFloat(stocksOwned) < parseFloat(quantity)) {
       showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
-
-      return false;
     } else {
       return true;
     }
@@ -82,6 +78,7 @@ const ClientUserPortolio = ({ setVisible }) => {
   const handleSubmit = () => {
     if (checkQuantity()) {
       const formData = new FormData();
+
       formData.append('stock_quantity', quantity);
 
       setIsButtonLoading(true);

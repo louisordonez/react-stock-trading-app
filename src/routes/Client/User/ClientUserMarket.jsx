@@ -16,6 +16,7 @@ import {
 } from '@mantine/core';
 import { TbSearch } from 'react-icons/tb';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
+import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 import {
   SYMBOLS_ENDPOINT,
   MOST_ACTIVE_ENDPOINT,
@@ -42,6 +43,7 @@ const ClientUserMarket = ({ setVisible }) => {
   const [stockName, setStockName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [stockPrice, setStockPrice] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [error, setError] = useState(false);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
   const [isModalLoading, setIsModalLoading] = useState(false);
@@ -79,15 +81,24 @@ const ClientUserMarket = ({ setVisible }) => {
     });
   }, [opened]);
 
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append('stock_quantity', quantity);
-
+  const checkQuantity = () => {
     if (quantity <= 0) {
       showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
+    } else if (quantity * stockPrice > balance) {
+      showErrorNotification('Invalid quantity.');
+      setError(true);
+      setQuantity('');
     } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (checkQuantity()) {
+      const formData = new FormData();
+      formData.append('stock_quantity', quantity);
       setIsButtonLoading(true);
       axiosPost(`${BUY_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
         if (response.status === 200) {
@@ -116,6 +127,9 @@ const ClientUserMarket = ({ setVisible }) => {
 
   const getStockInfo = (symbol) => {
     setIsModalLoading(true);
+    axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+      setBalance(parseFloat(response.data.wallet.balance));
+    });
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
       setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
       setStockSymbol(response.data.company.symbol);
@@ -197,9 +211,10 @@ const ClientUserMarket = ({ setVisible }) => {
   const resetModalContent = () => {
     setStockSymbol('');
     setStockName('');
-    setStockPrice(0);
     setStockLogo('');
     setQuantity('');
+    setStockPrice(0);
+    setBalance(0);
     setError(false);
     setOpened(false);
   };
@@ -219,6 +234,7 @@ const ClientUserMarket = ({ setVisible }) => {
               <Text>Owned: {getStocksOwned(stockSymbol)}</Text>
             </div>
           </Group>
+          <Text mb="md">Balance: {showCurrency(balance)}</Text>
           <TextInput
             label="Quantity"
             type="number"

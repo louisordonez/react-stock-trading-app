@@ -64,8 +64,6 @@ const ClientUserWallet = ({ setVisible }) => {
     if (parseFloat(amount) <= 0 || amount === '') {
       showErrorNotification('Invalid amount.');
       setError(true);
-
-      return false;
     } else {
       return true;
     }
