@@ -25,6 +25,7 @@ const ClientAdminUsers = ({ setVisible }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [isDoneLoading, setIsDoneLoading] = useState(true);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
@@ -63,13 +64,13 @@ const ClientAdminUsers = ({ setVisible }) => {
     formData.append('last_name', lastName);
     formData.append('email', email);
 
-    setVisible(true);
+    setIsButtonLoading(true);
     axiosPatch(`${UPDATE_USER_ENDPOINT}/${current.id}`, formData, headers).then((response) => {
       let filtered = users.filter((user) => user.id !== current.id);
       let updated = response.data.user;
 
       setUsers([...filtered, updated]);
-      setVisible(false);
+      setIsButtonLoading(false);
       setOpenUpdate(false);
       showSuccessNotification('Account has been updated!');
     });
@@ -185,7 +186,7 @@ const ClientAdminUsers = ({ setVisible }) => {
           />
         </Group>
         <Group>
-          <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit}>
+          <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit} loading={isButtonLoading}>
             Submit
           </Button>
         </Group>
