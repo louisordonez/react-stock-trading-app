@@ -10,7 +10,10 @@ import { getCookie } from './cookie';
 export const useRedirect = () => {
   const navigate = useNavigate();
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
   let urlPath = window.location.pathname.split('/');
 
   urlPath = `/${urlPath[1]}`;

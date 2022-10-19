@@ -11,7 +11,10 @@ import { toProperCase } from '../../../services/utilities/toProperCase';
 
 const ClientAdminTransactions = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   const [transactions, setTransactions] = useState([]);
   const [userList, setUserList] = useState([]);

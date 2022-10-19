@@ -23,7 +23,10 @@ const ClientAccount = ({ setVisible }) => {
   const [currentPasswordError, setCurrentPasswordError] = useState(false);
 
   useEffect(() => {
-    const headers = { Authorization: accessToken };
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      Authorization: accessToken,
+    };
 
     setVisible(true);
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
@@ -51,6 +54,7 @@ const ClientAccount = ({ setVisible }) => {
       password: `${currentPassword}`,
     };
     const headers = {
+      'Access-Control-Allow-Origin': '*',
       Authorization: accessToken,
       'Content-Type': 'multipart/form-data',
     };

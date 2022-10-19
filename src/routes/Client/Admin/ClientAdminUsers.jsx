@@ -15,7 +15,10 @@ import { axiosGet, axiosPost, axiosPatch } from '../../../services/utilities/axi
 
 const ClientAdminUsers = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -55,6 +58,7 @@ const ClientAdminUsers = ({ setVisible }) => {
 
   const handleUpdateSubmit = () => {
     const headers = {
+      'Access-Control-Allow-Origin': '*',
       Authorization: accessToken,
       'Content-Type': 'multipart/form-data',
     };

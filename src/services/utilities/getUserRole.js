@@ -4,7 +4,10 @@ import { getCookie } from './cookie';
 import { axiosGet } from './axios';
 
 const accessToken = getCookie(accessTokenCookie);
-const headers = { Authorization: accessToken };
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  Authorization: accessToken,
+};
 
 export const getUserRole = async () => {
   return axiosGet(CHECK_ROLE_ENDPOINT, headers).then((response) => {

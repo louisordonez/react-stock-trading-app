@@ -10,7 +10,10 @@ import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
 const ClientUserTransactions = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   const [stockTransactions, setStockTransactions] = useState([]);
   const [isDoneLoading, setIsDoneLoading] = useState(true);

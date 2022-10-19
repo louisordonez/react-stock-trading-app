@@ -29,6 +29,7 @@ import { showSuccessNotification, showErrorNotification } from '../../../compone
 const ClientUserWallet = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'multipart/form-data',
     Authorization: accessToken,
   };

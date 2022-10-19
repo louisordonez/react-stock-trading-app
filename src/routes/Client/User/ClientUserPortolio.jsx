@@ -23,7 +23,10 @@ import { showSuccessNotification, showErrorNotification } from '../../../compone
 
 const ClientUserPortolio = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   const [opened, setOpened] = useState(false);
   const [portfolio, setPortfolio] = useState([]);

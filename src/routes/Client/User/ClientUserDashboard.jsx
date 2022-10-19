@@ -15,7 +15,10 @@ import { convertDatetime } from '../../../services/utilities/convertDatetime';
 
 const ClientUserDashboard = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
   const navigate = useNavigate();
 
   const [balance, setBalance] = useState(0);

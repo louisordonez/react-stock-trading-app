@@ -5,7 +5,10 @@ import { axiosGet } from './axios';
 
 export const isLoggedIn = async () => {
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   if (accessToken === '') {
     return false;

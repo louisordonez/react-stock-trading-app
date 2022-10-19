@@ -12,7 +12,10 @@ const VerifyEmail = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: accessToken };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    Authorization: accessToken,
+  };
 
   const [email, setEmail] = useState('');
 

@@ -14,7 +14,10 @@ const SignUp = () => {
 
   const theme = useMantineTheme();
   const navigate = useNavigate();
-  const headers = { 'Content-Type': 'multipart/form-data' };
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'multipart/form-data',
+  };
 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
