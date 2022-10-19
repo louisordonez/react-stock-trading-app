@@ -1,4 +1,4 @@
-# stock-trading-app
+# react-stock-trading-app
 
 This project is a a Ruby on Rails application that allows users to buy and sell stocks.
 
