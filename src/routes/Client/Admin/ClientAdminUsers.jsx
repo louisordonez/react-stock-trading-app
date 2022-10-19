@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Title, Text, Paper, Group, Table, ScrollArea, Button, Modal, TextInput } from '@mantine/core';
+import { Title, Text, Paper, Group, Table, ScrollArea, Button, Modal, TextInput, Stack } from '@mantine/core';
+import { TbCheck, TbX } from 'react-icons/tb';
 import { showSuccessNotification } from '../../../components/Notification';
 import SignUpForm from '../../../components/SignUp/SignUpForm';
 import { accessTokenCookie } from '../../../services/constants/cookies';
@@ -44,9 +45,10 @@ const ClientAdminUsers = ({ setVisible }) => {
 
     setVisible(true);
     axiosPost(USERS_ENDPOINT, formData, headers).then((response) => {
-      setVisible(false);
-      showSuccessNotification('An email has been sent to verify the account!');
       setUsers([...users, response.data.user]);
+      setVisible(false);
+      setOpenCreate(false);
+      showSuccessNotification('An email has been sent to verify the account!');
     });
   };
 
@@ -68,6 +70,7 @@ const ClientAdminUsers = ({ setVisible }) => {
 
       setUsers([...filtered, updated]);
       setVisible(false);
+      setOpenUpdate(false);
       showSuccessNotification('Account has been updated!');
     });
   };
@@ -82,9 +85,9 @@ const ClientAdminUsers = ({ setVisible }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Account</th>
-              <th>Trade</th>
-              <th>Actions</th>
+              <th style={{ textAlign: 'center' }}>Email Verified</th>
+              <th style={{ textAlign: 'center' }}>Trade Verified</th>
+              <th style={{ textAlign: 'center' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -103,44 +106,51 @@ const ClientAdminUsers = ({ setVisible }) => {
     }
   };
 
-  const userRows = users.map((user) => {
-    const { id, first_name, last_name, email, email_verified, trade_verified } = user;
+  const userRows = users
+    .sort((x, y) => y.id - x.id)
+    .map((user) => {
+      const { id, first_name, last_name, email, email_verified, trade_verified } = user;
+      const color = email_verified ? 'green' : 'red';
 
-    return (
-      <tr key={id}>
-        <td>{id}</td>
-        <td>{first_name}</td>
-        <td>{last_name}</td>
-        <td>{email}</td>
-        <td>{email_verified ? 'Verified' : 'Not Verified'}</td>
-        <td>{trade_verified ? 'Verified' : 'Not Verified'}</td>
-        <td>
-          <Button
-            compact
-            color="violet"
-            onClick={() => {
-              setVisible(true);
-              axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then((response) => {
-                setVisible(false);
-                setOpenUpdate(true);
-                setCurrent(response.data);
-                setFirstName(response.data.first_name);
-                setLastName(response.data.last_name);
-                setEmail(response.data.email);
-              });
-            }}
-          >
-            Update
-          </Button>
-        </td>
-      </tr>
-    );
-  });
+      return (
+        <tr key={id}>
+          <td>{id}</td>
+          <td>{first_name}</td>
+          <td>{last_name}</td>
+          <td>{email}</td>
+          <td style={{ color: color, textAlign: 'center' }}>
+            {email_verified ? <TbCheck color="green" /> : <TbX color="red" />}
+          </td>
+          <td style={{ color: color, textAlign: 'center' }}>
+            {trade_verified ? <TbCheck color="green" /> : <TbX color="red" />}
+          </td>
+          <td style={{ textAlign: 'center' }}>
+            <Button
+              compact
+              color="violet"
+              onClick={() => {
+                setVisible(true);
+                axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then((response) => {
+                  setVisible(false);
+                  setOpenUpdate(true);
+                  setCurrent(response.data);
+                  setFirstName(response.data.first_name);
+                  setLastName(response.data.last_name);
+                  setEmail(response.data.email);
+                });
+              }}
+            >
+              Update
+            </Button>
+          </td>
+        </tr>
+      );
+    });
 
   return (
     <>
-      <Title pl="md">Users</Title>
-      <Group pl="md" pt="md">
+      <Group px="md" align="end" position="apart">
+        <Title>Users</Title>
         <Button color="violet" onClick={() => setOpenCreate(true)}>
           Create User
         </Button>

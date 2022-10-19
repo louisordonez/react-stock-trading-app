@@ -43,7 +43,7 @@ const ClientUserPortolio = ({ setVisible }) => {
     setIsDoneLoading(false);
     axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
       if (response.status === 200) {
-        setPortfolio(response.data.sort((x, y) => x.id > y.id));
+        setPortfolio(response.data.sort((x, y) => y.id - x.id));
         setVisible(false);
         setIsDoneLoading(true);
       }

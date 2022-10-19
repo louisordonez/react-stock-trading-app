@@ -192,17 +192,19 @@ const ClientUserWallet = ({ setVisible }) => {
     }
   };
 
-  const walletTransactionsRows = walletTransactions.map((column, index) => {
-    const { created_at, action_type, total_amount } = column;
+  const walletTransactionsRows = walletTransactions
+    .sort((x, y) => y.id - x.id)
+    .map((column, index) => {
+      const { created_at, action_type, total_amount } = column;
 
-    return (
-      <tr key={index}>
-        <td>{convertDatetime(created_at)}</td>
-        <td>{toProperCase(action_type)}</td>
-        <td>{showCurrency(total_amount)}</td>
-      </tr>
-    );
-  });
+      return (
+        <tr key={index}>
+          <td>{convertDatetime(created_at)}</td>
+          <td>{toProperCase(action_type)}</td>
+          <td>{showCurrency(total_amount)}</td>
+        </tr>
+      );
+    });
 
   return (
     <>

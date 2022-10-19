@@ -56,21 +56,23 @@ const ClientUserTransactions = ({ setVisible }) => {
     }
   };
 
-  const stockTransactionsRows = stockTransactions.map((column, index) => {
-    const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
+  const stockTransactionsRows = stockTransactions
+    .sort((x, y) => y.id - x.id)
+    .map((column, index) => {
+      const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
 
-    return (
-      <tr key={index}>
-        <td>{convertDatetime(created_at)}</td>
-        <td>{toProperCase(action_type)}</td>
-        <td>{stock_symbol}</td>
-        <td>{stock_name}</td>
-        <td>{showCurrency(stock_price)}</td>
-        <td>{stock_quantity}</td>
-        <td>{showCurrency(total_amount)}</td>
-      </tr>
-    );
-  });
+      return (
+        <tr key={index}>
+          <td>{convertDatetime(created_at)}</td>
+          <td>{toProperCase(action_type)}</td>
+          <td>{stock_symbol}</td>
+          <td>{stock_name}</td>
+          <td>{showCurrency(stock_price)}</td>
+          <td>{stock_quantity}</td>
+          <td>{showCurrency(total_amount)}</td>
+        </tr>
+      );
+    });
 
   return (
     <>

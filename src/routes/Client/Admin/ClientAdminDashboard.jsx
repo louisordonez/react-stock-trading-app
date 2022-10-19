@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { TbUser, TbReceipt } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-
-import { Title, Text, Paper, Group, Grid, ThemeIcon, Table, Anchor, ScrollArea } from '@mantine/core';
+import { Title, Text, Paper, Group, Grid, ThemeIcon, Table, Anchor, ScrollArea, Button } from '@mantine/core';
 import { showErrorNotification, showSuccessNotification } from '../../../components/Notification';
-
 import { accessTokenCookie } from '../../../services/constants/cookies';
-import { getCookie } from '../../../services/utilities/cookie';
-import { axiosGet, axiosPatch } from '../../../services/utilities/axios';
+import { CLIENT_USERS_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 import { ALL_USERS_ENDPOINT, APPROVE_TRADE_ENDPOINT } from '../../../services/constants/usersEndpoints';
 import { ALL_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
-
-import { CLIENT_USERS_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
+import { getCookie } from '../../../services/utilities/cookie';
+import { axiosGet, axiosPatch } from '../../../services/utilities/axios';
 
 const ClientAdminDashboard = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -22,13 +19,16 @@ const ClientAdminDashboard = ({ setVisible }) => {
   const [transactionCount, setTransactionCount] = useState('');
   const [tradeUnverified, setTradeUnverified] = useState([]);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      setVisible(false);
       setUserCount(response.data.length);
       setTradeUnverified(response.data.filter((user) => !user.trade_verified));
+      setIsDoneLoading(true);
+      setVisible(false);
     });
     axiosGet(ALL_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
       setTransactionCount(response.data.length);
@@ -36,14 +36,16 @@ const ClientAdminDashboard = ({ setVisible }) => {
   }, []);
 
   const handleApprove = (id) => {
+    setIsButtonLoading(true);
     axiosPatch(`${APPROVE_TRADE_ENDPOINT}/${id}`, {}, headers)
-      .then((response) => {
-        showSuccessNotification('Account has been approved for trading.');
-        let filtered = tradeUnverified.filter((user) => user.id !== id);
-        setTradeUnverified(filtered);
+      .then(() => {
+        setTradeUnverified(tradeUnverified.filter((user) => user.id !== id));
+        showSuccessNotification('Account has been approved for trading!');
+        setIsButtonLoading(false);
       })
-      .catch((err) => {
-        showErrorNotification(err.message);
+      .catch((error) => {
+        showErrorNotification(error.message);
+        setIsButtonLoading(false);
       });
   };
 
@@ -57,7 +59,7 @@ const ClientAdminDashboard = ({ setVisible }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Action</th>
+              <th style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -66,7 +68,7 @@ const ClientAdminDashboard = ({ setVisible }) => {
             ) : (
               <tr>
                 <td colSpan={5}>
-                  <Text align="center">No Pending User Accounts</Text>
+                  <Text align="center">No Pending Trader Accounts</Text>
                 </td>
               </tr>
             )}
@@ -76,20 +78,31 @@ const ClientAdminDashboard = ({ setVisible }) => {
     }
   };
 
-  const tradeUnverifiedRows = tradeUnverified.map((user) => {
-    const { id, first_name, last_name, email } = user;
-    return (
-      <tr key={id}>
-        <td>{id}</td>
-        <td>{first_name}</td>
-        <td>{last_name}</td>
-        <td>{email}</td>
-        <td>
-          {user.email_verified ? <Anchor onClick={() => handleApprove(id)}>Approve</Anchor> : 'Email not confirmed'}
-        </td>
-      </tr>
-    );
-  });
+  const tradeUnverifiedRows = tradeUnverified
+    .sort((x, y) => y.id - x.id)
+    .map((user) => {
+      const { id, first_name, last_name, email, email_verified } = user;
+      const disabled = !email_verified ? true : false;
+      return (
+        <tr key={id}>
+          <td>{id}</td>
+          <td>{first_name}</td>
+          <td>{last_name}</td>
+          <td>{email}</td>
+          <td style={{ textAlign: 'center' }}>
+            <Button
+              color="violet"
+              compact
+              onClick={() => handleApprove(id)}
+              disabled={disabled}
+              loading={isButtonLoading}
+            >
+              Approve
+            </Button>
+          </td>
+        </tr>
+      );
+    });
 
   return (
     <>
@@ -147,7 +160,7 @@ const ClientAdminDashboard = ({ setVisible }) => {
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
           <Group pb="md">
-            <Title order={3}>Pending User Accounts</Title>
+            <Title order={3}>Pending Trader Accounts</Title>
           </Group>
           <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
