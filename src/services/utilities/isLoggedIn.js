@@ -14,6 +14,7 @@ export const isLoggedIn = async () => {
     return false;
   } else {
     return axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+      console.log(response);
       switch (response.status) {
         case 200:
           return true;
