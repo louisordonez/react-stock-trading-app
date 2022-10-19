@@ -110,7 +110,6 @@ const ClientAdminUsers = ({ setVisible }) => {
   useEffect(() => {
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
       setUsers(response.data);
-      console.log(response.data);
     });
   }, []);
 
