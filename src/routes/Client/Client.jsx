@@ -41,35 +41,36 @@ const Client = () => {
   useEffect(() => {
     getUserRole().then((response) => {
       setUserRole(response);
+      useDisplayContent();
     });
-
-    useDisplayContent();
   }, [userRole]);
 
   const useDisplayContent = () => {
-    switch (location.pathname) {
-      case CLIENT_DASHBOARD_LINK:
-        return userRole === 'admin' ? (
-          <ClientAdminDashboard setVisible={setVisible} />
-        ) : (
-          <ClientUserDashboard setVisible={setVisible} />
-        );
-      case CLIENT_MARKET_LINK:
-        return <ClientUserMarket setVisible={setVisible} />;
-      case CLIENT_WALLET_LINK:
-        return <ClientUserWallet setVisible={setVisible} />;
-      case CLIENT_PORTFOLIO_LINK:
-        return <ClientUserPortolio setVisible={setVisible} />;
-      case CLIENT_USERS_LINK:
-        return <ClientAdminUsers setVisible={setVisible} />;
-      case CLIENT_TRANSACTIONS_LINK:
-        return userRole === 'admin' ? (
-          <ClientAdminTransactions setVisible={setVisible} />
-        ) : (
-          <ClientUserTransactions setVisible={setVisible} />
-        );
-      case CLIENT_ACCOUNT_LINK:
-        return <ClientAccount setVisible={setVisible} />;
+    if (userRole !== '') {
+      switch (location.pathname) {
+        case CLIENT_DASHBOARD_LINK:
+          return userRole === 'admin' ? (
+            <ClientAdminDashboard setVisible={setVisible} />
+          ) : (
+            <ClientUserDashboard setVisible={setVisible} />
+          );
+        case CLIENT_MARKET_LINK:
+          return <ClientUserMarket setVisible={setVisible} />;
+        case CLIENT_WALLET_LINK:
+          return <ClientUserWallet setVisible={setVisible} />;
+        case CLIENT_PORTFOLIO_LINK:
+          return <ClientUserPortolio setVisible={setVisible} />;
+        case CLIENT_USERS_LINK:
+          return <ClientAdminUsers setVisible={setVisible} />;
+        case CLIENT_TRANSACTIONS_LINK:
+          return userRole === 'admin' ? (
+            <ClientAdminTransactions setVisible={setVisible} />
+          ) : (
+            <ClientUserTransactions setVisible={setVisible} />
+          );
+        case CLIENT_ACCOUNT_LINK:
+          return <ClientAccount setVisible={setVisible} />;
+      }
     }
   };
 
