@@ -33,7 +33,9 @@ export const axiosPatch = async (endpoint, body, headers) => {
     headers,
   })
     .then((response) => response)
-    .catch((error) => error);
+    .catch((error) => {
+      throw error.response.data.error;
+    });
 };
 
 export const axiosDelete = async (endpoint, id) => {

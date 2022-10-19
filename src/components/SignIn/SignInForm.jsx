@@ -21,7 +21,6 @@ const SignInForm = ({ onSignInSubmit, isError }) => {
   return (
     <>
       <Paper
-        withBorder
         shadow="md"
         p={30}
         mt={30}

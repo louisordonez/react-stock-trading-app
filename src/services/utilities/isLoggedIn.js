@@ -11,10 +11,16 @@ export const isLoggedIn = async () => {
     return false;
   } else {
     return axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-      if (response.status === 200) {
-        return true;
-      } else if (response.response.status === 422) {
-        return false;
+      switch (response.status) {
+        case 200:
+          return true;
+        case 401:
+        case 403:
+        case 404:
+        case 422:
+          return false;
+        default:
+          return false;
       }
     });
   }
