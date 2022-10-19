@@ -23,43 +23,17 @@ const ClientAdminUsers = ({ setVisible }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
 
   useEffect(() => {
+    setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
       setUsers(response.data);
+      setIsDoneLoading(true);
+      setVisible(false);
     });
   }, []);
-
-  const userRows = users.map((user) => {
-    const { id, first_name, last_name, email, email_verified, trade_verified } = user;
-    return (
-      <tr key={id}>
-        <td>{id}</td>
-        <td>{first_name}</td>
-        <td>{last_name}</td>
-        <td>{email}</td>
-        <td>{email_verified ? 'Verified' : 'Not Verified'}</td>
-        <td>{trade_verified ? 'Verified' : 'Not Verified'}</td>
-        <td>
-          <Anchor
-            onClick={() => {
-              setVisible(true);
-              axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then((response) => {
-                setVisible(false);
-                setOpenUpdate(true);
-                setCurrent(response.data);
-                setFirstName(response.data.first_name);
-                setLastName(response.data.last_name);
-                setEmail(response.data.email);
-              });
-            }}
-          >
-            Update
-          </Anchor>
-        </td>
-      </tr>
-    );
-  });
 
   const handleCreateSubmit = (createInfo) => {
     const formData = new FormData();
@@ -71,7 +45,7 @@ const ClientAdminUsers = ({ setVisible }) => {
     setVisible(true);
     axiosPost(USERS_ENDPOINT, formData, headers).then((response) => {
       setVisible(false);
-      showSuccessNotification('An email has been sent to verify your account!');
+      showSuccessNotification('An email has been sent to verify the account!');
       setUsers([...users, response.data.user]);
     });
   };
@@ -98,6 +72,71 @@ const ClientAdminUsers = ({ setVisible }) => {
     });
   };
 
+  const displayTable = () => {
+    if (isDoneLoading) {
+      return (
+        <Table highlightOnHover>
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Account</th>
+              <th>Trade</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userRows.length > 0 ? (
+              userRows
+            ) : (
+              <tr>
+                <td colSpan={7}>
+                  <Text align="center">No User Accounts</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
+  };
+
+  const userRows = users.map((user) => {
+    const { id, first_name, last_name, email, email_verified, trade_verified } = user;
+
+    return (
+      <tr key={id}>
+        <td>{id}</td>
+        <td>{first_name}</td>
+        <td>{last_name}</td>
+        <td>{email}</td>
+        <td>{email_verified ? 'Verified' : 'Not Verified'}</td>
+        <td>{trade_verified ? 'Verified' : 'Not Verified'}</td>
+        <td>
+          <Button
+            compact
+            color="violet"
+            onClick={() => {
+              setVisible(true);
+              axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then((response) => {
+                setVisible(false);
+                setOpenUpdate(true);
+                setCurrent(response.data);
+                setFirstName(response.data.first_name);
+                setLastName(response.data.last_name);
+                setEmail(response.data.email);
+              });
+            }}
+          >
+            Update
+          </Button>
+        </td>
+      </tr>
+    );
+  });
+
   return (
     <>
       <Title pl="md">Users</Title>
@@ -108,32 +147,7 @@ const ClientAdminUsers = ({ setVisible }) => {
       </Group>
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
-          <ScrollArea>
-            <Table highlightOnHover>
-              <thead>
-                <tr>
-                  <th>User ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Account</th>
-                  <th>Trade</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userRows.length > 0 ? (
-                  userRows
-                ) : (
-                  <tr>
-                    <td colSpan={7}>
-                      <Text align="center">No User Accounts</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
       </Group>
       <Modal opened={openCreate} onClose={() => setOpenCreate(false)} title="Create" centered>
@@ -160,7 +174,7 @@ const ClientAdminUsers = ({ setVisible }) => {
             onChange={(event) => setEmail(event.target.value)}
           />
         </Group>
-        <Group mb="md">
+        <Group>
           <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit}>
             Submit
           </Button>
