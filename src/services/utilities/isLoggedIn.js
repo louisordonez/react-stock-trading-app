@@ -10,7 +10,7 @@ export const isLoggedIn = async () => {
     Authorization: accessToken,
   };
 
-  if (accessToken === '') {
+  if (accessToken === '' || accessToken === undefined) {
     return false;
   } else {
     return axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
