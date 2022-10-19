@@ -5,7 +5,7 @@ import { SIGN_UP_LINK } from '../../services/constants/links';
 import { isInvalidEmail, isInvalidPassword } from '../../services/utilities/inputValidation';
 import { showErrorNotification } from '../Notification';
 
-const SignUpForm = ({ onSignUpSubmit }) => {
+const SignUpForm = ({ onSignUpSubmit, isButtonLoading }) => {
   const location = useLocation();
 
   const [firstName, setFirstName] = useState('');
@@ -130,6 +130,7 @@ const SignUpForm = ({ onSignUpSubmit }) => {
         fullWidth
         mt="xl"
         color="violet"
+        loading={isButtonLoading}
         onClick={() => {
           handleSubmit();
         }}

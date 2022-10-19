@@ -16,7 +16,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const headers = { 'Content-Type': 'multipart/form-data' };
 
-  const [visible, setVisible] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const handleSignUpSubmit = (signUpInfo) => {
     const formData = new FormData();
@@ -25,9 +25,9 @@ const SignUp = () => {
       formData.append(key, value);
     });
 
-    setVisible(true);
+    setIsButtonLoading(true);
     axiosPost(USERS_ENDPOINT, formData, headers).then(() => {
-      setVisible(false);
+      setIsButtonLoading(false);
       showSuccessNotification('An email has been sent to verify your account!');
       navigate(`${SIGN_IN_LINK}`);
     });
@@ -43,7 +43,6 @@ const SignUp = () => {
       }}
       header={<LandingHeader />}
     >
-      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
       <Container size={420} my={40}>
         <Title
           align="center"
@@ -61,7 +60,7 @@ const SignUp = () => {
           </Anchor>
         </Text>
         <Paper shadow="md" p={30} mt={30} radius="md">
-          <SignUpForm onSignUpSubmit={handleSignUpSubmit} />
+          <SignUpForm onSignUpSubmit={handleSignUpSubmit} isButtonLoading={isButtonLoading} />
         </Paper>
       </Container>
     </AppShell>
