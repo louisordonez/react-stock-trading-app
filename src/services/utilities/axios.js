@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const StockTradingRef = axios.create({
-  baseURL: 'https://stock-trading-app-ha2z.onrender.com',
+  baseURL: 'https://react-stock-trading-app.onrender.com',
 });
 
 export const axiosGet = async (endpoint, headers) => {
