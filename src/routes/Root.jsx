@@ -1,6 +1,7 @@
 import { AppShell, useMantineTheme, Text, Center, Image, Stack } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import { useRedirect } from '../services/utilities/useRedirect';
+import { useRedirect } from '../assets/';
 
 const Root = () => {
   useRedirect();
@@ -38,7 +39,7 @@ const Root = () => {
               paddingRight: '3rem',
             }}
           >
-            <Image src="../../src/assets/landing.png" />
+            <Image src="../assets/landing.png" />
           </div>
         </Stack>
       </Center>
