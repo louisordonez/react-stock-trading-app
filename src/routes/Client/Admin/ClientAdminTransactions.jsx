@@ -50,27 +50,26 @@ const ClientAdminTransactions = ({ setVisible }) => {
     }
   };
 
-  const searchUser = (userId) => {
-    return userList.find((user) => user.id === userId);
-  };
-
   const transactionRows = transactions.map((transaction, index) => {
     const { user_id, created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } =
       transaction;
+    const user = userList.find((user) => user.id === user_id);
 
-    return (
-      <tr key={index}>
-        <td>{convertDatetime(created_at)}</td>
-        <td>{user_id}</td>
-        <td>{`${searchUser(user_id).first_name} ${searchUser(user_id).first_name}`}</td>
-        <td>{toProperCase(action_type)}</td>
-        <td>{stock_symbol}</td>
-        <td>{stock_name}</td>
-        <td>{showCurrency(stock_price)}</td>
-        <td>{stock_quantity}</td>
-        <td>{showCurrency(total_amount)}</td>
-      </tr>
-    );
+    if (isDoneLoading) {
+      return (
+        <tr key={index}>
+          <td>{convertDatetime(created_at)}</td>
+          <td>{user_id}</td>
+          <td>{`${user.first_name} ${user.last_name}`}</td>
+          <td>{toProperCase(action_type)}</td>
+          <td>{stock_symbol}</td>
+          <td>{stock_name}</td>
+          <td>{showCurrency(stock_price)}</td>
+          <td>{stock_quantity}</td>
+          <td>{showCurrency(total_amount)}</td>
+        </tr>
+      );
+    }
   });
 
   useEffect(() => {
