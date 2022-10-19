@@ -82,11 +82,13 @@ const ClientUserMarket = ({ setVisible }) => {
   }, [opened]);
 
   const checkQuantity = () => {
-    if (quantity <= 0) {
+    const total = parseFloat(quantity) * parseFloat(stockPrice);
+
+    if (parseFloat(quantity) <= 0 || quantity === '') {
       showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
-    } else if (quantity * stockPrice > balance) {
+    } else if (total > parseFloat(balance)) {
       showErrorNotification('Invalid quantity.');
       setError(true);
       setQuantity('');
@@ -261,7 +263,7 @@ const ClientUserMarket = ({ setVisible }) => {
                 handleSubmit();
               }
             }}
-            onChange={(event) => setQuantity(parseFloat(event.target.value))}
+            onChange={(event) => setQuantity(event.target.value)}
             value={quantity}
             error={error}
           />
