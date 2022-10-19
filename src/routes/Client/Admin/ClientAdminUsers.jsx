@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Title, Text, Paper, Group, Table, Anchor, ScrollArea, Button, Modal, TextInput } from '@mantine/core';
+import { Title, Text, Paper, Group, Table, ScrollArea, Button, Modal, TextInput } from '@mantine/core';
 import { showSuccessNotification } from '../../../components/Notification';
 import SignUpForm from '../../../components/SignUp/SignUpForm';
 import { accessTokenCookie } from '../../../services/constants/cookies';
