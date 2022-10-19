@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { TextInput, PasswordInput, Paper, Button, Group } from '@mantine/core';
+import { useLocation } from 'react-router-dom';
+import { TextInput, PasswordInput, Button, Group } from '@mantine/core';
+import { SIGN_UP_LINK } from '../../services/constants/links';
 import { isInvalidEmail, isInvalidPassword } from '../../services/utilities/inputValidation';
-import { showSuccessNotification, showErrorNotification } from '../Notification';
+import { showErrorNotification } from '../Notification';
 
 const SignUpForm = ({ onSignUpSubmit }) => {
+  const location = useLocation();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -73,70 +77,65 @@ const SignUpForm = ({ onSignUpSubmit }) => {
 
   return (
     <>
-      <Paper
-        shadow="md"
-        p={30}
-        mt={30}
-        radius="md"
+      <Group
+        grow
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             handleSubmit();
           }
         }}
       >
-        <Group grow>
-          <TextInput
-            label="First name"
-            required
-            onChange={(event) => setFirstName(event.target.value)}
-            value={firstName}
-            error={isFirstNameError}
-          />
-          <TextInput
-            label="Last name"
-            required
-            onChange={(event) => setLastName(event.target.value)}
-            value={lastName}
-            error={isLastNameError}
-          />
-        </Group>
         <TextInput
-          label="Email"
+          label="First name"
+          required
+          onChange={(event) => setFirstName(event.target.value)}
+          value={firstName}
+          error={isFirstNameError}
+        />
+        <TextInput
+          label="Last name"
+          required
+          onChange={(event) => setLastName(event.target.value)}
+          value={lastName}
+          error={isLastNameError}
+        />
+      </Group>
+      <TextInput
+        label="Email"
+        required
+        mt="md"
+        onChange={(event) => setEmail(event.target.value)}
+        value={email}
+        error={isEmailError}
+      />
+      <Group grow>
+        <PasswordInput
+          label="Password"
           required
           mt="md"
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
-          error={isEmailError}
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
+          error={isPasswordError}
         />
-        <Group grow>
-          <PasswordInput
-            label="Password"
-            required
-            mt="md"
-            onChange={(event) => setPassword(event.target.value)}
-            value={password}
-            error={isPasswordError}
-          />
-          <PasswordInput
-            label="Confirm Password"
-            required
-            mt="md"
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            value={confirmPassword}
-            error={isConfirmPasswordError}
-          />
-        </Group>
-        <Button
-          fullWidth
-          mt="xl"
-          color="violet"
-          onClick={() => {
-            handleSubmit();
-          }}
-        >
-          Sign up
-        </Button>
-      </Paper>
+        <PasswordInput
+          label="Confirm Password"
+          required
+          mt="md"
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          value={confirmPassword}
+          error={isConfirmPasswordError}
+        />
+      </Group>
+      <Button
+        fullWidth
+        mt="xl"
+        color="violet"
+        onClick={() => {
+          handleSubmit();
+        }}
+      >
+        {location.pathname === SIGN_UP_LINK ? 'Sign up' : 'Submit'}
+      </Button>
     </>
   );
 };

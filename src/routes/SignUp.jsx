@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container, LoadingOverlay } from '@mantine/core';
+import { AppShell, useMantineTheme, Anchor, Title, Text, Container, LoadingOverlay, Paper } from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
@@ -60,7 +60,9 @@ const SignUp = () => {
             Sign in
           </Anchor>
         </Text>
-        <SignUpForm onSignUpSubmit={handleSignUpSubmit} />
+        <Paper shadow="md" p={30} mt={30} radius="md">
+          <SignUpForm onSignUpSubmit={handleSignUpSubmit} />
+        </Paper>
       </Container>
     </AppShell>
   );

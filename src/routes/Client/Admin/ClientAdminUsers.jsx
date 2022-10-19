@@ -1,31 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import {
-  Title,
-  Text,
-  Paper,
-  Group,
-  Table,
-  Anchor,
-  ScrollArea,
-  Button,
-  Modal,
-  Container,
-  TextInput,
-} from '@mantine/core';
+import { Title, Text, Paper, Group, Table, Anchor, ScrollArea, Button, Modal, TextInput } from '@mantine/core';
 import { showSuccessNotification } from '../../../components/Notification';
 import SignUpForm from '../../../components/SignUp/SignUpForm';
-
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { getCookie } from '../../../services/utilities/cookie';
-import { axiosGet, axiosPost, axiosPatch } from '../../../services/utilities/axios';
 import {
   SHOW_USER_ENDPOINT,
   UPDATE_USER_ENDPOINT,
   ALL_USERS_ENDPOINT,
   USERS_ENDPOINT,
 } from '../../../services/constants/usersEndpoints';
+import { axiosGet, axiosPost, axiosPatch } from '../../../services/utilities/axios';
 
 const ClientAdminUsers = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -34,11 +19,16 @@ const ClientAdminUsers = ({ setVisible }) => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [users, setUsers] = useState([]);
-
   const [current, setCurrent] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  useEffect(() => {
+    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
+      setUsers(response.data);
+    });
+  }, []);
 
   const userRows = users.map((user) => {
     const { id, first_name, last_name, email, email_verified, trade_verified } = user;
@@ -88,36 +78,33 @@ const ClientAdminUsers = ({ setVisible }) => {
 
   const handleUpdateSubmit = () => {
     const headers = {
-      Authorization: `${accessToken}`,
+      Authorization: accessToken,
       'Content-Type': 'multipart/form-data',
     };
-
     const formData = new FormData();
+
     formData.append('first_name', firstName);
     formData.append('last_name', lastName);
     formData.append('email', email);
 
     setVisible(true);
     axiosPatch(`${UPDATE_USER_ENDPOINT}/${current.id}`, formData, headers).then((response) => {
-      setVisible(false);
       let filtered = users.filter((user) => user.id !== current.id);
       let updated = response.data.user;
+
       setUsers([...filtered, updated]);
+      setVisible(false);
       showSuccessNotification('Account has been updated!');
     });
   };
 
-  useEffect(() => {
-    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      setUsers(response.data);
-    });
-  }, []);
-
   return (
     <>
       <Title pl="md">Users</Title>
-      <Group px="md" py="md">
-        <Button onClick={() => setOpenCreate(true)}>Create User</Button>
+      <Group pl="md" pt="md">
+        <Button color="violet" onClick={() => setOpenCreate(true)}>
+          Create User
+        </Button>
       </Group>
       <Group px="md" py="md" grow>
         <Paper p="xl" radius="md" shadow="md" withBorder>
@@ -125,7 +112,7 @@ const ClientAdminUsers = ({ setVisible }) => {
             <Table highlightOnHover>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>User ID</th>
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Email</th>
@@ -149,46 +136,35 @@ const ClientAdminUsers = ({ setVisible }) => {
           </ScrollArea>
         </Paper>
       </Group>
-      <Modal opened={openCreate} onClose={() => setOpenCreate(false)} title="Sign Up New User Account">
+      <Modal opened={openCreate} onClose={() => setOpenCreate(false)} title="Create" centered>
         <SignUpForm onSignUpSubmit={handleCreateSubmit} />
       </Modal>
-      <Modal opened={openUpdate} onClose={() => setOpenUpdate(false)} title="Update User Account">
-        <Container size={520} my="md">
-          <Group grow>
-            <Paper
-              radius="md"
-              shadow="md"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  handleUpdateSubmit();
-                }
-              }}
-            >
-              <Group grow>
-                <TextInput
-                  label="First name"
-                  value={firstName}
-                  onChange={(event) => setFirstName(event.target.value)}
-                />
-                <TextInput label="Last name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
-              </Group>
-              <Group grow>
-                <TextInput
-                  label="Email"
-                  mt="md"
-                  type="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-              </Group>
-              <Group>
-                <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit}>
-                  Submit
-                </Button>
-              </Group>
-            </Paper>
-          </Group>
-        </Container>
+      <Modal opened={openUpdate} onClose={() => setOpenUpdate(false)} title="Update" centered>
+        <Group
+          grow
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              handleUpdateSubmit();
+            }
+          }}
+        >
+          <TextInput label="First name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
+          <TextInput label="Last name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+        </Group>
+        <Group grow>
+          <TextInput
+            label="Email"
+            mt="md"
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </Group>
+        <Group mb="md">
+          <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit}>
+            Submit
+          </Button>
+        </Group>
       </Modal>
     </>
   );

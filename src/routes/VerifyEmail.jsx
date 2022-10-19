@@ -12,7 +12,7 @@ const VerifyEmail = () => {
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const accessToken = getCookie(accessTokenCookie);
-  const headers = { Authorization: `${accessToken}` };
+  const headers = { Authorization: accessToken };
 
   const [email, setEmail] = useState('');
 
