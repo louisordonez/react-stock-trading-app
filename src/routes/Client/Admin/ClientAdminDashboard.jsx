@@ -21,6 +21,19 @@ const ClientAdminDashboard = ({ setVisible }) => {
   const [userCount, setUserCount] = useState('');
   const [transactionCount, setTransactionCount] = useState('');
   const [tradeUnverified, setTradeUnverified] = useState([]);
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
+
+  useEffect(() => {
+    setVisible(true);
+    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
+      setVisible(false);
+      setUserCount(response.data.length);
+      setTradeUnverified(response.data.filter((user) => !user.trade_verified));
+    });
+    axiosGet(ALL_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      setTransactionCount(response.data.length);
+    });
+  }, []);
 
   const handleApprove = (id) => {
     axiosPatch(`${APPROVE_TRADE_ENDPOINT}/${id}`, {}, headers)
@@ -32,6 +45,35 @@ const ClientAdminDashboard = ({ setVisible }) => {
       .catch((err) => {
         showErrorNotification(err.message);
       });
+  };
+
+  const displayTable = () => {
+    if (isDoneLoading) {
+      return (
+        <Table highlightOnHover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tradeUnverifiedRows.length > 0 ? (
+              tradeUnverifiedRows
+            ) : (
+              <tr>
+                <td colSpan={5}>
+                  <Text align="center">No Pending User Accounts</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
   };
 
   const tradeUnverifiedRows = tradeUnverified.map((user) => {
@@ -48,18 +90,6 @@ const ClientAdminDashboard = ({ setVisible }) => {
       </tr>
     );
   });
-
-  useEffect(() => {
-    setVisible(true);
-    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      setVisible(false);
-      setUserCount(response.data.length);
-      setTradeUnverified(response.data.filter((user) => !user.trade_verified));
-    });
-    axiosGet(ALL_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
-      setTransactionCount(response.data.length);
-    });
-  }, []);
 
   return (
     <>
@@ -119,30 +149,7 @@ const ClientAdminDashboard = ({ setVisible }) => {
           <Group pb="md">
             <Title order={3}>Pending User Accounts</Title>
           </Group>
-          <ScrollArea>
-            <Table highlightOnHover>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Email</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tradeUnverifiedRows.length > 0 ? (
-                  tradeUnverifiedRows
-                ) : (
-                  <tr>
-                    <td colSpan={5}>
-                      <Text align="center">No Pending User Accounts</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
       </Group>
     </>

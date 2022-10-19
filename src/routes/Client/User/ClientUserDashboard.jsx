@@ -56,7 +56,7 @@ const ClientUserDashboard = ({ setVisible }) => {
   const displayWalletTransactions = () => {
     if (isDoneLoading) {
       return (
-        <Table>
+        <Table highlightOnHover>
           <thead>
             <tr>
               <th>Datetime</th>
@@ -83,7 +83,7 @@ const ClientUserDashboard = ({ setVisible }) => {
   const displayStockTransactions = () => {
     if (isDoneLoading) {
       return (
-        <Table>
+        <Table highlightOnHover>
           <thead>
             <tr>
               <th>Datetime</th>

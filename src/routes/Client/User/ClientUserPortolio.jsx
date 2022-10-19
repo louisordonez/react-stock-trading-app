@@ -153,7 +153,7 @@ const ClientUserPortolio = ({ setVisible }) => {
   const displayTable = () => {
     if (isDoneLoading) {
       return (
-        <Table>
+        <Table highlightOnHover>
           <thead>
             <tr>
               <th>Symbol</th>

@@ -28,7 +28,7 @@ const ClientUserTransactions = ({ setVisible }) => {
   const displayTable = () => {
     if (isDoneLoading) {
       return (
-        <Table>
+        <Table highlightOnHover>
           <thead>
             <tr>
               <th>Datetime</th>
