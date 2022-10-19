@@ -198,7 +198,13 @@ const ClientUserMarket = ({ setVisible }) => {
             </Group>
           </ScrollArea>
           <Group position="right">
-            <Button color="violet" onClick={() => setOpened((opened) => !opened)}>
+            <Button
+              color="violet"
+              onClick={() => {
+                setOpened((opened) => !opened);
+                getStockInfo(search);
+              }}
+            >
               Buy
             </Button>
           </Group>
