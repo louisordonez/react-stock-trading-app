@@ -82,6 +82,16 @@ const ClientUserMarket = ({ setVisible }) => {
         setPortfolio(response.data);
       }
     });
+
+    if (search !== '') {
+      axiosGet(`${STOCK_INFO_ENDPOINT}${search}`, headers).then((response) => {
+        setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+        setStockSymbol(response.data.company.symbol);
+        setStockName(response.data.company.company_name);
+        setStockPrice(response.data.quote.latest_price);
+        setIsModalLoading(false);
+      });
+    }
   }, [opened]);
 
   const checkQuantity = () => {
@@ -152,6 +162,9 @@ const ClientUserMarket = ({ setVisible }) => {
       setSearch(event);
       setVisible(true);
       setIsDoneLoading(false);
+      axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
+        setBalance(parseFloat(response.data.wallet.balance));
+      });
       axiosGet(`${STOCK_INFO_ENDPOINT}${event}`, headers).then((response) => {
         // setStockLogo(response.data.logo.url);
         setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
