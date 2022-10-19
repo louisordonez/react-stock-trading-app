@@ -159,7 +159,7 @@ const ClientUserPortolio = ({ setVisible }) => {
               <th>Symbol</th>
               <th>Name</th>
               <th>Owned</th>
-              <th></th>
+              <th style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -188,7 +188,7 @@ const ClientUserPortolio = ({ setVisible }) => {
         <td>{stock_symbol}</td>
         <td>{stock_name}</td>
         <td>{stocks_owned_quantity}</td>
-        <td>
+        <td style={{ textAlign: 'center' }}>
           <Button
             color="violet"
             compact
