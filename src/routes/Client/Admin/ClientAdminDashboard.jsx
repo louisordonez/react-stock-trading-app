@@ -22,7 +22,6 @@ const ClientAdminDashboard = ({ setVisible }) => {
   const [transactionCount, setTransactionCount] = useState('');
   const [tradeUnverified, setTradeUnverified] = useState([]);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   useEffect(() => {
     setVisible(true);
@@ -39,16 +38,16 @@ const ClientAdminDashboard = ({ setVisible }) => {
   }, []);
 
   const handleApprove = (id) => {
-    setIsButtonLoading(true);
+    setVisible(true);
     axiosPatch(`${APPROVE_TRADE_ENDPOINT}/${id}`, {}, headers)
       .then(() => {
         setTradeUnverified(tradeUnverified.filter((user) => user.id !== id));
         showSuccessNotification('Account has been approved for trading!');
-        setIsButtonLoading(false);
+        setVisible(false);
       })
       .catch((error) => {
         showErrorNotification(error.message);
-        setIsButtonLoading(false);
+        setVisible(false);
       });
   };
 
@@ -93,13 +92,7 @@ const ClientAdminDashboard = ({ setVisible }) => {
           <td>{last_name}</td>
           <td>{email}</td>
           <td style={{ textAlign: 'center' }}>
-            <Button
-              color="violet"
-              compact
-              onClick={() => handleApprove(id)}
-              disabled={disabled}
-              loading={isButtonLoading}
-            >
+            <Button color="violet" compact onClick={() => handleApprove(id)} disabled={disabled}>
               Approve
             </Button>
           </td>
