@@ -4,6 +4,7 @@ import { TbWallet, TbChartBar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
 import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
+import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
 import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
@@ -21,35 +22,94 @@ const ClientUserDashboard = ({ setVisible }) => {
   const [stocksOwned, setStocksOwned] = useState(0);
   const [walletTransactions, setWalletTransactions] = useState([]);
   const [stockTransactions, setStockTransactions] = useState([]);
+  const [isDoneLoading, setIsDoneLoading] = useState(true);
 
   useEffect(() => {
     setVisible(true);
+    setIsDoneLoading(false);
     axiosGet(SHOW_WALLET_ENDPOINT, headers).then((response) => {
-      setVisible(false);
       setBalance(showCurrency(response.data.wallet.balance));
       setWalletTransactions(response.data.transactions);
+      setVisible(false);
+      setIsDoneLoading(true);
     });
     axiosGet(USER_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
-      const stocksQuantity = () => {
-        if (response.data.length === 0) {
-          setStocksOwned(0);
-        } else {
-          setStocksOwned(
-            response.data
-              .map((array) => parseFloat(array.stock_quantity))
-              .reduce((x, y) => x + y)
-              .toLocaleString('en-US', {
-                maximumFractionDigits: 1,
-                minimumFractionDigits: 1,
-              })
-          );
-        }
-      };
-
-      stocksQuantity();
       setStockTransactions(response.data);
     });
+    axiosGet(USER_PORTFOLIO_ENDPOINT, headers).then((response) => {
+      if (response.data.length === 0) {
+        setStocksOwned(0);
+      } else {
+        setStocksOwned(
+          response.data
+            .map((array) => parseFloat(array.stocks_owned_quantity))
+            .reduce((x, y) => x + y)
+            .toLocaleString('en-US', {
+              maximumFractionDigits: 1,
+              minimumFractionDigits: 1,
+            })
+        );
+      }
+    });
   }, []);
+
+  const displayWalletTransactions = () => {
+    if (isDoneLoading) {
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Datetime</th>
+              <th>Action</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {walletTransactionsRows.length > 0 ? (
+              walletTransactionsRows
+            ) : (
+              <tr>
+                <td colSpan={3}>
+                  <Text align="center">No transactions</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
+  };
+
+  const displayStockTransactions = () => {
+    if (isDoneLoading) {
+      return (
+        <Table>
+          <thead>
+            <tr>
+              <th>Datetime</th>
+              <th>Action</th>
+              <th>Symbol</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stockTransactionsRows.length > 0 ? (
+              stockTransactionsRows
+            ) : (
+              <tr>
+                <td colSpan={7}>
+                  <Text align="center">No transactions</Text>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+      );
+    }
+  };
 
   const walletTransactionsRows = walletTransactions.slice(0, 5).map((column, index) => {
     const { created_at, action_type, total_amount } = column;
@@ -124,28 +184,7 @@ const ClientUserDashboard = ({ setVisible }) => {
               View All
             </Anchor>
           </Group>
-          <ScrollArea>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Datetime</th>
-                  <th>Action</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {walletTransactionsRows.length > 0 ? (
-                  walletTransactionsRows
-                ) : (
-                  <tr>
-                    <td colSpan={3}>
-                      <Text align="center">No transactions</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayWalletTransactions()}</ScrollArea>
         </Paper>
       </Group>
       <Group px="md" py="md" grow>
@@ -161,32 +200,7 @@ const ClientUserDashboard = ({ setVisible }) => {
               View All
             </Anchor>
           </Group>
-          <ScrollArea>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Datetime</th>
-                  <th>Action</th>
-                  <th>Symbol</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stockTransactionsRows.length > 0 ? (
-                  stockTransactionsRows
-                ) : (
-                  <tr>
-                    <td colSpan={7}>
-                      <Text align="center">No transactions</Text>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </Table>
-          </ScrollArea>
+          <ScrollArea>{displayStockTransactions()}</ScrollArea>
         </Paper>
       </Group>
     </>
