@@ -82,7 +82,7 @@ const ClientAdminUsers = ({ setVisible }) => {
         <Table highlightOnHover>
           <thead>
             <tr>
-              <th>User ID</th>
+              <th>ID</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
