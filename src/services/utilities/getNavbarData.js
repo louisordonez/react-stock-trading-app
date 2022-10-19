@@ -17,7 +17,7 @@ const userData = [
 ];
 
 const adminData = [
-  { link: CLIENT_DASHBOARD_LINK, label: 'Dashboard', icon: TbDeviceAnalytics },
+  { link: CLIENT_DASHBOARD_LINK, label: 'Dashboard', icon: TbDashboard },
   { link: CLIENT_USERS_LINK, label: 'Users', icon: TbUsers },
   { link: CLIENT_TRANSACTIONS_LINK, label: 'Transactions', icon: TbReceipt },
 ];
