@@ -84,7 +84,13 @@ const ClientAdminTransactions = ({ setVisible }) => {
       setTransactions(response.data);
     });
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      setUserList(response.data);
+      const usersArr = response.data.map((item) => {
+        return {
+          ...item,
+          id: item.id.toString(),
+        };
+      });
+      setUserList(usersArr);
       setVisible(false);
       setIsDoneLoading(true);
     });

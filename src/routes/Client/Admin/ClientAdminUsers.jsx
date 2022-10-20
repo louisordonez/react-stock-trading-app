@@ -34,7 +34,13 @@ const ClientAdminUsers = ({ setVisible }) => {
     setVisible(true);
     setIsDoneLoading(false);
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      setUsers(response.data);
+      const usersArr = response.data.map((item) => {
+        return {
+          ...item,
+          id: item.id.toString(),
+        };
+      });
+      setUsers(usersArr);
       setIsDoneLoading(true);
       setVisible(false);
     });
@@ -49,7 +55,13 @@ const ClientAdminUsers = ({ setVisible }) => {
 
     setVisible(true);
     axiosPost(USERS_ENDPOINT, formData, headers).then((response) => {
-      setUsers([...users, response.data.user]);
+      const usersArr = response.data.map((item) => {
+        return {
+          ...item,
+          id: item.id.toString(),
+        };
+      });
+      setUsers([...users, usersArr]);
       setVisible(false);
       setOpenCreate(false);
       showSuccessNotification('An email has been sent to verify the account!');

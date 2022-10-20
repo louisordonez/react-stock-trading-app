@@ -27,8 +27,14 @@ const ClientAdminDashboard = ({ setVisible }) => {
     setVisible(true);
     setIsDoneLoading(false);
     axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
+      const usersArr = response.data.map((item) => {
+        return {
+          ...item,
+          id: item.id.toString(),
+        };
+      });
       setUserCount(response.data.length);
-      setTradeUnverified(response.data.filter((user) => !user.trade_verified));
+      setTradeUnverified(usersArr.filter((user) => !user.trade_verified));
       setIsDoneLoading(true);
       setVisible(false);
     });
