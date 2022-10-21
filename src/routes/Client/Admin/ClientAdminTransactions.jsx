@@ -20,6 +20,25 @@ const ClientAdminTransactions = ({ setVisible }) => {
   const [userList, setUserList] = useState([]);
   const [isDoneLoading, setIsDoneLoading] = useState(true);
 
+  useEffect(() => {
+    setVisible(true);
+    setIsDoneLoading(false);
+    axiosGet(ALL_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
+      setTransactions(response.data);
+    });
+    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
+      const usersArr = response.data.map((item) => {
+        return {
+          ...item,
+          id: item.id.toString(),
+        };
+      });
+      setUserList(usersArr);
+      setVisible(false);
+      setIsDoneLoading(true);
+    });
+  }, []);
+
   const displayTable = () => {
     if (isDoneLoading) {
       return (
@@ -56,11 +75,19 @@ const ClientAdminTransactions = ({ setVisible }) => {
   const transactionRows = transactions
     .sort((x, y) => y.id - x.id)
     .map((transaction, index) => {
-      const { user_id, created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } =
-        transaction;
-      const user = userList.find((user) => user.id === user_id);
-
       if (isDoneLoading) {
+        const {
+          user_id,
+          created_at,
+          action_type,
+          stock_symbol,
+          stock_name,
+          stock_price,
+          stock_quantity,
+          total_amount,
+        } = transaction;
+        const user = userList.find((user) => user.id === user_id.toString());
+
         return (
           <tr key={index}>
             <td>{convertDatetime(created_at)}</td>
@@ -76,25 +103,6 @@ const ClientAdminTransactions = ({ setVisible }) => {
         );
       }
     });
-
-  useEffect(() => {
-    setVisible(true);
-    setIsDoneLoading(false);
-    axiosGet(ALL_STOCK_TRANSACTIONS_ENDPOINT, headers).then((response) => {
-      setTransactions(response.data);
-    });
-    axiosGet(ALL_USERS_ENDPOINT, headers).then((response) => {
-      const usersArr = response.data.map((item) => {
-        return {
-          ...item,
-          id: item.id.toString(),
-        };
-      });
-      setUserList(usersArr);
-      setVisible(false);
-      setIsDoneLoading(true);
-    });
-  }, []);
 
   return (
     <>
