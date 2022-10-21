@@ -76,15 +76,14 @@ const SignUpForm = ({ onSignUpSubmit, isButtonLoading }) => {
   };
 
   return (
-    <>
-      <Group
-        grow
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            handleSubmit();
-          }
-        }}
-      >
+    <div
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          handleSubmit();
+        }
+      }}
+    >
+      <Group grow>
         <TextInput
           label="First name"
           required
@@ -137,7 +136,7 @@ const SignUpForm = ({ onSignUpSubmit, isButtonLoading }) => {
       >
         {location.pathname === SIGN_UP_LINK ? 'Sign up' : 'Submit'}
       </Button>
-    </>
+    </div>
   );
 };
 
