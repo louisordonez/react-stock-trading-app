@@ -1,12 +1,22 @@
 import { useRouteError } from 'react-router-dom';
-import { createStyles, Title, Text, Button, Container, Group } from '@mantine/core';
+import {
+  createStyles,
+  Title,
+  Text,
+  Button,
+  Container,
+  Group,
+} from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   container: {
     width: '100vw',
     height: '100vh',
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+    background:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[8]
+        : theme.colors.gray[0],
   },
 
   root: {
@@ -20,7 +30,10 @@ const useStyles = createStyles((theme) => ({
     fontSize: 220,
     lineHeight: 1,
     marginBottom: theme.spacing.xl * 1.5,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[4]
+        : theme.colors.gray[2],
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: 120,
@@ -31,7 +44,10 @@ const useStyles = createStyles((theme) => ({
     textAlign: 'center',
     fontWeight: 900,
     fontSize: 38,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[2],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
+        : theme.colors.gray[2],
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: 32,
@@ -43,7 +59,10 @@ const useStyles = createStyles((theme) => ({
     fontWeight: 900,
     fontSize: 38,
     marginBottom: theme.spacing.xl * 1.5,
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[2],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
+        : theme.colors.gray[2],
 
     [theme.fn.smallerThan('sm')]: {
       fontSize: 32,
@@ -66,14 +85,26 @@ const Error = () => {
     <div className={classes.container}>
       <Container className={classes.root}>
         <div className={classes.label}>404</div>
-        <Title className={classes.subtitle}>{error.statusText || error.message}</Title>
+        <Title className={classes.subtitle}>
+          {error.statusText || error.message}
+        </Title>
         <Title className={classes.title}>You have found a secret place.</Title>
-        <Text color="dimmed" size="lg" align="center" className={classes.description}>
-          Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has been moved to
-          another URL.
+        <Text
+          color="dimmed"
+          size="lg"
+          align="center"
+          className={classes.description}
+        >
+          Unfortunately, this is only a 404 page. You may have mistyped the
+          address, or the page has been moved to another URL.
         </Text>
         <Group position="center">
-          <Button variant="subtle" color="violet" size="md" onClick={() => window.location.assign('/')}>
+          <Button
+            variant="subtle"
+            color="violet"
+            size="md"
+            onClick={() => window.location.assign('/')}
+          >
             Take me back to home page
           </Button>
         </Group>

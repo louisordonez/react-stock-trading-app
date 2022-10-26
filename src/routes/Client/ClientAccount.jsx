@@ -1,5 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Title, Paper, Group, TextInput, PasswordInput, Button, Container } from '@mantine/core';
+import {
+  Title,
+  Paper,
+  Group,
+  TextInput,
+  PasswordInput,
+  Button,
+  Container,
+} from '@mantine/core';
 import { accessTokenCookie } from '../../services/constants/cookies';
 import { getCookie } from '../../services/utilities/cookie';
 import {
@@ -7,8 +15,15 @@ import {
   SIGN_IN_USER_ENDPOINT,
   UPDATE_USER_ENDPOINT,
 } from '../../services/constants/usersEndpoints';
-import { axiosGet, axiosPost, axiosPatch } from '../../services/utilities/axios';
-import { showErrorNotification, showSuccessNotification } from '../../components/Notification';
+import {
+  axiosGet,
+  axiosPost,
+  axiosPatch,
+} from '../../services/utilities/axios';
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from '../../components/Notification';
 
 const ClientAccount = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -62,11 +77,15 @@ const ClientAccount = ({ setVisible }) => {
 
     if (password !== '') {
       if (password.length < 6) {
-        showErrorNotification('Account was not updated. Password is too short (minimum is 6 characters).');
+        showErrorNotification(
+          'Account was not updated. Password is too short (minimum is 6 characters).'
+        );
         setPasswordError(true);
         resetForm();
       } else if (password !== confirmPassword) {
-        showErrorNotification('Account was not updated. Password and Confirm Password does not match.');
+        showErrorNotification(
+          'Account was not updated. Password and Confirm Password does not match.'
+        );
         setPasswordError(true);
         resetForm();
       } else {
@@ -75,24 +94,28 @@ const ClientAccount = ({ setVisible }) => {
         axiosPost(SIGN_IN_USER_ENDPOINT, userInfo).then((response) => {
           if (response.status !== 200) {
             setVisible(false);
-            showErrorNotification('Account was not updated. Invalid current password.');
+            showErrorNotification(
+              'Account was not updated. Invalid current password.'
+            );
             setCurrentPasswordError(true);
             resetForm();
           } else {
             formData.append('password', password);
 
-            axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then((response) => {
-              setVisible(false);
+            axiosPatch(UPDATE_USER_ENDPOINT, formData, headers).then(
+              (response) => {
+                setVisible(false);
 
-              if (response.status === 200) {
-                showSuccessNotification('Account has been updated!');
-                resetErrors();
-                resetForm();
-              } else {
-                showErrorNotification('Account was not updated.');
-                resetForm();
+                if (response.status === 200) {
+                  showSuccessNotification('Account has been updated!');
+                  resetErrors();
+                  resetForm();
+                } else {
+                  showErrorNotification('Account was not updated.');
+                  resetForm();
+                }
               }
-            });
+            );
           }
         });
       }
@@ -126,8 +149,16 @@ const ClientAccount = ({ setVisible }) => {
             }}
           >
             <Group grow>
-              <TextInput label="First name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-              <TextInput label="Last name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+              <TextInput
+                label="First name"
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+              />
+              <TextInput
+                label="Last name"
+                value={lastName}
+                onChange={(event) => setLastName(event.target.value)}
+              />
             </Group>
             <Group grow>
               <PasswordInput

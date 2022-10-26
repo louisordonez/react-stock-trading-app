@@ -1,7 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SHOW_USER_ENDPOINT } from '../constants/usersEndpoints';
-import { SIGN_IN_LINK, SIGN_UP_LINK, VERIFY_EMAIL_LINK, CLIENT_DASHBOARD_LINK } from '../constants/links';
+import {
+  SIGN_IN_LINK,
+  SIGN_UP_LINK,
+  VERIFY_EMAIL_LINK,
+  CLIENT_DASHBOARD_LINK,
+} from '../constants/links';
 import { accessTokenCookie } from '../constants/cookies';
 import { isLoggedIn } from './isLoggedIn';
 import { axiosGet } from './axios';

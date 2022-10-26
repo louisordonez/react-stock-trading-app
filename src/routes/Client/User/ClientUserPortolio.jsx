@@ -14,12 +14,18 @@ import {
   Center,
 } from '@mantine/core';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
-import { STOCK_INFO_ENDPOINT, SELL_STOCK_INFO_ENDPOINT } from '../../../services/constants/stocksEndpoints';
+import {
+  STOCK_INFO_ENDPOINT,
+  SELL_STOCK_INFO_ENDPOINT,
+} from '../../../services/constants/stocksEndpoints';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { showCurrency } from '../../../services/utilities/showCurrency';
 import { axiosGet, axiosPost } from '../../../services/utilities/axios';
 import { getCookie } from '../../../services/utilities/cookie';
-import { showSuccessNotification, showErrorNotification } from '../../../components/Notification';
+import {
+  showSuccessNotification,
+  showErrorNotification,
+} from '../../../components/Notification';
 
 const ClientUserPortolio = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -85,7 +91,11 @@ const ClientUserPortolio = ({ setVisible }) => {
       formData.append('stock_quantity', quantity);
 
       setIsButtonLoading(true);
-      axiosPost(`${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
+      axiosPost(
+        `${SELL_STOCK_INFO_ENDPOINT}${stockSymbol}`,
+        formData,
+        headers
+      ).then((response) => {
         if (response.status === 200) {
           setIsButtonLoading(false);
           showSuccessNotification('Stock sold successfully!');
@@ -127,7 +137,12 @@ const ClientUserPortolio = ({ setVisible }) => {
             error={error}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={handleSubmit} loading={isButtonLoading}>
+            <Button
+              color="violet"
+              mt={32}
+              onClick={handleSubmit}
+              loading={isButtonLoading}
+            >
               Submit
             </Button>
           </Group>
@@ -145,7 +160,9 @@ const ClientUserPortolio = ({ setVisible }) => {
   const getStockInfo = (symbol) => {
     setIsModalLoading(true);
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
-      setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+      setStockLogo(
+        `https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`
+      );
       setStockSymbol(response.data.company.symbol);
       setStockName(response.data.company.company_name);
       setStockPrice(response.data.quote.latest_price);

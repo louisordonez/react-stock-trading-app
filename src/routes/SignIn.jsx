@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container, LoadingOverlay } from '@mantine/core';
+import {
+  AppShell,
+  useMantineTheme,
+  Anchor,
+  Title,
+  Text,
+  Container,
+  LoadingOverlay,
+} from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignInForm from '../components/SignIn/SignInForm';
 import { showErrorNotification } from '../components/Notification';
@@ -8,7 +16,10 @@ import { SIGN_IN_USER_ENDPOINT } from '../services/constants/usersEndpoints';
 import { accessTokenCookie } from '../services/constants/cookies';
 import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
-import { CLIENT_DASHBOARD_LINK, VERIFY_EMAIL_LINK } from '../services/constants/links';
+import {
+  CLIENT_DASHBOARD_LINK,
+  VERIFY_EMAIL_LINK,
+} from '../services/constants/links';
 
 const SignIn = () => {
   useRedirect();
@@ -25,7 +36,11 @@ const SignIn = () => {
 
       if (response.status === 200) {
         setIsError(false);
-        setCookie(accessTokenCookie, response.data[accessTokenCookie], response.data.expiration);
+        setCookie(
+          accessTokenCookie,
+          response.data[accessTokenCookie],
+          response.data.expiration
+        );
 
         if (response.data.user.email_verified) {
           window.location.assign(`${CLIENT_DASHBOARD_LINK}`);
@@ -44,12 +59,19 @@ const SignIn = () => {
       padding="md"
       styles={{
         main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       }}
       header={<LandingHeader />}
     >
-      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
+      <LoadingOverlay
+        visible={visible}
+        overlayBlur={2}
+        loaderProps={{ color: 'violet' }}
+      />
       <Container size={420} my={40}>
         <Title
           align="center"

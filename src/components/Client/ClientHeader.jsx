@@ -7,7 +7,13 @@ const ClientHeader = ({ opened, onOpened, theme }) => {
       <Header height={70} p="md">
         <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
           <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-            <Burger opened={opened} onClick={onOpened} size="sm" color={theme.colors.gray[6]} mr="xl" />
+            <Burger
+              opened={opened}
+              onClick={onOpened}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
           </MediaQuery>
           <Anchor
             href="/"

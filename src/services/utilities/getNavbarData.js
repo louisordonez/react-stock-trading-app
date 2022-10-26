@@ -1,4 +1,11 @@
-import { TbDeviceAnalytics, TbDashboard, TbWallet, TbFolder, TbReceipt, TbUsers } from 'react-icons/tb';
+import {
+  TbDeviceAnalytics,
+  TbDashboard,
+  TbWallet,
+  TbFolder,
+  TbReceipt,
+  TbUsers,
+} from 'react-icons/tb';
 import {
   CLIENT_DASHBOARD_LINK,
   CLIENT_MARKET_LINK,

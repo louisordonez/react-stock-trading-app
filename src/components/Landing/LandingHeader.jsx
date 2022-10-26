@@ -1,6 +1,10 @@
 import { Header, Text, Space, Button, Anchor } from '@mantine/core';
 import { AiOutlineStock } from 'react-icons/ai';
-import { SIGN_IN_LINK, SIGN_UP_LINK, VERIFY_EMAIL_LINK } from '../../services/constants/links';
+import {
+  SIGN_IN_LINK,
+  SIGN_UP_LINK,
+  VERIFY_EMAIL_LINK,
+} from '../../services/constants/links';
 import { userSignOut } from '../../services/utilities/userSignOut';
 
 const LandingHeader = () => {
@@ -9,7 +13,11 @@ const LandingHeader = () => {
 
     urlPath = `/${urlPath[1]}`;
 
-    if (urlPath !== SIGN_IN_LINK && urlPath !== SIGN_UP_LINK && urlPath !== VERIFY_EMAIL_LINK) {
+    if (
+      urlPath !== SIGN_IN_LINK &&
+      urlPath !== SIGN_UP_LINK &&
+      urlPath !== VERIFY_EMAIL_LINK
+    ) {
       return (
         <>
           <Anchor

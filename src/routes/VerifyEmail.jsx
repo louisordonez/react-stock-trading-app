@@ -1,9 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppShell, useMantineTheme, Title, Text, Container, Paper, Button, Center } from '@mantine/core';
+import {
+  AppShell,
+  useMantineTheme,
+  Title,
+  Text,
+  Container,
+  Paper,
+  Button,
+  Center,
+} from '@mantine/core';
 import { showSuccessNotification } from '../components/Notification';
 import LandingHeader from '../components/Landing/LandingHeader';
-import { SHOW_USER_ENDPOINT, REQUEST_EMAIL_VERIFICATION_ENDPOINT } from '../services/constants/usersEndpoints';
+import {
+  SHOW_USER_ENDPOINT,
+  REQUEST_EMAIL_VERIFICATION_ENDPOINT,
+} from '../services/constants/usersEndpoints';
 import { accessTokenCookie } from '../services/constants/cookies';
 import { axiosGet } from '../services/utilities/axios';
 import { getCookie } from '../services/utilities/cookie';
@@ -40,7 +52,10 @@ const VerifyEmail = () => {
       padding="md"
       styles={{
         main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       }}
       header={<LandingHeader />}

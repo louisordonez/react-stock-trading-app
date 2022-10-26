@@ -27,7 +27,10 @@ import { axiosGet, axiosPost } from '../../../services/utilities/axios';
 import { accessTokenCookie } from '../../../services/constants/cookies';
 import { getCookie } from '../../../services/utilities/cookie';
 import { showCurrency } from '../../../services/utilities/showCurrency';
-import { showSuccessNotification, showErrorNotification } from '../../../components/Notification';
+import {
+  showSuccessNotification,
+  showErrorNotification,
+} from '../../../components/Notification';
 
 const ClientUserMarket = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -57,7 +60,10 @@ const ClientUserMarket = ({ setVisible }) => {
       if (response.status === 200) {
         setSymbolsList(
           response.data.symbols.map((item) => {
-            return { value: item.symbol, label: `${item.symbol} | ${item.name}` };
+            return {
+              value: item.symbol,
+              label: `${item.symbol} | ${item.name}`,
+            };
           })
         );
       }
@@ -85,7 +91,9 @@ const ClientUserMarket = ({ setVisible }) => {
 
     if (search !== '') {
       axiosGet(`${STOCK_INFO_ENDPOINT}${search}`, headers).then((response) => {
-        setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+        setStockLogo(
+          `https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`
+        );
         setStockSymbol(response.data.company.symbol);
         setStockName(response.data.company.company_name);
         setStockPrice(response.data.quote.latest_price);
@@ -117,7 +125,11 @@ const ClientUserMarket = ({ setVisible }) => {
       formData.append('stock_quantity', quantity);
 
       setIsButtonLoading(true);
-      axiosPost(`${BUY_STOCK_INFO_ENDPOINT}${stockSymbol}`, formData, headers).then((response) => {
+      axiosPost(
+        `${BUY_STOCK_INFO_ENDPOINT}${stockSymbol}`,
+        formData,
+        headers
+      ).then((response) => {
         if (response.status === 200) {
           setIsButtonLoading(false);
           showSuccessNotification('Stock bought successfully!');
@@ -143,7 +155,9 @@ const ClientUserMarket = ({ setVisible }) => {
       setBalance(parseFloat(response.data.wallet.balance));
     });
     axiosGet(`${STOCK_INFO_ENDPOINT}${symbol}`, headers).then((response) => {
-      setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+      setStockLogo(
+        `https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`
+      );
       setStockSymbol(response.data.company.symbol);
       setStockName(response.data.company.company_name);
       setStockPrice(response.data.quote.latest_price);
@@ -167,7 +181,9 @@ const ClientUserMarket = ({ setVisible }) => {
       });
       axiosGet(`${STOCK_INFO_ENDPOINT}${event}`, headers).then((response) => {
         // setStockLogo(response.data.logo.url);
-        setStockLogo(`https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`);
+        setStockLogo(
+          `https://storage.googleapis.com/iex/api/logos/${response.data.company.symbol}.png`
+        );
         setStockSymbol(response.data.company.symbol);
         setStockName(response.data.company.company_name);
         setStockPrice(response.data.quote.latest_price);
@@ -223,7 +239,10 @@ const ClientUserMarket = ({ setVisible }) => {
             <ScrollArea>
               <Group>
                 <div style={{ width: 150 }}>
-                  <Image radius="md" src={`https://storage.googleapis.com/iex/api/logos/${symbol}.png`} />
+                  <Image
+                    radius="md"
+                    src={`https://storage.googleapis.com/iex/api/logos/${symbol}.png`}
+                  />
                 </div>
                 <Stack>
                   <Text>{symbol}</Text>
@@ -290,7 +309,12 @@ const ClientUserMarket = ({ setVisible }) => {
             error={error}
           />
           <Group position="right">
-            <Button color="violet" mt={32} onClick={handleSubmit} loading={isButtonLoading}>
+            <Button
+              color="violet"
+              mt={32}
+              onClick={handleSubmit}
+              loading={isButtonLoading}
+            >
               Submit
             </Button>
           </Group>
@@ -311,7 +335,13 @@ const ClientUserMarket = ({ setVisible }) => {
       <Group px="md" pt="md" grow>
         <Stack>
           <Select
-            icon={symbolsList.length !== 0 ? <TbSearch /> : <Loader color="violet" />}
+            icon={
+              symbolsList.length !== 0 ? (
+                <TbSearch />
+              ) : (
+                <Loader color="violet" />
+              )
+            }
             searchable
             clearable
             placeholder="Search"

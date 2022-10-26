@@ -1,5 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Title, Text, Paper, Group, Table, ScrollArea, Button, Modal, TextInput, Stack } from '@mantine/core';
+import {
+  Title,
+  Text,
+  Paper,
+  Group,
+  Table,
+  ScrollArea,
+  Button,
+  Modal,
+  TextInput,
+  Stack,
+} from '@mantine/core';
 import { TbCheck, TbX } from 'react-icons/tb';
 import { showSuccessNotification } from '../../../components/Notification';
 import SignUpForm from '../../../components/SignUp/SignUpForm';
@@ -11,7 +22,11 @@ import {
   ALL_USERS_ENDPOINT,
   USERS_ENDPOINT,
 } from '../../../services/constants/usersEndpoints';
-import { axiosGet, axiosPost, axiosPatch } from '../../../services/utilities/axios';
+import {
+  axiosGet,
+  axiosPost,
+  axiosPatch,
+} from '../../../services/utilities/axios';
 
 const ClientAdminUsers = ({ setVisible }) => {
   const accessToken = getCookie(accessTokenCookie);
@@ -81,15 +96,17 @@ const ClientAdminUsers = ({ setVisible }) => {
     formData.append('email', email);
 
     setIsButtonLoading(true);
-    axiosPatch(`${UPDATE_USER_ENDPOINT}/${current.id}`, formData, headers).then((response) => {
-      let filtered = users.filter((user) => user.id !== current.id);
-      let updated = response.data.user;
+    axiosPatch(`${UPDATE_USER_ENDPOINT}/${current.id}`, formData, headers).then(
+      (response) => {
+        let filtered = users.filter((user) => user.id !== current.id);
+        let updated = response.data.user;
 
-      setUsers([...filtered, updated]);
-      setIsButtonLoading(false);
-      setOpenUpdate(false);
-      showSuccessNotification('Account has been updated!');
-    });
+        setUsers([...filtered, updated]);
+        setIsButtonLoading(false);
+        setOpenUpdate(false);
+        showSuccessNotification('Account has been updated!');
+      }
+    );
   };
 
   const displayTable = () => {
@@ -126,7 +143,14 @@ const ClientAdminUsers = ({ setVisible }) => {
   const userRows = users
     .sort((x, y) => y.id - x.id)
     .map((user) => {
-      const { id, first_name, last_name, email, email_verified, trade_verified } = user;
+      const {
+        id,
+        first_name,
+        last_name,
+        email,
+        email_verified,
+        trade_verified,
+      } = user;
       const color = email_verified ? 'green' : 'red';
 
       return (
@@ -147,14 +171,16 @@ const ClientAdminUsers = ({ setVisible }) => {
               color="violet"
               onClick={() => {
                 setVisible(true);
-                axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then((response) => {
-                  setVisible(false);
-                  setOpenUpdate(true);
-                  setCurrent(response.data);
-                  setFirstName(response.data.first_name);
-                  setLastName(response.data.last_name);
-                  setEmail(response.data.email);
-                });
+                axiosGet(`${SHOW_USER_ENDPOINT}/${id}`, headers).then(
+                  (response) => {
+                    setVisible(false);
+                    setOpenUpdate(true);
+                    setCurrent(response.data);
+                    setFirstName(response.data.first_name);
+                    setLastName(response.data.last_name);
+                    setEmail(response.data.email);
+                  }
+                );
               }}
             >
               Update
@@ -177,10 +203,20 @@ const ClientAdminUsers = ({ setVisible }) => {
           <ScrollArea>{displayTable()}</ScrollArea>
         </Paper>
       </Group>
-      <Modal opened={openCreate} onClose={() => setOpenCreate(false)} title="Create" centered>
+      <Modal
+        opened={openCreate}
+        onClose={() => setOpenCreate(false)}
+        title="Create"
+        centered
+      >
         <SignUpForm onSignUpSubmit={handleCreateSubmit} />
       </Modal>
-      <Modal opened={openUpdate} onClose={() => setOpenUpdate(false)} title="Update" centered>
+      <Modal
+        opened={openUpdate}
+        onClose={() => setOpenUpdate(false)}
+        title="Update"
+        centered
+      >
         <Group
           grow
           onKeyDown={(event) => {
@@ -189,8 +225,16 @@ const ClientAdminUsers = ({ setVisible }) => {
             }
           }}
         >
-          <TextInput label="First name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
-          <TextInput label="Last name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
+          <TextInput
+            label="First name"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+          <TextInput
+            label="Last name"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+          />
         </Group>
         <Group grow>
           <TextInput
@@ -202,7 +246,13 @@ const ClientAdminUsers = ({ setVisible }) => {
           />
         </Group>
         <Group>
-          <Button fullWidth mt="xl" color="violet" onClick={handleUpdateSubmit} loading={isButtonLoading}>
+          <Button
+            fullWidth
+            mt="xl"
+            color="violet"
+            onClick={handleUpdateSubmit}
+            loading={isButtonLoading}
+          >
             Submit
           </Button>
         </Group>

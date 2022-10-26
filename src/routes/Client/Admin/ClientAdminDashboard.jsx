@@ -1,11 +1,31 @@
 import { useState, useEffect } from 'react';
 import { TbUser, TbReceipt } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { Title, Text, Paper, Group, Grid, ThemeIcon, Table, Anchor, ScrollArea, Button } from '@mantine/core';
-import { showErrorNotification, showSuccessNotification } from '../../../components/Notification';
+import {
+  Title,
+  Text,
+  Paper,
+  Group,
+  Grid,
+  ThemeIcon,
+  Table,
+  Anchor,
+  ScrollArea,
+  Button,
+} from '@mantine/core';
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from '../../../components/Notification';
 import { accessTokenCookie } from '../../../services/constants/cookies';
-import { CLIENT_USERS_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
-import { ALL_USERS_ENDPOINT, APPROVE_TRADE_ENDPOINT } from '../../../services/constants/usersEndpoints';
+import {
+  CLIENT_USERS_LINK,
+  CLIENT_TRANSACTIONS_LINK,
+} from '../../../services/constants/links';
+import {
+  ALL_USERS_ENDPOINT,
+  APPROVE_TRADE_ENDPOINT,
+} from '../../../services/constants/usersEndpoints';
 import { ALL_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
 import { getCookie } from '../../../services/utilities/cookie';
 import { axiosGet, axiosPatch } from '../../../services/utilities/axios';
@@ -98,7 +118,12 @@ const ClientAdminDashboard = ({ setVisible }) => {
           <td>{last_name}</td>
           <td>{email}</td>
           <td style={{ textAlign: 'center' }}>
-            <Button color="violet" compact onClick={() => handleApprove(id)} disabled={disabled}>
+            <Button
+              color="violet"
+              compact
+              onClick={() => handleApprove(id)}
+              disabled={disabled}
+            >
               Approve
             </Button>
           </td>

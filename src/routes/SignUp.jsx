@@ -1,6 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppShell, useMantineTheme, Anchor, Title, Text, Container, Paper } from '@mantine/core';
+import {
+  AppShell,
+  useMantineTheme,
+  Anchor,
+  Title,
+  Text,
+  Container,
+  Paper,
+} from '@mantine/core';
 import LandingHeader from '../components/Landing/LandingHeader';
 import SignUpForm from '../components/SignUp/SignUpForm';
 import { showSuccessNotification } from '../components/Notification';
@@ -41,7 +49,10 @@ const SignUp = () => {
       padding="md"
       styles={{
         main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       }}
       header={<LandingHeader />}
@@ -63,7 +74,10 @@ const SignUp = () => {
           </Anchor>
         </Text>
         <Paper shadow="md" p={30} mt={30} radius="md">
-          <SignUpForm onSignUpSubmit={handleSignUpSubmit} isButtonLoading={isButtonLoading} />
+          <SignUpForm
+            onSignUpSubmit={handleSignUpSubmit}
+            isButtonLoading={isButtonLoading}
+          />
         </Paper>
       </Container>
     </AppShell>

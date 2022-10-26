@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Title, Text, Paper, Group, ThemeIcon, Table, Anchor, ScrollArea } from '@mantine/core';
+import {
+  Title,
+  Text,
+  Paper,
+  Group,
+  ThemeIcon,
+  Table,
+  Anchor,
+  ScrollArea,
+} from '@mantine/core';
 import { TbWallet, TbChartBar } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { CLIENT_WALLET_LINK, CLIENT_TRANSACTIONS_LINK } from '../../../services/constants/links';
+import {
+  CLIENT_WALLET_LINK,
+  CLIENT_TRANSACTIONS_LINK,
+} from '../../../services/constants/links';
 import { SHOW_WALLET_ENDPOINT } from '../../../services/constants/walletEndpoints';
 import { USER_PORTFOLIO_ENDPOINT } from '../../../services/constants/portfolioEndpoints';
 import { USER_STOCK_TRANSACTIONS_ENDPOINT } from '../../../services/constants/transactionsEndpoints';
@@ -133,7 +145,15 @@ const ClientUserDashboard = ({ setVisible }) => {
     .sort((x, y) => y.id - x.id)
     .slice(0, 5)
     .map((column, index) => {
-      const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
+      const {
+        created_at,
+        action_type,
+        stock_symbol,
+        stock_name,
+        stock_price,
+        stock_quantity,
+        total_amount,
+      } = column;
 
       return (
         <tr key={index}>

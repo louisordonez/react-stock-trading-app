@@ -78,15 +78,30 @@ const Client = () => {
     <AppShell
       styles={{
         main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<ClientNavbar opened={opened} onOpened={handleOpened} userRole={userRole} />}
-      header={<ClientHeader opened={opened} onOpened={handleOpened} theme={theme} />}
+      navbar={
+        <ClientNavbar
+          opened={opened}
+          onOpened={handleOpened}
+          userRole={userRole}
+        />
+      }
+      header={
+        <ClientHeader opened={opened} onOpened={handleOpened} theme={theme} />
+      }
     >
-      <LoadingOverlay visible={visible} overlayBlur={2} loaderProps={{ color: 'violet' }} />
+      <LoadingOverlay
+        visible={visible}
+        overlayBlur={2}
+        loaderProps={{ color: 'violet' }}
+      />
       {useDisplayContent()}
     </AppShell>
   );

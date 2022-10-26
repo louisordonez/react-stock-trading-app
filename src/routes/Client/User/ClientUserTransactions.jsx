@@ -62,7 +62,15 @@ const ClientUserTransactions = ({ setVisible }) => {
   const stockTransactionsRows = stockTransactions
     .sort((x, y) => y.id - x.id)
     .map((column, index) => {
-      const { created_at, action_type, stock_symbol, stock_name, stock_price, stock_quantity, total_amount } = column;
+      const {
+        created_at,
+        action_type,
+        stock_symbol,
+        stock_name,
+        stock_price,
+        stock_quantity,
+        total_amount,
+      } = column;
 
       return (
         <tr key={index}>

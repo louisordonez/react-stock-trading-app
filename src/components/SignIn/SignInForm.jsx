@@ -31,7 +31,12 @@ const SignInForm = ({ onSignInSubmit, isError }) => {
           }
         }}
       >
-        <TextInput label="Email" onChange={(event) => setEmail(event.target.value)} value={email} error={isError} />
+        <TextInput
+          label="Email"
+          onChange={(event) => setEmail(event.target.value)}
+          value={email}
+          error={isError}
+        />
         <PasswordInput
           label="Password"
           mt="md"

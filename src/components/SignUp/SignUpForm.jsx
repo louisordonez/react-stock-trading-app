@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { TextInput, PasswordInput, Button, Group } from '@mantine/core';
 import { SIGN_UP_LINK } from '../../services/constants/links';
-import { isInvalidEmail, isInvalidPassword } from '../../services/utilities/inputValidation';
+import {
+  isInvalidEmail,
+  isInvalidPassword,
+} from '../../services/utilities/inputValidation';
 import { showErrorNotification } from '../Notification';
 
 const SignUpForm = ({ onSignUpSubmit, isButtonLoading }) => {
