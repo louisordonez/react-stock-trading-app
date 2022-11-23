@@ -19,6 +19,7 @@ import {
 import { accessTokenCookie } from '../services/constants/cookies';
 import { axiosGet } from '../services/utilities/axios';
 import { getCookie } from '../services/utilities/cookie';
+import { CLIENT_DASHBOARD_LINK } from '../services/constants/links';
 
 const VerifyEmail = () => {
   const theme = useMantineTheme();
@@ -33,10 +34,12 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-      if (!response.data.email_verified) {
-        setEmail(response.data.email);
+      if (response.data.error !== undefined) {
+        if (!response.data.error.user.email_verified) {
+          setEmail(response.data.error.user.email);
+        }
       } else {
-        navigate('/error');
+        navigate(CLIENT_DASHBOARD_LINK);
       }
     });
   }, []);

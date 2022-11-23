@@ -282,7 +282,7 @@ const ClientUserWallet = ({ setVisible }) => {
           setOpened(false);
           resetForm();
         }}
-        title={`${modalTitle}`}
+        title={modalTitle}
         centered
       >
         {showModalContent()}

@@ -115,7 +115,7 @@ const ClientUserPortolio = ({ setVisible }) => {
         <>
           <Group align="center" mb="md">
             <div style={{ width: 92 }}>
-              <Image radius="md" src={`${stockLogo}`} />
+              <Image radius="md" src={stockLogo} />
             </div>
             <div>
               <Text>{stockSymbol}</Text>

@@ -33,18 +33,18 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Root />} errorElement={<Error />} />
-      <Route path={`${SIGN_IN_LINK}`} element={<SignIn />} />
-      <Route path={`${SIGN_UP_LINK}`} element={<SignUp />} />
-      <Route path={`${VERIFY_EMAIL_LINK}`} element={<VerifyEmail />} />
+      <Route path={SIGN_IN_LINK} element={<SignIn />} />
+      <Route path={SIGN_UP_LINK} element={<SignUp />} />
+      <Route path={VERIFY_EMAIL_LINK} element={<VerifyEmail />} />
       <Route element={<ProtectedRoute />}>
         <Route errorElement={<Error />}>
-          <Route path={`${CLIENT_DASHBOARD_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_MARKET_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_WALLET_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_PORTFOLIO_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_USERS_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_TRANSACTIONS_LINK}`} element={<Client />} />
-          <Route path={`${CLIENT_ACCOUNT_LINK}`} element={<Client />} />
+          <Route path={CLIENT_DASHBOARD_LINK} element={<Client />} />
+          <Route path={CLIENT_MARKET_LINK} element={<Client />} />
+          <Route path={CLIENT_WALLET_LINK} element={<Client />} />
+          <Route path={CLIENT_PORTFOLIO_LINK} element={<Client />} />
+          <Route path={CLIENT_USERS_LINK} element={<Client />} />
+          <Route path={CLIENT_TRANSACTIONS_LINK} element={<Client />} />
+          <Route path={CLIENT_ACCOUNT_LINK} element={<Client />} />
         </Route>
       </Route>
     </>

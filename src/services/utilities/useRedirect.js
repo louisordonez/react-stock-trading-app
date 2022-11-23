@@ -19,40 +19,29 @@ export const useRedirect = () => {
     'Access-Control-Allow-Origin': '*',
     Authorization: accessToken,
   };
-  let urlPath = window.location.pathname.split('/');
-
-  urlPath = `/${urlPath[1]}`;
+  const urlPath = `/${window.location.pathname.split('/')[1]}`;
 
   useEffect(() => {
-    isLoggedIn().then((reponse) => {
-      if (reponse) {
-        axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-          if (!response.data.email_verified) {
-            navigate(VERIFY_EMAIL_LINK);
-          }
-        });
+    if (isLoggedIn()) {
+      axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+        if (response.data.error !== undefined) {
+          navigate(VERIFY_EMAIL_LINK);
+        }
+      });
 
-        switch (urlPath) {
-          case '/':
-            navigate(CLIENT_DASHBOARD_LINK);
-            break;
-          case SIGN_IN_LINK:
-          case SIGN_UP_LINK:
-            navigate(CLIENT_DASHBOARD_LINK);
-        }
-      } else {
-        switch (urlPath) {
-          case '/':
-            navigate('/');
-            break;
-          case SIGN_UP_LINK:
-            navigate(SIGN_UP_LINK);
-            break;
-          default:
-            navigate(SIGN_IN_LINK);
-            break;
-        }
+      navigate(CLIENT_DASHBOARD_LINK);
+    } else {
+      switch (urlPath) {
+        case '/':
+          navigate('/');
+          break;
+        case SIGN_UP_LINK:
+          navigate(SIGN_UP_LINK);
+          break;
+        default:
+          navigate(SIGN_IN_LINK);
+          break;
       }
-    });
+    }
   }, []);
 };

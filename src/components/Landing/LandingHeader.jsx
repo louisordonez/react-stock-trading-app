@@ -21,7 +21,7 @@ const LandingHeader = () => {
       return (
         <>
           <Anchor
-            href={`${SIGN_IN_LINK}`}
+            href={SIGN_IN_LINK}
             style={{
               color: 'white',
               fontWeight: '700',
@@ -30,7 +30,7 @@ const LandingHeader = () => {
           >
             Sign in
           </Anchor>
-          <Anchor href={`${SIGN_UP_LINK}`}>
+          <Anchor href={SIGN_UP_LINK}>
             <Button color="violet">Sign up</Button>
           </Anchor>
         </>

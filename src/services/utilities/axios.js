@@ -2,19 +2,15 @@ import axios from 'axios';
 import JSONbig from 'json-bigint';
 
 export const StockTradingRef = axios.create({
-  // baseURL: 'http://localhost:3000/api/v1',
-  baseURL: 'https://stock-trading-app-ha2z.onrender.com/api/v1',
+  baseURL: 'http://localhost:3000/api/v1',
+  // baseURL: 'https://stock-trading-app-ha2z.onrender.com/api/v1',
 });
 
 export const axiosGet = async (endpoint, headers) => {
-  return StockTradingRef.get(
-    endpoint,
-
-    {
-      transformResponse: (data) => JSONbig.parse(data),
-      headers,
-    }
-  )
+  return StockTradingRef.get(endpoint, {
+    transformResponse: (data) => JSONbig.parse(data),
+    headers,
+  })
     .then((response) => response)
     .catch((error) => error);
 };
