@@ -37,11 +37,8 @@ export const useRedirect = () => {
             navigate(CLIENT_DASHBOARD_LINK);
             break;
           case SIGN_IN_LINK:
-            navigate(CLIENT_DASHBOARD_LINK);
-            break;
           case SIGN_UP_LINK:
             navigate(CLIENT_DASHBOARD_LINK);
-            break;
         }
       } else {
         switch (urlPath) {
