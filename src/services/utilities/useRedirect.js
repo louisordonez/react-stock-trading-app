@@ -24,8 +24,8 @@ export const useRedirect = () => {
   urlPath = `/${urlPath[1]}`;
 
   useEffect(() => {
-    isLoggedIn().then((bool) => {
-      if (bool) {
+    // isLoggedIn().then((response) => {
+      if (isLoggedIn()) {
         axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
           if (!response.data.email_verified) {
             navigate(VERIFY_EMAIL_LINK);
@@ -52,7 +52,7 @@ export const useRedirect = () => {
             navigate(SIGN_IN_LINK);
             break;
         }
-      }
+     // }
     });
   }, []);
 };
