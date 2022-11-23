@@ -15,7 +15,6 @@ export const isLoggedIn = async () => {
     accessToken === undefined ||
     accessToken === 'undefined'
   ) {
-    return false;
     return axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
       switch (response.status) {
         case 200:
