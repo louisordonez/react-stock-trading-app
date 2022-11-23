@@ -1,6 +1,6 @@
-export const SIGN_IN_LINK = '/sign_in';
-export const SIGN_UP_LINK = '/sign_up';
-export const VERIFY_EMAIL_LINK = '/verify_email';
+export const SIGN_IN_LINK = '/sign-in';
+export const SIGN_UP_LINK = '/sign-up';
+export const VERIFY_EMAIL_LINK = '/verify-email';
 
 export const CLIENT_DASHBOARD_LINK = '/client/dashboard';
 export const CLIENT_MARKET_LINK = '/client/market';
