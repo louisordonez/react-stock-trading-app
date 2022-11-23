@@ -3,7 +3,7 @@ import { SHOW_USER_ENDPOINT } from '../constants/usersEndpoints';
 import { getCookie } from './cookie';
 import { axiosGet } from './axios';
 
-export const isLoggedIn = () => {
+export const isLoggedIn = async () => {
   const accessToken = getCookie(accessTokenCookie);
   const headers = {
     'Access-Control-Allow-Origin': '*',
