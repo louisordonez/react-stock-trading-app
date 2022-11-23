@@ -24,36 +24,35 @@ export const useRedirect = () => {
   urlPath = `/${urlPath[1]}`;
 
   useEffect(() => {
-    if (isLoggedIn()) {
-      axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-        if (!response.data.email_verified) {
-          navigate(VERIFY_EMAIL_LINK);
-        }
-      });
+    isLoggedIn().then((reponse) => {
+      if (reponse) {
+        axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
+          if (!response.data.email_verified) {
+            navigate(VERIFY_EMAIL_LINK);
+          }
+        });
 
-      switch (urlPath) {
-        case '/':
-          navigate(CLIENT_DASHBOARD_LINK);
-          break;
-        case SIGN_IN_LINK:
-          navigate(CLIENT_DASHBOARD_LINK);
-          break;
-        case SIGN_UP_LINK:
-          navigate(CLIENT_DASHBOARD_LINK);
-          break;
+        switch (urlPath) {
+          case '/':
+            navigate(CLIENT_DASHBOARD_LINK);
+            break;
+          case SIGN_IN_LINK:
+          case SIGN_UP_LINK:
+            navigate(CLIENT_DASHBOARD_LINK);
+        }
+      } else {
+        switch (urlPath) {
+          case '/':
+            navigate('/');
+            break;
+          case SIGN_UP_LINK:
+            navigate(SIGN_UP_LINK);
+            break;
+          default:
+            navigate(SIGN_IN_LINK);
+            break;
+        }
       }
-    } else {
-      switch (urlPath) {
-        case '/':
-          navigate('/');
-          break;
-        case SIGN_UP_LINK:
-          navigate(SIGN_UP_LINK);
-          break;
-        default:
-          navigate(SIGN_IN_LINK);
-          break;
-      }
-    }
+    });
   }, []);
 };
