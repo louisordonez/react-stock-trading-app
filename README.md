@@ -53,5 +53,8 @@ This project is an application that allows users to buy and sell stocks.
 
 ## Live Demo
 
-- https://react-stock-trading-app.onrender.com
-- https://github.com/louisordonez/react-stock-trading-app
+https://react-stock-trading-app.onrender.com
+
+## Backend
+
+https://github.com/louisordonez/rails-stock-trading-app
