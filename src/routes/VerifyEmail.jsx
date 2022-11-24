@@ -35,9 +35,8 @@ const VerifyEmail = () => {
   useEffect(() => {
     axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
       if (response.data.error !== undefined) {
-        if (!response.data.error.user.email_verified) {
+        !response.data.error.user.email_verified &&
           setEmail(response.data.error.user.email);
-        }
       } else {
         navigate(CLIENT_DASHBOARD_LINK);
       }
