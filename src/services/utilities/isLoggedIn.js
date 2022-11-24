@@ -14,7 +14,7 @@ export const isLoggedIn = () => {
     return false;
   } else {
     return axiosGet(SHOW_USER_ENDPOINT, headers).then((response) => {
-      response.status === 200 ? true : fasle;
+      response.status === 200 ? true : false;
     });
   }
 };
