@@ -51,10 +51,6 @@ This project is an application that allows users to buy and sell stocks.
 - `email: email_verified@email.com`  
   `password: ThmM*Qt8AA56`
 
-## ERD
-
-![ERD](./docs/images/erd/Fintrader_ERD.jpeg)
-
 ## Live Demo
 
 ### Frontend
