@@ -37,6 +37,10 @@ This project is an application that allows users to buy and sell stocks.
 - Approve a trader so that user can start buying and selling stocks.
 - View all the transactions made by users.
 
+## ERD
+
+![ERD](./docs/images/erd/Fintrader_ERD.jpeg)
+
 ## Test Accounts
 
 - `email: admin@email.com`  
@@ -55,6 +59,6 @@ This project is an application that allows users to buy and sell stocks.
 
 https://react-stock-trading-app.onrender.com
 
-## Backend
+## Backend Repo
 
 https://github.com/louisordonez/rails-stock-trading-app
