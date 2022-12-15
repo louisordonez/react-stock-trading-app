@@ -69,7 +69,7 @@ const SignUp = () => {
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
           Already have an account?{' '}
-          <Anchor size="sm" href="/sign_in">
+          <Anchor size="sm" href={SIGN_IN_LINK}>
             Sign in
           </Anchor>
         </Text>

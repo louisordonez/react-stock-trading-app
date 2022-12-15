@@ -17,6 +17,7 @@ import { accessTokenCookie } from '../services/constants/cookies';
 import { setCookie } from '../services/utilities/cookie';
 import { useRedirect } from '../services/utilities/useRedirect';
 import {
+  SIGN_UP_LINK,
   CLIENT_DASHBOARD_LINK,
   VERIFY_EMAIL_LINK,
 } from '../services/constants/links';
@@ -84,7 +85,7 @@ const SignIn = () => {
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
           Don't have an account yet?{' '}
-          <Anchor size="sm" href="/sign_up">
+          <Anchor size="sm" href={SIGN_UP_LINK}>
             Sign up
           </Anchor>
         </Text>
